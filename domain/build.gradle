@@ -1,7 +1,14 @@
 apply plugin: 'java-library'
 
+test {
+    useJUnitPlatform()
+}
+
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation 'org.junit.platform:junit-platform-commons:1.7.0-M1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.7.0-M1'
+    testImplementation 'org.hamcrest:hamcrest:2.2'
+    testImplementation 'org.mockito:mockito-core:3.4.6'
 }
 
 sourceCompatibility = "1.7"
