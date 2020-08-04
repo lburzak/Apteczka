@@ -2,6 +2,7 @@ package com.github.polydome.domain.usecase;
 
 import com.github.polydome.domain.model.Medicine;
 import com.github.polydome.domain.repository.MedicineRepository;
+import com.github.polydome.domain.usecase.exception.DuplicateMedicineException;
 
 import io.reactivex.Completable;
 import io.reactivex.CompletableSource;
