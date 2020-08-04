@@ -11,5 +11,12 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:3.4.6'
 }
 
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
+compileJava {
+    sourceCompatibility = "1.7"
+    targetCompatibility = "1.7"
+}
+
+compileTestJava {
+    sourceCompatibility = "1.8"
+    targetCompatibility = "1.8"
+}
