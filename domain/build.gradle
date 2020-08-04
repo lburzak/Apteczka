@@ -5,6 +5,9 @@ test {
 }
 
 dependencies {
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.19'
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
     testImplementation 'org.junit.platform:junit-platform-commons:1.7.0-M1'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.7.0-M1'
     testImplementation 'org.hamcrest:hamcrest:2.2'
