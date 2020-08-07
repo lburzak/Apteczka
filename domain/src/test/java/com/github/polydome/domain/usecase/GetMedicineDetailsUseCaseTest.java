@@ -1,6 +1,6 @@
 package com.github.polydome.domain.usecase;
 
-import com.github.polydome.domain.model.MedicineDetails;
+import com.github.polydome.domain.service.MedicineDetails;
 import com.github.polydome.domain.service.MedicineDetailsEndpoint;
 
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,9 @@ class GetMedicineDetailsUseCaseTest {
 
     @Test
     public void execute_medicineDetailsAvailable_emitsMedicineDetails() {
-        MedicineDetails DETAILS = new MedicineDetails("Some medicine");
+        MedicineDetails DETAILS = MedicineDetails.builder()
+                .name("testmed")
+                .build();
 
         Mockito.when(medicineDetailsEndpoint.fetchMedicineDetails(Mockito.eq(EAN))).thenReturn(Maybe.just(DETAILS));
 
