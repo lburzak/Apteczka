@@ -31,7 +31,7 @@ public class EanInputDialog extends DialogFragment implements AddMedicineContrac
     }
 
     @Override
-    public void showMedicineEditor(int medicineId) {
+    public void showMedicineEditor(long medicineId) {
         Intent intent = new Intent(requireActivity(), EditMedicineActivity.class);
         requireActivity().startActivity(intent);
     }
