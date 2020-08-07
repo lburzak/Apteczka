@@ -4,5 +4,6 @@ import lombok.Data;
 
 @Data
 public class Medicine {
+    private final int id;
     private final String ean;
 }

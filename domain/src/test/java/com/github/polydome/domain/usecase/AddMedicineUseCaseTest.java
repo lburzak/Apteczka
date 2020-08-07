@@ -30,12 +30,12 @@ class AddMedicineUseCaseTest {
         SUT.execute(EAN).test().assertComplete();
 
         assertThat(medicineRepository.data, Matchers.<Medicine>hasSize(1));
-        assertThat(((ArrayList<Medicine>) medicineRepository.data).get(0), equalToObject(new Medicine(EAN)));
+        assertThat(((ArrayList<Medicine>) medicineRepository.data).get(0), equalToObject(new Medicine(0, EAN)));
     }
 
     @Test
     void execute_medicineWithGivenEANAlreadyExists_exceptionThrown() {
-        medicineRepository.data = Collections.singletonList(new Medicine(EAN));
+        medicineRepository.data = Collections.singletonList(new Medicine(1, EAN));
 
         SUT.execute(EAN).test().assertError(new Predicate<Throwable>() {
             @Override

@@ -22,7 +22,7 @@ public class AddMedicineUseCase {
                 if (exists)
                     throw new DuplicateMedicineException(ean);
 
-                Medicine medicine = new Medicine(ean);
+                Medicine medicine = new Medicine(0, ean);
                 return medicineRepository.create(medicine);
             }
         });
