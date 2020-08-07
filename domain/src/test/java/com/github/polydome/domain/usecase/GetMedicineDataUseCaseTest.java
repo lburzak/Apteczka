@@ -28,7 +28,7 @@ class GetMedicineDataUseCaseTest {
 
     @Test
     public void execute_medicineExists_emitsMedicineData() {
-        medicineRepository.data = List.of(new Medicine(ID, EAN));
+        medicineRepository.data = List.of(Medicine.builder().id(ID).ean(EAN).build());
 
         SUT.execute(ID).test().assertValue(
                 MedicineData.builder()
