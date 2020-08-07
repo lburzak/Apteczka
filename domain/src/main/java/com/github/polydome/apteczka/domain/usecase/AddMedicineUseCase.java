@@ -1,13 +1,11 @@
-package com.github.polydome.domain.usecase;
+package com.github.polydome.apteczka.domain.usecase;
 
-import com.github.polydome.domain.model.Medicine;
-import com.github.polydome.domain.repository.MedicineRepository;
-import com.github.polydome.domain.service.MedicineDetails;
-import com.github.polydome.domain.service.MedicineDetailsEndpoint;
-import com.github.polydome.domain.usecase.exception.DuplicateMedicineException;
+import com.github.polydome.apteczka.domain.model.Medicine;
+import com.github.polydome.apteczka.domain.repository.MedicineRepository;
+import com.github.polydome.apteczka.domain.service.MedicineDetails;
+import com.github.polydome.apteczka.domain.service.MedicineDetailsEndpoint;
+import com.github.polydome.apteczka.domain.usecase.exception.DuplicateMedicineException;
 
-import io.reactivex.Completable;
-import io.reactivex.CompletableSource;
 import io.reactivex.Single;
 import io.reactivex.SingleSource;
 import io.reactivex.functions.Function;

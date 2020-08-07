@@ -1,4 +1,4 @@
-package com.github.polydome.domain.usecase.exception;
+package com.github.polydome.apteczka.domain.usecase.exception;
 
 public class DuplicateMedicineException extends RuntimeException {
     public DuplicateMedicineException(String ean) {

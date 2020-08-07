@@ -1,9 +1,8 @@
-package com.github.polydome.domain.usecase;
+package com.github.polydome.apteczka.domain.usecase;
 
-import com.github.polydome.domain.common.MedicineRepositoryStub;
-import com.github.polydome.domain.model.Medicine;
-import com.github.polydome.domain.repository.MedicineRepository;
-import com.github.polydome.domain.usecase.structure.MedicineData;
+import com.github.polydome.apteczka.domain.common.MedicineRepositoryStub;
+import com.github.polydome.apteczka.domain.model.Medicine;
+import com.github.polydome.apteczka.domain.usecase.structure.MedicineData;
 import com.sun.tools.javac.util.List;
 
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,6 @@
-package com.github.polydome.domain.service;
+package com.github.polydome.apteczka.domain.service;
 
-import com.github.polydome.domain.model.Medicine;
+import com.github.polydome.apteczka.domain.model.Medicine;
 
 import lombok.Builder;
 import lombok.Data;

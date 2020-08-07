@@ -1,8 +1,8 @@
-package com.github.polydome.domain.usecase;
+package com.github.polydome.apteczka.domain.usecase;
 
-import com.github.polydome.domain.model.Medicine;
-import com.github.polydome.domain.repository.MedicineRepository;
-import com.github.polydome.domain.usecase.structure.MedicineData;
+import com.github.polydome.apteczka.domain.model.Medicine;
+import com.github.polydome.apteczka.domain.repository.MedicineRepository;
+import com.github.polydome.apteczka.domain.usecase.structure.MedicineData;
 
 import io.reactivex.Maybe;
 import io.reactivex.functions.Function;

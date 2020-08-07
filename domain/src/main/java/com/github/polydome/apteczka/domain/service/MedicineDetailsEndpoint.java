@@ -1,4 +1,4 @@
-package com.github.polydome.domain.service;
+package com.github.polydome.apteczka.domain.service;
 
 import io.reactivex.Maybe;
 

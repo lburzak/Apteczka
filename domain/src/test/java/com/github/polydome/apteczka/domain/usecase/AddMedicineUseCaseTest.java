@@ -1,10 +1,10 @@
-package com.github.polydome.domain.usecase;
+package com.github.polydome.apteczka.domain.usecase;
 
-import com.github.polydome.domain.common.MedicineRepositoryStub;
-import com.github.polydome.domain.model.Medicine;
-import com.github.polydome.domain.service.MedicineDetails;
-import com.github.polydome.domain.service.MedicineDetailsEndpoint;
-import com.github.polydome.domain.usecase.exception.DuplicateMedicineException;
+import com.github.polydome.apteczka.domain.common.MedicineRepositoryStub;
+import com.github.polydome.apteczka.domain.model.Medicine;
+import com.github.polydome.apteczka.domain.service.MedicineDetails;
+import com.github.polydome.apteczka.domain.service.MedicineDetailsEndpoint;
+import com.github.polydome.apteczka.domain.usecase.exception.DuplicateMedicineException;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;

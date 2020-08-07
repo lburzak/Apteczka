@@ -1,8 +1,7 @@
-package com.github.polydome.domain.repository;
+package com.github.polydome.apteczka.domain.repository;
 
-import com.github.polydome.domain.model.Medicine;
+import com.github.polydome.apteczka.domain.model.Medicine;
 
-import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.Single;
 

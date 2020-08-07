@@ -1,6 +1,6 @@
-package com.github.polydome.domain.usecase.structure;
+package com.github.polydome.apteczka.domain.usecase.structure;
 
-import com.github.polydome.domain.model.Medicine;
+import com.github.polydome.apteczka.domain.model.Medicine;
 
 import lombok.Builder;
 import lombok.Data;

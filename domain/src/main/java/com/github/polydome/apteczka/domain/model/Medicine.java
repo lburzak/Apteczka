@@ -1,4 +1,4 @@
-package com.github.polydome.domain.model;
+package com.github.polydome.apteczka.domain.model;
 
 import lombok.Builder;
 import lombok.Data;

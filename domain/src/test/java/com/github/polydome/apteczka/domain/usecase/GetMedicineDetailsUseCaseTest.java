@@ -1,7 +1,7 @@
-package com.github.polydome.domain.usecase;
+package com.github.polydome.apteczka.domain.usecase;
 
-import com.github.polydome.domain.service.MedicineDetails;
-import com.github.polydome.domain.service.MedicineDetailsEndpoint;
+import com.github.polydome.apteczka.domain.service.MedicineDetails;
+import com.github.polydome.apteczka.domain.service.MedicineDetailsEndpoint;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;

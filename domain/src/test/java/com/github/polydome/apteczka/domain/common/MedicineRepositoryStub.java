@@ -1,13 +1,12 @@
-package com.github.polydome.domain.common;
+package com.github.polydome.apteczka.domain.common;
 
-import com.github.polydome.domain.model.Medicine;
-import com.github.polydome.domain.repository.MedicineRepository;
+import com.github.polydome.apteczka.domain.model.Medicine;
+import com.github.polydome.apteczka.domain.repository.MedicineRepository;
 
 import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;
 import io.reactivex.MaybeOnSubscribe;
