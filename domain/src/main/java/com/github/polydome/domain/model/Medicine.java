@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @Builder(toBuilder = true)
 public class Medicine {
-    private final int id;
+    private final long id;
     private final String ean;
     private final String name;
     private final String commonName;
