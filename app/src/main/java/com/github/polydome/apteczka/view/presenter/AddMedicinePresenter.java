@@ -5,8 +5,10 @@ import com.github.polydome.apteczka.domain.usecase.AddMedicineUseCase;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class AddMedicinePresenter implements AddMedicineContract.Presenter {
     private final AddMedicineUseCase addMedicineUseCase;
@@ -22,12 +24,15 @@ public class AddMedicinePresenter implements AddMedicineContract.Presenter {
     @Override
     public void onCreateMedicine(String ean) {
         compDisposable.add(
-            addMedicineUseCase.execute(ean).subscribe(new Consumer<Long>() {
-                @Override
-                public void accept(Long medicineId) {
-                    requireView().showMedicineEditor(medicineId);
-                }
-            })
+            addMedicineUseCase.execute(ean)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<Long>() {
+                        @Override
+                        public void accept(Long medicineId) {
+                            requireView().showMedicineEditor(medicineId);
+                        }
+                    })
         );
     }
 
