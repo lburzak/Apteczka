@@ -9,6 +9,7 @@ import com.github.polydome.domain.usecase.exception.DuplicateMedicineException;
 import io.reactivex.Completable;
 import io.reactivex.CompletableSource;
 import io.reactivex.Single;
+import io.reactivex.SingleSource;
 import io.reactivex.functions.Function;
 
 public class AddMedicineUseCase {
@@ -20,10 +21,15 @@ public class AddMedicineUseCase {
         this.medicineDetailsEndpoint = medicineDetailsEndpoint;
     }
 
-    public Completable execute(final String ean) {
-        return medicineRepository.exists(ean).flatMapCompletable(new Function<Boolean, CompletableSource>() {
+    /**
+     *
+     * @param ean
+     * @return ID of created medicine
+     */
+    public Single<Long> execute(final String ean) {
+        return medicineRepository.exists(ean).flatMap(new Function<Boolean, SingleSource<Long>>() {
             @Override
-            public CompletableSource apply(Boolean exists) {
+            public SingleSource<Long> apply(Boolean exists) {
                 if (exists)
                     throw new DuplicateMedicineException(ean);
 
@@ -39,9 +45,9 @@ public class AddMedicineUseCase {
                                 return medicineDetails.mergeToMedicine(defaultMedicine);
                             }
                         })
-                        .flatMapCompletable(new Function<Medicine, CompletableSource>() {
+                        .flatMap(new Function<Medicine, SingleSource<Long>>() {
                             @Override
-                            public CompletableSource apply(Medicine medicine) {
+                            public SingleSource<Long> apply(Medicine medicine) throws Exception {
                                 return medicineRepository.create(medicine);
                             }
                         });

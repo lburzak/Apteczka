@@ -7,7 +7,7 @@ import io.reactivex.Maybe;
 import io.reactivex.Single;
 
 public interface MedicineRepository {
-    Completable create(Medicine medicine);
+    Single<Long> create(Medicine medicine);
     Single<Boolean> exists(String ean);
     Maybe<Medicine> findById(int id);
 }

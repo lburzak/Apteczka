@@ -40,11 +40,12 @@ public class MedicineRepositoryStub implements MedicineRepository {
     }
 
     @Override
-    public Completable create(final Medicine medicine) {
-        return Completable.fromRunnable(new Runnable() {
+    public Single<Long> create(final Medicine medicine) {
+        return Single.create(new SingleOnSubscribe<Long>() {
             @Override
-            public void run() {
+            public void subscribe(SingleEmitter<Long> emitter) {
                 data.add(medicine);
+                emitter.onSuccess(medicine.getId());
             }
         });
     }
