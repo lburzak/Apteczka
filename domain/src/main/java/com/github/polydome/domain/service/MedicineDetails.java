@@ -1,5 +1,7 @@
 package com.github.polydome.domain.service;
 
+import com.github.polydome.domain.model.Medicine;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,4 +14,15 @@ public class MedicineDetails {
     private final String form;
     private final int packagingSize;
     private final String packagingUnit;
+
+    public Medicine mergeToMedicine(Medicine medicine) {
+        return medicine.toBuilder()
+                .potency(getPotency())
+                .packagingUnit(getPackagingUnit())
+                .packagingSize(getPackagingSize())
+                .name(getName())
+                .form(getForm())
+                .commonName(getCommonName())
+                .build();
+    }
 }
