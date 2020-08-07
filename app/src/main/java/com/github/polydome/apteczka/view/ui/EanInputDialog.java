@@ -13,10 +13,21 @@ import androidx.fragment.app.DialogFragment;
 
 import com.github.polydome.apteczka.R;
 import com.github.polydome.apteczka.view.contract.AddMedicineContract;
+import com.github.polydome.apteczka.view.ui.common.BaseDialogFragment;
 
-public class EanInputDialog extends DialogFragment implements AddMedicineContract.View {
-    private AddMedicineContract.Presenter presenter;
+import javax.inject.Inject;
+
+public class EanInputDialog extends BaseDialogFragment implements AddMedicineContract.View {
+    @Inject
+    public AddMedicineContract.Presenter presenter;
     private EditText eanInputEditText;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getPresentationComponent().inject(this);
+        presenter.attach(this);
+    }
 
     @NonNull
     @Override
@@ -28,6 +39,12 @@ public class EanInputDialog extends DialogFragment implements AddMedicineContrac
     public void onStart() {
         super.onStart();
         eanInputEditText = requireDialog().findViewById(R.id.ean_input);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.detach();
     }
 
     @Override

@@ -1,7 +1,9 @@
 package com.github.polydome.apteczka.view.presenter;
 
 import com.github.polydome.apteczka.view.contract.AddMedicineContract;
-import com.github.polydome.domain.usecase.AddMedicineUseCase;
+import com.github.polydome.apteczka.domain.usecase.AddMedicineUseCase;
+
+import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
@@ -12,6 +14,7 @@ public class AddMedicinePresenter implements AddMedicineContract.Presenter {
 
     private final CompositeDisposable compDisposable = new CompositeDisposable();
 
+    @Inject
     public AddMedicinePresenter(AddMedicineUseCase addMedicineUseCase) {
         this.addMedicineUseCase = addMedicineUseCase;
     }

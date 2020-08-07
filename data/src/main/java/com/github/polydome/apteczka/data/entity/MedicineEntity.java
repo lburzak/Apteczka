@@ -21,6 +21,17 @@ public class MedicineEntity {
     @ColumnInfo(name = "packaging_unit")
     private final String packagingUnit;
 
+    public MedicineEntity(long id, String ean, String name, String commonName, String potency, String form, int packagingSize, String packagingUnit) {
+        this.id = id;
+        this.ean = ean;
+        this.name = name;
+        this.commonName = commonName;
+        this.potency = potency;
+        this.form = form;
+        this.packagingSize = packagingSize;
+        this.packagingUnit = packagingUnit;
+    }
+
     public MedicineEntity(Medicine medicine) {
         this.commonName = medicine.getCommonName();
         this.ean = medicine.getEan();
@@ -43,5 +54,37 @@ public class MedicineEntity {
                 .packagingUnit(packagingUnit)
                 .potency(potency)
                 .build();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getEan() {
+        return ean;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCommonName() {
+        return commonName;
+    }
+
+    public String getPotency() {
+        return potency;
+    }
+
+    public String getForm() {
+        return form;
+    }
+
+    public int getPackagingSize() {
+        return packagingSize;
+    }
+
+    public String getPackagingUnit() {
+        return packagingUnit;
     }
 }
