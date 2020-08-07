@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
+    <EditText android:id="@+id/ean_input"
         android:hint="Enter EAN"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
