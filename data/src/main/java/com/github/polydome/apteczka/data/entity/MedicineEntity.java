@@ -8,7 +8,7 @@ import com.github.polydome.apteczka.domain.model.Medicine;
 
 @Entity(tableName = "medicine")
 public class MedicineEntity {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private final long id;
     private final String ean;
     private final String name;

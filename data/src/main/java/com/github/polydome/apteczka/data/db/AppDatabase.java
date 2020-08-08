@@ -9,12 +9,13 @@ import androidx.room.RoomDatabase;
 import com.github.polydome.apteczka.data.dao.MedicineDao;
 import com.github.polydome.apteczka.data.entity.MedicineEntity;
 
-@Database(entities = {MedicineEntity.class}, version = 1)
+@Database(entities = {MedicineEntity.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract MedicineDao medicineDao();
 
     public static AppDatabase build(Context applicationContext) {
         return Room.databaseBuilder(applicationContext, AppDatabase.class, "apteczka")
+                .fallbackToDestructiveMigration()
                 .build();
     }
 }

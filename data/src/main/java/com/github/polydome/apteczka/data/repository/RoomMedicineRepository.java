@@ -1,5 +1,7 @@
 package com.github.polydome.apteczka.data.repository;
 
+import android.util.Log;
+
 import com.github.polydome.apteczka.data.dao.MedicineDao;
 import com.github.polydome.apteczka.data.entity.MedicineEntity;
 import com.github.polydome.apteczka.domain.model.Medicine;
@@ -18,6 +20,7 @@ public class RoomMedicineRepository implements MedicineRepository {
 
     @Override
     public Single<Long> create(Medicine medicine) {
+        Log.d(RoomMedicineRepository.class.toString(), String.format("Creating medicine %s", medicine));
         return medicineDao.create(new MedicineEntity(medicine));
     }
 
