@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <EditText android:id="@+id/editMedicine_ean"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="EAN code"/>
+    
+    <EditText android:id="@+id/editMedicine_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Name"/>
+    
+    <EditText android:id="@+id/editMedicine_commonName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Common name"/>
+    
+    <EditText android:id="@+id/editMedicine_potency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Potency"/>
+    
+    <EditText android:id="@+id/editMedicine_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Form"/>
+    
+    <EditText android:id="@+id/editMedicine_packagingSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Packaging size"/>
+    
+    <EditText android:id="@+id/editMedicine_packagingUnit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Packaging unit"/>
+
+</com.google.android.material.textfield.TextInputLayout>
