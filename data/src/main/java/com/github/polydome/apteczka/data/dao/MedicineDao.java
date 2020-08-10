@@ -18,5 +18,5 @@ public interface MedicineDao {
     Single<Boolean> exists(String ean);
 
     @Query("SELECT * FROM medicine WHERE id = :id")
-    Maybe<MedicineEntity> findById(int id);
+    Maybe<MedicineEntity> findById(long id);
 }

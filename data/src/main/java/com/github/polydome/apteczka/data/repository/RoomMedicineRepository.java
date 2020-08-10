@@ -27,7 +27,7 @@ public class RoomMedicineRepository implements MedicineRepository {
     }
 
     @Override
-    public Maybe<Medicine> findById(int id) {
+    public Maybe<Medicine> findById(long id) {
         return medicineDao.findById(id).map(new Function<MedicineEntity, Medicine>() {
             @Override
             public Medicine apply(MedicineEntity medicineEntity) {

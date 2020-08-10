@@ -46,6 +46,7 @@ public class EanInputDialog extends BaseDialogFragment implements AddMedicineCon
     @UiThread
     public void showMedicineEditor(long medicineId) {
         Intent intent = new Intent(requireActivity(), EditMedicineActivity.class);
+        intent.putExtra("MEDICINE_ID", medicineId);
         requireActivity().startActivity(intent);
     }
 

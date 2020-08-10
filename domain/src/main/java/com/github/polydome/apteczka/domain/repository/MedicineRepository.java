@@ -8,5 +8,5 @@ import io.reactivex.Single;
 public interface MedicineRepository {
     Single<Long> create(Medicine medicine);
     Single<Boolean> exists(String ean);
-    Maybe<Medicine> findById(int id);
+    Maybe<Medicine> findById(long id);
 }

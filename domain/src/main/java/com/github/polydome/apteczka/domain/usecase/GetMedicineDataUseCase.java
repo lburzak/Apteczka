@@ -14,7 +14,7 @@ public class GetMedicineDataUseCase {
         this.medicineRepository = medicineRepository;
     }
 
-    public Maybe<MedicineData> execute(int id) {
+    public Maybe<MedicineData> execute(long id) {
         return medicineRepository.findById(id).map(new Function<Medicine, MedicineData>() {
             @Override
             public MedicineData apply(Medicine medicine) {

@@ -2,6 +2,7 @@ package com.github.polydome.apteczka.view.ui;
 
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
+import androidx.test.espresso.assertion.ViewAssertions;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
@@ -64,6 +65,7 @@ public class MainActivityTest extends RoomTest<AppDatabase> {
         createMedicine();
 
         intended(hasComponent(EditMedicineActivity.class.getName()));
+        onView(withId(R.id.editMedicine_ean)).check(ViewAssertions.matches(withText(EAN)));
     }
 
     private void createMedicine() {
