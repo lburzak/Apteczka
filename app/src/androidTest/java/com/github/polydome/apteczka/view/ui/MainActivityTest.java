@@ -48,7 +48,7 @@ public class MainActivityTest extends RoomTest<AppDatabase> {
     }
 
     @Test
-    public void createMedicine_eanNotExists_medicineCreated() throws InterruptedException {
+    public void createMedicine_eanNotExists_medicineCreated() {
         ActivityScenario.launch(MainActivity.class);
 
         createMedicine();
