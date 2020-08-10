@@ -1,5 +1,6 @@
 package com.github.polydome.apteczka.view.ui;
 
+import androidx.room.Room;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.assertion.ViewAssertions;
@@ -10,7 +11,6 @@ import androidx.test.filters.LargeTest;
 import com.github.polydome.apteczka.Apteczka;
 import com.github.polydome.apteczka.R;
 import com.github.polydome.apteczka.data.db.AppDatabase;
-import com.github.polydome.apteczka.data.test.RoomTest;
 import com.github.polydome.apteczka.data.test.TestDataModule;
 import com.github.polydome.apteczka.di.component.DaggerApplicationComponent;
 import com.github.polydome.apteczka.di.module.ApplicationModule;
@@ -30,20 +30,22 @@ import static org.hamcrest.Matchers.equalToIgnoringCase;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class MainActivityTest extends RoomTest<AppDatabase> {
-    public MainActivityTest() {
-        super(AppDatabase.class);
-    }
+public class MainActivityTest {
+    AppDatabase database;
 
     final String EAN = "2398712763722";
 
     @Before
     public void setUp() {
-        rebuildDatabase();
+        database = Room.inMemoryDatabaseBuilder(
+                        ApplicationProvider.getApplicationContext(),
+                        AppDatabase.class)
+                    .build();
+
         ((Apteczka) ApplicationProvider.getApplicationContext()).setApplicationComponent(
                 DaggerApplicationComponent.builder()
                         .applicationModule(new ApplicationModule(ApplicationProvider.getApplicationContext()))
-                        .dataModule(new TestDataModule(getDatabase()))
+                        .dataModule(new TestDataModule(database))
                         .build()
         );
     }
@@ -74,5 +76,9 @@ public class MainActivityTest extends RoomTest<AppDatabase> {
         onView(withId(R.id.ean_input)).perform(typeText(EAN));
 
         onView(withText(equalToIgnoringCase("add"))).perform(click());
+    }
+
+    public AppDatabase getDatabase() {
+        return database;
     }
 }
