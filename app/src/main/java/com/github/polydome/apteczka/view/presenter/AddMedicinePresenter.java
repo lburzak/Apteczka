@@ -2,6 +2,7 @@ package com.github.polydome.apteczka.view.presenter;
 
 import com.github.polydome.apteczka.domain.usecase.AddMedicineUseCase;
 import com.github.polydome.apteczka.view.contract.AddMedicineContract;
+import com.github.polydome.apteczka.view.presenter.common.Presenter;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -10,11 +11,10 @@ import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 
-public class AddMedicinePresenter implements AddMedicineContract.Presenter {
+public class AddMedicinePresenter extends Presenter<AddMedicineContract.View> implements AddMedicineContract.Presenter {
     private final AddMedicineUseCase addMedicineUseCase;
     private final Scheduler ioScheduler;
     private final Scheduler uiScheduler;
-    private AddMedicineContract.View view;
 
     private final CompositeDisposable compDisposable = new CompositeDisposable();
 
@@ -45,20 +45,8 @@ public class AddMedicinePresenter implements AddMedicineContract.Presenter {
     }
 
     @Override
-    public void attach(AddMedicineContract.View view) {
-        this.view = view;
-    }
-
-    @Override
     public void detach() {
+        super.detach();
         compDisposable.dispose();
-        this.view = null;
-    }
-
-    private AddMedicineContract.View requireView() {
-        if (this.view == null)
-            throw new IllegalStateException("No view attached");
-        else
-            return view;
     }
 }
