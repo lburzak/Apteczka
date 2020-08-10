@@ -51,30 +51,26 @@ public class MainActivityTest extends RoomTest<AppDatabase> {
     public void createMedicine_eanNotExists_medicineCreated() throws InterruptedException {
         ActivityScenario.launch(MainActivity.class);
 
-        onView(withId(R.id.add_medicine)).perform(click());
-
-        onView(withId(R.id.ean_input)).perform(typeText(EAN));
-
-        onView(withText(equalToIgnoringCase("add"))).perform(click());
-
-        Thread.sleep(500);
+        createMedicine();
 
         getDatabase().medicineDao().exists(EAN).test().assertValue(true);
     }
 
     @Test
-    public void createMedicine_eanNotExists_editMedicineLaunched() throws InterruptedException {
+    public void createMedicine_eanNotExists_editMedicineLaunched() {
         Intents.init();
         ActivityScenario.launch(MainActivity.class);
 
+        createMedicine();
+
+        intended(hasComponent(EditMedicineActivity.class.getName()));
+    }
+
+    private void createMedicine() {
         onView(withId(R.id.add_medicine)).perform(click());
 
         onView(withId(R.id.ean_input)).perform(typeText(EAN));
 
         onView(withText(equalToIgnoringCase("add"))).perform(click());
-
-        Thread.sleep(500);
-
-        intended(hasComponent(EditMedicineActivity.class.getName()));
     }
 }
