@@ -9,7 +9,6 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.DialogFragment;
 
 import com.github.polydome.apteczka.R;
 import com.github.polydome.apteczka.view.contract.AddMedicineContract;
@@ -44,7 +43,8 @@ public class EanInputDialog extends BaseDialogFragment implements AddMedicineCon
     @Override
     public void onDestroy() {
         super.onDestroy();
-        presenter.detach();
+        if (presenter != null)
+            presenter.detach();
     }
 
     @Override
