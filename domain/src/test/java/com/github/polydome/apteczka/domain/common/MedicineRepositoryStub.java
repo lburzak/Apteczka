@@ -18,7 +18,7 @@ public class MedicineRepositoryStub implements MedicineRepository {
     public Collection<Medicine> data;
 
     @Override
-    public Maybe<Medicine> findById(final int id) {
+    public Maybe<Medicine> findById(final long id) {
         return Maybe.create(new MaybeOnSubscribe<Medicine>() {
             @Override
             public void subscribe(MaybeEmitter<Medicine> emitter) {
