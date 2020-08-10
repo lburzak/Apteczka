@@ -1,14 +1,15 @@
 package com.github.polydome.apteczka.view.ui;
 
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
+import androidx.annotation.UiThread;
 
 import com.github.polydome.apteczka.R;
 import com.github.polydome.apteczka.view.contract.AddMedicineContract;
@@ -28,12 +29,6 @@ public class EanInputDialog extends BaseDialogFragment implements AddMedicineCon
         presenter.attach(this);
     }
 
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        return buildSelf();
-    }
-
     @Override
     public void onStart() {
         super.onStart();
@@ -48,27 +43,31 @@ public class EanInputDialog extends BaseDialogFragment implements AddMedicineCon
     }
 
     @Override
+    @UiThread
     public void showMedicineEditor(long medicineId) {
         Intent intent = new Intent(requireActivity(), EditMedicineActivity.class);
         requireActivity().startActivity(intent);
     }
 
-    private Dialog buildSelf() {
-        return new AlertDialog.Builder(requireActivity())
-                .setTitle("Add medicine")
-                .setView(R.layout.dialog_ean_input)
-                .setPositiveButton("Add", new AddButtonListener())
-                .create();
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.dialog_ean_input, container, true);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        view.findViewById(R.id.ean_input_add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onCreateMedicine(getEanInput());
+            }
+        });
+
+        eanInputEditText = view.findViewById(R.id.ean_input);
     }
 
     private String getEanInput() {
         return eanInputEditText.getText().toString();
-    }
-
-    private class AddButtonListener implements DialogInterface.OnClickListener {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            presenter.onCreateMedicine(getEanInput());
-        }
     }
 }
