@@ -19,6 +19,12 @@ public class MedicineData {
     public static MedicineData fromMedicine(Medicine medicine) {
         return MedicineData.builder()
                 .ean(medicine.getEan())
+                .name(medicine.getName())
+                .commonName(medicine.getCommonName())
+                .form(medicine.getForm())
+                .packagingSize(medicine.getPackagingSize())
+                .packagingUnit(medicine.getPackagingUnit())
+                .potency(medicine.getPotency())
                 .build();
     }
 }
