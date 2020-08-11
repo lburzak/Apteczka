@@ -8,10 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.mockito.Mockito;
 
-import okhttp3.MediaType;
-import okhttp3.ResponseBody;
-import retrofit2.Response;
-import retrofit2.mock.Calls;
+import io.reactivex.Maybe;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class RemedyMedicineDetailsEndpointTest {
@@ -25,11 +22,11 @@ class RemedyMedicineDetailsEndpointTest {
     public void fetchMedicineDetails_packagingAndProductExist_emitsMedicineDetails() {
         MedicineDetails expected = createMedicineDetails();
 
-        Mockito.when(remedyService.getPackaging(EAN)).thenReturn(Calls.response(
+        Mockito.when(remedyService.getPackaging(EAN)).thenReturn(Maybe.just(
                 createRemedyPackaging(expected)
         ));
 
-        Mockito.when(remedyService.getProduct(PRODUCT_ID)).thenReturn(Calls.response(
+        Mockito.when(remedyService.getProduct(PRODUCT_ID)).thenReturn(Maybe.just(
                 createRemedyProduct(expected)
         ));
 
@@ -38,32 +35,18 @@ class RemedyMedicineDetailsEndpointTest {
 
     @Test
     public void fetchMedicineDetails_packagingNotExists_empty() {
-        Mockito.when(remedyService.getPackaging(EAN)).thenReturn(Calls.response(
-                Response.<RemedyPackaging>error(404,
-                        ResponseBody.create(
-                                MediaType.get("application/json"),
-                                "{ \"error\": \"No such packaging\" }"
-                        )
-                )
-        ));
+        Mockito.when(remedyService.getPackaging(EAN)).thenReturn(Maybe.<RemedyPackaging>empty());
 
         SUT.fetchMedicineDetails(EAN).test().assertNoValues().assertComplete();
     }
 
     @Test
     public void fetchMedicineDetails_productNotExists_empty() {
-        Mockito.when(remedyService.getPackaging(EAN)).thenReturn(Calls.response(
+        Mockito.when(remedyService.getPackaging(EAN)).thenReturn(Maybe.just(
                 RemedyPackaging.builder().productId(PRODUCT_ID).build()
         ));
 
-        Mockito.when(remedyService.getProduct(PRODUCT_ID)).thenReturn(Calls.response(
-                Response.<RemedyProduct>error(404,
-                        ResponseBody.create(
-                                MediaType.get("application/json"),
-                                "{ \"error\": \"No such product\" }"
-                        )
-                )
-        ));
+        Mockito.when(remedyService.getProduct(PRODUCT_ID)).thenReturn(Maybe.<RemedyProduct>empty());
 
         SUT.fetchMedicineDetails(EAN).test().assertNoValues().assertComplete();
     }

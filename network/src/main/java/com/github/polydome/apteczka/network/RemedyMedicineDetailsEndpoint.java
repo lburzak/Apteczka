@@ -5,14 +5,10 @@ import com.github.polydome.apteczka.domain.service.MedicineDetailsEndpoint;
 import com.github.polydome.apteczka.network.model.RemedyPackaging;
 import com.github.polydome.apteczka.network.model.RemedyProduct;
 
-import org.jetbrains.annotations.NotNull;
-
 import io.reactivex.Maybe;
-import io.reactivex.MaybeEmitter;
-import io.reactivex.MaybeOnSubscribe;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.MaybeSource;
+import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Function;
 
 public class RemedyMedicineDetailsEndpoint implements MedicineDetailsEndpoint {
     private final RemedyService remedyService;
@@ -23,38 +19,21 @@ public class RemedyMedicineDetailsEndpoint implements MedicineDetailsEndpoint {
 
     @Override
     public Maybe<MedicineDetails> fetchMedicineDetails(final String ean) {
-        return Maybe.create(new MaybeOnSubscribe<MedicineDetails>() {
-            @Override
-            public void subscribe(final MaybeEmitter<MedicineDetails> emitter) {
-                remedyService.getPackaging(ean).enqueue(new Callback<RemedyPackaging>() {
-                    @Override
-                    public void onResponse(@NotNull Call<RemedyPackaging> call, @NotNull final Response<RemedyPackaging> packaging) {
-                        if (packaging.isSuccessful())
-                            remedyService.getProduct(packaging.body().getProductId()).enqueue(new Callback<RemedyProduct>() {
-                                @Override
-                                public void onResponse(@NotNull Call<RemedyProduct> call,@NotNull Response<RemedyProduct> product) {
-                                    if (product.isSuccessful())
-                                        emitter.onSuccess(createMedicineDetails(packaging.body(), product.body()));
-                                    else
-                                        emitter.onComplete();
-                                }
+        Maybe<RemedyPackaging> packaging =
+                remedyService.getPackaging(ean).cache();
 
-                                @Override
-                                public void onFailure(@NotNull Call<RemedyProduct> call, @NotNull Throwable t) {
-                                    emitter.onError(t);
-                                }
-                            });
-                        else
-                            emitter.onComplete();
-                    }
-
-                    @Override
-                    public void onFailure(@NotNull Call<RemedyPackaging> call,@NotNull Throwable t) {
-                        emitter.onError(t);
-                    }
-                });
-            }
-        });
+        return packaging.flatMap(new Function<RemedyPackaging, MaybeSource<?>>() {
+                @Override
+                public MaybeSource<?> apply(RemedyPackaging packaging) {
+                    return remedyService.getProduct(packaging.getProductId());
+                }
+            })
+            .zipWith(packaging, new BiFunction<Object, RemedyPackaging, MedicineDetails>() {
+                @Override
+                public MedicineDetails apply(Object product, RemedyPackaging packaging) {
+                    return createMedicineDetails(packaging, ((RemedyProduct) product));
+                }
+            });
     }
 
     private MedicineDetails createMedicineDetails(RemedyPackaging packaging, RemedyProduct product) {
