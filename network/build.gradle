@@ -1,6 +1,11 @@
 apply plugin: 'java-library'
 
-dependencies {}
+dependencies {
+    implementation project(":domain")
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+}
 
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
+compileJava {
+    sourceCompatibility = "1.7"
+    targetCompatibility = "1.7"
+}
