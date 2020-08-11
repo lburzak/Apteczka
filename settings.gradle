@@ -1,3 +1,9 @@
+pluginManagement {
+    plugins {
+        id "io.freefair.lombok" version "5.1.1"
+    }
+}
+
 include ':network'
 include ':data'
 include ':app'
