@@ -41,7 +41,7 @@ public class RemedyMedicineDetailsEndpoint implements MedicineDetailsEndpoint {
 
                                 @Override
                                 public void onFailure(@NotNull Call<RemedyProduct> call, @NotNull Throwable t) {
-
+                                    emitter.onError(t);
                                 }
                             });
                         else
@@ -50,7 +50,7 @@ public class RemedyMedicineDetailsEndpoint implements MedicineDetailsEndpoint {
 
                     @Override
                     public void onFailure(@NotNull Call<RemedyPackaging> call,@NotNull Throwable t) {
-
+                        emitter.onError(t);
                     }
                 });
             }

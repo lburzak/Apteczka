@@ -8,7 +8,7 @@ import com.github.polydome.apteczka.domain.usecase.GetMedicineDataUseCase;
 import dagger.Module;
 import dagger.Provides;
 
-@Module(includes = {NetworkModule.class})
+@Module
 public class DomainModule {
     @Provides
     public AddMedicineUseCase addMedicineUseCase(MedicineRepository medicineRepository, MedicineDetailsEndpoint medicineDetailsEndpoint) {

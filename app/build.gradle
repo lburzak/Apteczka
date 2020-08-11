@@ -1,3 +1,5 @@
+apply from: 'network_properties.gradle'
+
 apply plugin: 'com.android.application'
 apply plugin: "de.mannodermaus.android-junit5"
 
@@ -20,6 +22,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "REMEDY_URL", "\"$remedyUrl\""
+        }
+
+        debug {
+            buildConfigField "String", "REMEDY_URL", "\"$remedyUrl\""
         }
     }
 
@@ -38,7 +45,9 @@ dependencies {
 
     implementation project(":domain")
     implementation project(":data")
+    implementation project(":network")
 
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.google.android.material:material:1.2.0'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.19'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
