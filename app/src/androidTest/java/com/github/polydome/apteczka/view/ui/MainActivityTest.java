@@ -33,7 +33,13 @@ import static org.hamcrest.Matchers.equalToIgnoringCase;
 public class MainActivityTest {
     AppDatabase database;
 
-    final String EAN = "5909991023782";
+    final String EAN = "5909990663613";
+    final String NAME = "Herbapect";
+    final String COMMON_NAME = "Thymi herbae extractum + Primulae radicis tinctura + Sulfogaiacolum";
+    final String POTENCY = "(498 mg + 348 mg + 87 mg)/5 ml";
+    final String FORM = "syrop";
+    final String PACKAGE_UNIT = "butelka 125 ml";
+    final String PACKAGE_SIZE = "1";
 
     @Before
     public void setUp() {
@@ -73,7 +79,24 @@ public class MainActivityTest {
         Thread.sleep(1000);
 
         intended(hasComponent(EditMedicineActivity.class.getName()));
+    }
+
+    @Test
+    public void createMedicine_eanExists_editMedicineHasFilledFields() throws InterruptedException {
+        ActivityScenario.launch(MainActivity.class);
+
+        createMedicine();
+
+        // Wait for network operation TODO: Replace with IdlingResource implementation
+        Thread.sleep(1000);
+
         onView(withId(R.id.editMedicine_ean)).check(ViewAssertions.matches(withText(EAN)));
+        onView(withId(R.id.editMedicine_commonName)).check(ViewAssertions.matches(withText(COMMON_NAME)));
+        onView(withId(R.id.editMedicine_potency)).check(ViewAssertions.matches(withText(POTENCY)));
+        onView(withId(R.id.editMedicine_form)).check(ViewAssertions.matches(withText(FORM)));
+        onView(withId(R.id.editMedicine_name)).check(ViewAssertions.matches(withText(NAME)));
+        onView(withId(R.id.editMedicine_packagingSize)).check(ViewAssertions.matches(withText(PACKAGE_SIZE)));
+        onView(withId(R.id.editMedicine_packagingUnit)).check(ViewAssertions.matches(withText(PACKAGE_UNIT)));
     }
 
     private void createMedicine() {
