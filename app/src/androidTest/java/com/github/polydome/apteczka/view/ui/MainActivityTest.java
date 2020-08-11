@@ -33,7 +33,7 @@ import static org.hamcrest.Matchers.equalToIgnoringCase;
 public class MainActivityTest {
     AppDatabase database;
 
-    final String EAN = "2398712763722";
+    final String EAN = "5909991023782";
 
     @Before
     public void setUp() {
@@ -51,20 +51,26 @@ public class MainActivityTest {
     }
 
     @Test
-    public void createMedicine_eanNotExists_medicineCreated() {
+    public void createMedicine_eanNotExists_medicineCreated() throws InterruptedException {
         ActivityScenario.launch(MainActivity.class);
 
         createMedicine();
+
+        // Wait for network operation TODO: Replace with IdlingResource implementation
+        Thread.sleep(1000);
 
         getDatabase().medicineDao().exists(EAN).test().assertValue(true);
     }
 
     @Test
-    public void createMedicine_eanNotExists_editMedicineLaunched() {
+    public void createMedicine_eanNotExists_editMedicineLaunched() throws InterruptedException {
         Intents.init();
         ActivityScenario.launch(MainActivity.class);
 
         createMedicine();
+
+        // Wait for network operation TODO: Replace with IdlingResource implementation
+        Thread.sleep(1000);
 
         intended(hasComponent(EditMedicineActivity.class.getName()));
         onView(withId(R.id.editMedicine_ean)).check(ViewAssertions.matches(withText(EAN)));

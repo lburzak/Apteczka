@@ -4,6 +4,8 @@ import com.github.polydome.apteczka.domain.service.MedicineDetailsEndpoint;
 import com.github.polydome.apteczka.network.RemedyMedicineDetailsEndpoint;
 import com.github.polydome.apteczka.network.RemedyService;
 
+import java.util.concurrent.Executors;
+
 import javax.inject.Named;
 import javax.inject.Singleton;
 
@@ -29,6 +31,7 @@ public class NetworkModule {
     public Retrofit retrofit(@Named("remedyUrl") String remedyUrl) {
         return new Retrofit.Builder()
                 .baseUrl(remedyUrl)
+                .callbackExecutor(Executors.newSingleThreadExecutor())
                 .addConverterFactory(MoshiConverterFactory.create())
                 .build();
     }
