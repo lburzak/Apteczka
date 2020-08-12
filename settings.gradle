@@ -8,4 +8,5 @@ include ':network'
 include ':data'
 include ':app'
 include ':domain'
+include ':barcode-scanner'
 rootProject.name = "Apteczka"
