@@ -101,7 +101,8 @@
         android:layout_gravity="bottom"
         app:backgroundTint="@color/colorPrimary"
         app:fabAlignmentMode="end"
-        app:navigationIcon="@drawable/ic_baseline_menu_24"/>
+        app:navigationIcon="@drawable/ic_baseline_menu_24"
+        app:menu="@menu/menu_bottomappbar_editmedicine"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="64dp"
