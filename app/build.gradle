@@ -46,6 +46,7 @@ dependencies {
     implementation project(":domain")
     implementation project(":data")
     implementation project(":network")
+    implementation project(":barcode-scanner")
 
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.google.android.material:material:1.2.0'

@@ -42,6 +42,11 @@ public class EditMedicinePresenter extends Presenter<EditMedicineContract.View> 
     }
 
     @Override
+    public void onEanScanned(String ean) {
+        // TODO: Implement
+    }
+
+    @Override
     public void detach() {
         super.detach();
         comp.dispose();
