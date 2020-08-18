@@ -52,6 +52,8 @@ public class AndroidCameraPreview extends SurfaceView implements SurfaceHolder.C
         params.setPreviewFormat(ImageFormat.YV12);
 
         camera.setParameters(params);
+        camera.setDisplayOrientation(90);
+
         camera.setPreviewDisplay(holder);
 
         camera.setPreviewCallback(listener);
