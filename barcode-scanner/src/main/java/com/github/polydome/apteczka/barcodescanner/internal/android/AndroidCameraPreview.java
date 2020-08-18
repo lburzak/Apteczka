@@ -50,6 +50,7 @@ public class AndroidCameraPreview extends SurfaceView implements SurfaceHolder.C
     private void startPreview() throws IOException {
         Camera.Parameters params = camera.getParameters();
         params.setPreviewFormat(ImageFormat.YV12);
+        params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
 
         camera.setParameters(params);
         camera.setDisplayOrientation(90);
