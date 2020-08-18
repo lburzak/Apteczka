@@ -21,7 +21,8 @@
 
         <activity android:name=".view.ui.EditMedicineActivity"/>
 
-        <activity android:name=".barcodescanner.BarcodeScannerActivity"/>
+        <activity android:name=".barcodescanner.BarcodeScannerActivity"
+            android:theme="@style/FullScreenTheme"/>
 
     </application>
 
