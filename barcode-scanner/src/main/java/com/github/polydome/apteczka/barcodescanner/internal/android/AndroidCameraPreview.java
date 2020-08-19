@@ -44,6 +44,8 @@ public class AndroidCameraPreview extends SurfaceView implements SurfaceHolder.C
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
+        camera.setPreviewCallback(null);
+        camera.stopPreview();
         camera.release();
     }
 
