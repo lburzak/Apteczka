@@ -29,22 +29,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Context context = this;
 
-        addMedicineButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, EditMedicineActivity.class);
-                context.startActivity(intent);
-            }
-        });
+        addMedicineButton.setOnClickListener((c) -> showMedicineEditor());
     }
 
-    private void showEanInputDialog() {
-        DialogFragment dialogFragment = new EanInputDialog();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(dialogFragment, "EanInputDialog")
-                .commit();
+    private void showMedicineEditor() {
+        Intent intent = new Intent(this, EditMedicineActivity.class);
+        startActivity(intent);
     }
 }
