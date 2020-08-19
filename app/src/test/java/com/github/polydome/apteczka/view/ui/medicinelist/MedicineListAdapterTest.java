@@ -16,7 +16,6 @@ import org.mockito.Mockito;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.in;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -26,9 +25,8 @@ import static org.mockito.Mockito.when;
 class MedicineListAdapterTest {
     LayoutInflater inflater = Mockito.mock(LayoutInflater.class);
     ViewGroup viewGroup = Mockito.mock(ViewGroup.class);
-    CountMedicineUseCase countMedicineUseCase = mock(CountMedicineUseCase.class);
     MedicineViewHolder.Factory medicineViewHolderFactory = mock(MedicineViewHolder.Factory.class);
-    MedicineListAdapter SUT = new MedicineListAdapter(inflater, countMedicineUseCase, medicineViewHolderFactory);
+    MedicineListAdapter SUT = new MedicineListAdapter(inflater, medicineViewHolderFactory);
 
     @Test
     void onCreateViewHolder_createsViewHolderWithInflatedView() {
@@ -70,9 +68,8 @@ class MedicineListAdapterTest {
     }
 
     @Test
-    void getItemCount_medicineInRepository_returnsMedicineInRepositoryCount() {
-        when(countMedicineUseCase.execute()).thenReturn(38);
-
-        assertThat(SUT.getItemCount(), equalTo(38));
+    void getItemCount_noUpdates_returns0() {
+        int count = SUT.getItemCount();
+        assertThat(count, equalTo(0));
     }
 }

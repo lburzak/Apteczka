@@ -8,16 +8,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.polydome.apteczka.R;
-import com.github.polydome.apteczka.domain.usecase.CountMedicineUseCase;
+import com.github.polydome.apteczka.view.contract.ListMedicineContract;
 
-public class MedicineListAdapter extends RecyclerView.Adapter<MedicineViewHolder> {
+public class MedicineListAdapter extends RecyclerView.Adapter<MedicineViewHolder> implements ListMedicineContract.View {
     private final LayoutInflater inflater;
-    private final CountMedicineUseCase countMedicineUseCase;
     private final MedicineViewHolder.Factory viewHolderFactory;
 
-    public MedicineListAdapter(LayoutInflater inflater, CountMedicineUseCase countMedicineUseCase, MedicineViewHolder.Factory viewHolderFactory) {
+    private int medicineCount = 0;
+
+    public MedicineListAdapter(LayoutInflater inflater, MedicineViewHolder.Factory viewHolderFactory) {
         this.inflater = inflater;
-        this.countMedicineUseCase = countMedicineUseCase;
         this.viewHolderFactory = viewHolderFactory;
     }
 
@@ -36,6 +36,12 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineViewHolder
 
     @Override
     public int getItemCount() {
-        return countMedicineUseCase.execute();
+        return medicineCount;
+    }
+
+    @Override
+    public void updateMedicineCount(int count) {
+        medicineCount = count;
+        notifyDataSetChanged();
     }
 }
