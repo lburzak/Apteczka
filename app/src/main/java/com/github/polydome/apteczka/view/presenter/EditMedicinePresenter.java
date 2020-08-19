@@ -1,6 +1,8 @@
 package com.github.polydome.apteczka.view.presenter;
 
+import com.github.polydome.apteczka.domain.service.MedicineDetails;
 import com.github.polydome.apteczka.domain.usecase.GetMedicineDataUseCase;
+import com.github.polydome.apteczka.domain.usecase.GetMedicineDetailsUseCase;
 import com.github.polydome.apteczka.domain.usecase.structure.MedicineData;
 import com.github.polydome.apteczka.view.contract.EditMedicineContract;
 import com.github.polydome.apteczka.view.presenter.common.Presenter;
@@ -14,14 +16,16 @@ import io.reactivex.functions.Consumer;
 
 public class EditMedicinePresenter extends Presenter<EditMedicineContract.View> implements EditMedicineContract.Presenter {
     private final GetMedicineDataUseCase getMedicineDataUseCase;
+    private final GetMedicineDetailsUseCase getMedicineDetailsUseCase;
     private final Scheduler ioScheduler;
     private final Scheduler uiScheduler;
 
     private final CompositeDisposable comp = new CompositeDisposable();
 
     @Inject
-    public EditMedicinePresenter(GetMedicineDataUseCase getMedicineDataUseCase, @Named("ioScheduler") Scheduler ioScheduler, @Named("uiScheduler") Scheduler uiScheduler) {
+    public EditMedicinePresenter(GetMedicineDataUseCase getMedicineDataUseCase, GetMedicineDetailsUseCase getMedicineDetailsUseCase, @Named("ioScheduler") Scheduler ioScheduler, @Named("uiScheduler") Scheduler uiScheduler) {
         this.getMedicineDataUseCase = getMedicineDataUseCase;
+        this.getMedicineDetailsUseCase = getMedicineDetailsUseCase;
         this.ioScheduler = ioScheduler;
         this.uiScheduler = uiScheduler;
     }
@@ -32,18 +36,18 @@ public class EditMedicinePresenter extends Presenter<EditMedicineContract.View> 
             getMedicineDataUseCase.execute(medicineId)
                     .subscribeOn(ioScheduler)
                     .observeOn(uiScheduler)
-                    .subscribe(new Consumer<MedicineData>() {
-                        @Override
-                        public void accept(MedicineData medicineData) {
-                            fillViewFields(medicineData);
-                        }
-                    })
+                    .subscribe(this::fillViewFields)
         );
     }
 
     @Override
-    public void onEanScanned(String ean) {
-        // TODO: Implement
+    public void onEanInput(String ean) {
+        comp.add(
+                getMedicineDetailsUseCase.execute(ean)
+                .subscribeOn(ioScheduler)
+                .observeOn(uiScheduler)
+                .subscribe((this::fillViewFields))
+        );
     }
 
     @Override
@@ -60,5 +64,14 @@ public class EditMedicinePresenter extends Presenter<EditMedicineContract.View> 
         requireView().showPackagingSize(medicineData.getPackagingSize());
         requireView().showPackagingUnit(medicineData.getPackagingUnit());
         requireView().showPotency(medicineData.getPotency());
+    }
+    
+    private void fillViewFields(MedicineDetails medicineDetails) {
+        requireView().showCommonName(medicineDetails.getCommonName());
+        requireView().showForm(medicineDetails.getForm());
+        requireView().showName(medicineDetails.getName());
+        requireView().showPackagingSize(medicineDetails.getPackagingSize());
+        requireView().showPackagingUnit(medicineDetails.getPackagingUnit());
+        requireView().showPotency(medicineDetails.getPotency());
     }
 }

@@ -57,18 +57,6 @@ public class MainActivityTest {
     }
 
     @Test
-    public void createMedicine_eanNotExists_medicineCreated() throws InterruptedException {
-        ActivityScenario.launch(MainActivity.class);
-
-        createMedicine();
-
-        // Wait for network operation TODO: Replace with IdlingResource implementation
-        Thread.sleep(1000);
-
-        getDatabase().medicineDao().exists(EAN).test().assertValue(true);
-    }
-
-    @Test
     public void createMedicine_eanNotExists_editMedicineLaunched() throws InterruptedException {
         Intents.init();
         ActivityScenario.launch(MainActivity.class);
@@ -100,11 +88,9 @@ public class MainActivityTest {
     }
 
     private void createMedicine() {
-        onView(withId(R.id.add_medicine)).perform(click());
+        onView(withId(R.id.mainActivity_fab)).perform(click());
 
-        onView(withId(R.id.ean_input)).perform(typeText(EAN));
-
-        onView(withText(equalToIgnoringCase("add"))).perform(click());
+        onView(withId(R.id.editMedicine_ean)).perform(typeText(EAN));
     }
 
     public AppDatabase getDatabase() {

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -27,6 +29,7 @@ import javax.inject.Inject;
 public class EditMedicineActivity extends BaseActivity implements EditMedicineContract.View, Toolbar.OnMenuItemClickListener {
     private final static int BARCODE_SCAN_REQUEST_CODE = 3691;
     private final static int BARCODE_SCAN_PERMISSIONS_REQUEST_CODE = 4921;
+    private final static int EAN13_LENGTH = 13;
 
     @Inject
     public EditMedicineContract.Presenter presenter;
@@ -59,10 +62,30 @@ public class EditMedicineActivity extends BaseActivity implements EditMedicineCo
         packagingUnitField = findViewById(R.id.editMedicine_packagingUnit);
 
         long medicineId = getIntent().getLongExtra("MEDICINE_ID", 0);
-        presenter.onCurrentDataRequest(medicineId);
+        if (medicineId > 0)
+            presenter.onCurrentDataRequest(medicineId);
 
         BottomAppBar bottomAppBar = findViewById(R.id.bottom_app_bar);
         bottomAppBar.setOnMenuItemClickListener(this);
+
+        eanField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() == EAN13_LENGTH) {
+                    presenter.onEanInput(s.toString());
+                }
+            }
+        });
     }
 
     @Override
@@ -128,7 +151,7 @@ public class EditMedicineActivity extends BaseActivity implements EditMedicineCo
                 case Activity.RESULT_CANCELED:
                     break;
                 case BarcodeScannerActivity.RESULT_CODE_SUCCESS:
-                    presenter.onEanScanned(data.getStringExtra(BarcodeScannerActivity.OUTPUT_EXTRA_CODE));
+                    eanField.setText(data.getStringExtra(BarcodeScannerActivity.OUTPUT_EXTRA_CODE));
                     break;
                 case BarcodeScannerActivity.RESULT_CODE_INSUFFICIENT_PERMISSIONS:
                     if (deviceRequiresExplicitPermissions()) {

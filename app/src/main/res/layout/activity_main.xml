@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
-    <Button android:id="@+id/add_medicine"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:text="Add medicine"/>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-</merge>
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/mainActivity_bottomAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:backgroundTint="@color/colorPrimary"
+        app:fabAlignmentMode="end"
+        app:navigationIcon="@drawable/ic_baseline_menu_24"
+        app:menu="@menu/menu_bottomappbar_mainactivity"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/mainActivity_fab"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        app:layout_anchor="@id/mainActivity_bottomAppBar"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

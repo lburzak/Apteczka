@@ -12,7 +12,7 @@ public class GetMedicineDetailsUseCase {
         this.medicineDetailsEndpoint = medicineDetailsEndpoint;
     }
 
-    Maybe<MedicineDetails> execute(String ean) {
+    public Maybe<MedicineDetails> execute(String ean) {
         return medicineDetailsEndpoint.fetchMedicineDetails(ean);
     }
 }

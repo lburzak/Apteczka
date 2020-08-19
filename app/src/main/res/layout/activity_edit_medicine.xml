@@ -20,6 +20,10 @@
                 <com.google.android.material.textfield.TextInputEditText android:id="@+id/editMedicine_ean"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:digits="0123456789"
+                    android:inputType="numberDecimal"
+                    android:maxLength="13"
+                    android:ems="13"
                     android:hint="EAN code"/>
 
             </com.google.android.material.textfield.TextInputLayout>
