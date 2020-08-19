@@ -13,10 +13,12 @@ import com.github.polydome.apteczka.domain.usecase.CountMedicineUseCase;
 public class MedicineListAdapter extends RecyclerView.Adapter<MedicineViewHolder> {
     private final LayoutInflater inflater;
     private final CountMedicineUseCase countMedicineUseCase;
+    private final MedicineViewHolder.Factory viewHolderFactory;
 
-    public MedicineListAdapter(LayoutInflater inflater, CountMedicineUseCase countMedicineUseCase) {
+    public MedicineListAdapter(LayoutInflater inflater, CountMedicineUseCase countMedicineUseCase, MedicineViewHolder.Factory viewHolderFactory) {
         this.inflater = inflater;
         this.countMedicineUseCase = countMedicineUseCase;
+        this.viewHolderFactory = viewHolderFactory;
     }
 
     @NonNull
@@ -24,7 +26,7 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineViewHolder
     public MedicineViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = inflater.inflate(R.layout.entry_medicine, parent, false);
 
-        return new MedicineViewHolder(itemView, null);
+        return viewHolderFactory.create(itemView);
     }
 
     @Override
