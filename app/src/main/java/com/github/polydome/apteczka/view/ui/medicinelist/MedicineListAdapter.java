@@ -24,7 +24,7 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineViewHolder
     public MedicineViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = inflater.inflate(R.layout.entry_medicine, parent, false);
 
-        return new MedicineViewHolder(itemView);
+        return new MedicineViewHolder(itemView, null);
     }
 
     @Override
