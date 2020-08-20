@@ -10,12 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.github.polydome.apteczka.R;
 import com.github.polydome.apteczka.view.contract.ListMedicineContract;
 
+import javax.inject.Inject;
+
 public class MedicineListAdapter extends RecyclerView.Adapter<MedicineViewHolder> implements ListMedicineContract.View {
     private final LayoutInflater inflater;
     private final MedicineViewHolder.Factory viewHolderFactory;
 
     private int medicineCount = 0;
 
+    @Inject
     public MedicineListAdapter(LayoutInflater inflater, MedicineViewHolder.Factory viewHolderFactory) {
         this.inflater = inflater;
         this.viewHolderFactory = viewHolderFactory;

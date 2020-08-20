@@ -34,11 +34,6 @@ public class FrameworkModule {
     }
 
     @Provides
-    MedicineListAdapter adapter(LayoutInflater inflater, MedicineViewHolder.Factory viewHolderFactory) {
-        return new MedicineListAdapter(inflater, viewHolderFactory);
-    }
-
-    @Provides
     LayoutInflater layoutInflater() {
         return LayoutInflater.from(presentationContext);
     }
