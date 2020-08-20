@@ -69,6 +69,24 @@ class MedicineListAdapterTest {
     }
 
     @Test
+    void onViewAttachedToWindow_callsViewHolderOnAttach() {
+        MedicineViewHolder holder = mock(MedicineViewHolder.class);
+
+        SUT.onViewAttachedToWindow(holder);
+
+        verify(holder).onAttach();
+    }
+
+    @Test
+    void onViewDetachedFromWindow_callsViewHolderOnAttach() {
+        MedicineViewHolder holder = mock(MedicineViewHolder.class);
+
+        SUT.onViewDetachedFromWindow(holder);
+
+        verify(holder).onDetach();
+    }
+
+    @Test
     void getItemCount_noUpdates_returns0() {
         int count = SUT.getItemCount();
         assertThat(count, equalTo(0));

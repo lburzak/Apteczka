@@ -57,6 +57,18 @@ public class MedicineViewHolderTest {
         );
     }
 
+    @Test
+    public void onAttach_attachesPresenter() {
+        SUT.onAttach();
+        Mockito.verify(presenter).attach(SUT);
+    }
+
+    @Test
+    public void onDetach_detachesPresenter() {
+        SUT.onDetach();
+        Mockito.verify(presenter).detach();
+    }
+
     public static class EntryViewContainer extends ViewContainer {
         @Override
         protected int getViewResId() {

@@ -32,6 +32,14 @@ public class MedicineViewHolder extends RecyclerView.ViewHolder implements ShowM
         nameField.setText(name);
     }
 
+    public void onAttach() {
+        presenter.attach(this);
+    }
+
+    public void onDetach() {
+        presenter.detach();
+    }
+
     public static class Factory {
         private final Provider<ShowMedicineContract.Presenter> presenterProvider;
 

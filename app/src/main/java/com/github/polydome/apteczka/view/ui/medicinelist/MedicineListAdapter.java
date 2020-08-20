@@ -52,6 +52,16 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineViewHolder
     }
 
     @Override
+    public void onViewAttachedToWindow(@NonNull MedicineViewHolder holder) {
+        holder.onAttach();
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull MedicineViewHolder holder) {
+        holder.onDetach();
+    }
+
+    @Override
     public void updateMedicineCount(int count) {
         medicineCount = count;
         notifyDataSetChanged();
