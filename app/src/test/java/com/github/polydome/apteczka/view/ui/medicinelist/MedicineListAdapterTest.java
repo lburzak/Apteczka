@@ -79,4 +79,11 @@ class MedicineListAdapterTest {
         SUT.getItemCount();
         verify(presenter).onMedicineCountRequested();
     }
+
+    @Test
+    void onAttachedToRecyclerView_attachesPresenter() {
+        SUT.onAttachedToRecyclerView(mock(RecyclerView.class));
+
+        verify(presenter).attach(SUT);
+    }
 }

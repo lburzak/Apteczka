@@ -26,6 +26,12 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineViewHolder
         this.presenter = presenter;
     }
 
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        presenter.attach(this);
+    }
+
     @NonNull
     @Override
     public MedicineViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
