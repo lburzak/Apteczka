@@ -5,6 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/mainActivity_medicineListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.github.polydome.apteczka.view.ui.MedicineListFragment"/>
+
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/mainActivity_bottomAppBar"
         android:layout_width="match_parent"
