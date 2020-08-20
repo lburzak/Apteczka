@@ -15,13 +15,15 @@ import javax.inject.Inject;
 public class MedicineListAdapter extends RecyclerView.Adapter<MedicineViewHolder> implements ListMedicineContract.View {
     private final LayoutInflater inflater;
     private final MedicineViewHolder.Factory viewHolderFactory;
+    private final ListMedicineContract.Presenter presenter;
 
     private int medicineCount = 0;
 
     @Inject
-    public MedicineListAdapter(LayoutInflater inflater, MedicineViewHolder.Factory viewHolderFactory) {
+    public MedicineListAdapter(LayoutInflater inflater, MedicineViewHolder.Factory viewHolderFactory, ListMedicineContract.Presenter presenter) {
         this.inflater = inflater;
         this.viewHolderFactory = viewHolderFactory;
+        this.presenter = presenter;
     }
 
     @NonNull
@@ -39,6 +41,7 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineViewHolder
 
     @Override
     public int getItemCount() {
+        presenter.onMedicineCountRequested();
         return medicineCount;
     }
 

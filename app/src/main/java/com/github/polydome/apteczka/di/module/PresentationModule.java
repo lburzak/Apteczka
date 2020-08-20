@@ -2,9 +2,11 @@ package com.github.polydome.apteczka.di.module;
 
 import com.github.polydome.apteczka.view.contract.AddMedicineContract;
 import com.github.polydome.apteczka.view.contract.EditMedicineContract;
+import com.github.polydome.apteczka.view.contract.ListMedicineContract;
 import com.github.polydome.apteczka.view.contract.ShowMedicineContract;
 import com.github.polydome.apteczka.view.presenter.AddMedicinePresenter;
 import com.github.polydome.apteczka.view.presenter.EditMedicinePresenter;
+import com.github.polydome.apteczka.view.presenter.ListMedicinePresenter;
 import com.github.polydome.apteczka.view.presenter.ShowMedicinePresenter;
 
 import dagger.Module;
@@ -25,5 +27,10 @@ public class PresentationModule {
     @Provides
     public ShowMedicineContract.Presenter showMedicinePresenter(ShowMedicinePresenter showMedicinePresenter) {
         return showMedicinePresenter;
+    }
+
+    @Provides
+    public ListMedicineContract.Presenter listMedicinePresenter(ListMedicinePresenter listMedicinePresenter) {
+        return listMedicinePresenter;
     }
 }

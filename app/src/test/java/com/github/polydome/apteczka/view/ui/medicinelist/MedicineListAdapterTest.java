@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.polydome.apteczka.R;
-import com.github.polydome.apteczka.domain.usecase.CountMedicineUseCase;
+import com.github.polydome.apteczka.view.contract.ListMedicineContract;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -21,12 +21,13 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestInstance(TestInstance.Lifecycle.PER_METHOD)
 class MedicineListAdapterTest {
     LayoutInflater inflater = Mockito.mock(LayoutInflater.class);
     ViewGroup viewGroup = Mockito.mock(ViewGroup.class);
     MedicineViewHolder.Factory medicineViewHolderFactory = mock(MedicineViewHolder.Factory.class);
-    MedicineListAdapter SUT = new MedicineListAdapter(inflater, medicineViewHolderFactory);
+    ListMedicineContract.Presenter presenter = Mockito.mock(ListMedicineContract.Presenter.class);
+    MedicineListAdapter SUT = new MedicineListAdapter(inflater, medicineViewHolderFactory, presenter);
 
     @Test
     void onCreateViewHolder_createsViewHolderWithInflatedView() {
@@ -71,5 +72,11 @@ class MedicineListAdapterTest {
     void getItemCount_noUpdates_returns0() {
         int count = SUT.getItemCount();
         assertThat(count, equalTo(0));
+    }
+
+    @Test
+    void getItemCount_requestsUpdatedCount() {
+        SUT.getItemCount();
+        verify(presenter).onMedicineCountRequested();
     }
 }
