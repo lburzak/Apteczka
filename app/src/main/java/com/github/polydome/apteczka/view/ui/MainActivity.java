@@ -1,13 +1,10 @@
 package com.github.polydome.apteczka.view.ui;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 
 import com.github.polydome.apteczka.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

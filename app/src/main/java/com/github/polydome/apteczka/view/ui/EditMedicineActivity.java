@@ -14,6 +14,7 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.github.polydome.apteczka.R;
@@ -21,15 +22,17 @@ import com.github.polydome.apteczka.barcodescanner.BarcodeScannerActivity;
 import com.github.polydome.apteczka.barcodescanner.BarcodeScannerOptions;
 import com.github.polydome.apteczka.barcodescanner.BarcodeType;
 import com.github.polydome.apteczka.view.contract.EditMedicineContract;
-import com.github.polydome.apteczka.view.ui.common.BaseActivity;
+import com.github.polydome.apteczka.view.ui.common.PresentationComponentProvider;
 import com.google.android.material.bottomappbar.BottomAppBar;
 
 import javax.inject.Inject;
 
-public class EditMedicineActivity extends BaseActivity implements EditMedicineContract.View, Toolbar.OnMenuItemClickListener {
+public class EditMedicineActivity extends AppCompatActivity implements EditMedicineContract.View, Toolbar.OnMenuItemClickListener {
     private final static int BARCODE_SCAN_REQUEST_CODE = 3691;
     private final static int BARCODE_SCAN_PERMISSIONS_REQUEST_CODE = 4921;
     private final static int EAN13_LENGTH = 13;
+
+    private PresentationComponentProvider componentProvider;
 
     @Inject
     public EditMedicineContract.Presenter presenter;
@@ -50,7 +53,9 @@ public class EditMedicineActivity extends BaseActivity implements EditMedicineCo
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getPresentationComponent().inject(this);
+        this.componentProvider = new PresentationComponentProvider(this);
+
+        componentProvider.getPresentationComponent().inject(this);
         presenter.attach(this);
 
         eanField = findViewById(R.id.editMedicine_ean);

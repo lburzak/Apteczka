@@ -8,10 +8,29 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.polydome.apteczka.R;
+import com.github.polydome.apteczka.view.ui.common.PresentationComponentProvider;
+import com.github.polydome.apteczka.view.ui.medicinelist.MedicineListAdapter;
+
+import javax.inject.Inject;
 
 public class MedicineListFragment extends Fragment {
+    private PresentationComponentProvider componentProvider;
+
+    @Inject MedicineListAdapter adapter;
+    @Inject RecyclerView.LayoutManager layoutManager;
+
+    private RecyclerView recyclerView;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        componentProvider = new PresentationComponentProvider(this);
+        componentProvider.getPresentationComponent().inject(this);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -21,5 +40,10 @@ public class MedicineListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        recyclerView = view.findViewById(R.id.medicineList_recyclerView);
+
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(layoutManager);
     }
 }
