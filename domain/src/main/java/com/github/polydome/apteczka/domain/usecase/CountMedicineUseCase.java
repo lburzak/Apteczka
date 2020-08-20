@@ -1,7 +1,9 @@
 package com.github.polydome.apteczka.domain.usecase;
 
+import io.reactivex.Single;
+
 public class CountMedicineUseCase {
-    public int execute() {
-        return 0;
+    public Single<Integer> execute() {
+        return Single.just(0);
     }
 }
