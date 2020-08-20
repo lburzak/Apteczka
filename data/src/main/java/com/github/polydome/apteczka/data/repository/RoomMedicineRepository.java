@@ -35,4 +35,9 @@ public class RoomMedicineRepository implements MedicineRepository {
             }
         });
     }
+
+    @Override
+    public Single<Integer> count() {
+        return medicineDao.count();
+    }
 }

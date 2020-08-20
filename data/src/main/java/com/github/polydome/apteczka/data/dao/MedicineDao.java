@@ -19,4 +19,7 @@ public interface MedicineDao {
 
     @Query("SELECT * FROM medicine WHERE id = :id")
     Maybe<MedicineEntity> findById(long id);
+
+    @Query("SELECT COUNT(*) FROM medicine")
+    Single<Integer> count();
 }

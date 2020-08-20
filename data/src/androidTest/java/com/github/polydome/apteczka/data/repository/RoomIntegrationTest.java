@@ -107,6 +107,18 @@ public class RoomIntegrationTest {
                 .assertComplete();
     }
 
+    @Test
+    public void count_noMedicineInRepository_emits0() {
+        roomMedicineRepository.count().test().assertValue(0);
+    }
+
+    @Test
+    public void count_1medicineInRepository_emits1() {
+        roomMedicineRepository.create(createMedicine(2))
+            .flatMap((i) -> roomMedicineRepository.count())
+            .test().assertValue(1);
+    }
+
     private Medicine createMedicine(long id) {
         return Medicine.builder()
                 .id(id)
