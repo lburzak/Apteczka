@@ -17,17 +17,13 @@ import com.github.polydome.apteczka.view.ui.medicinelist.MedicineListAdapter;
 import javax.inject.Inject;
 
 public class MedicineListFragment extends Fragment {
-    private PresentationComponentProvider componentProvider;
-
     @Inject MedicineListAdapter adapter;
     @Inject RecyclerView.LayoutManager layoutManager;
-
-    private RecyclerView recyclerView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        componentProvider = new PresentationComponentProvider(this);
+        PresentationComponentProvider componentProvider = new PresentationComponentProvider(this);
         componentProvider.getPresentationComponent().inject(this);
     }
 
@@ -41,7 +37,7 @@ public class MedicineListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        recyclerView = view.findViewById(R.id.medicineList_recyclerView);
+        RecyclerView recyclerView = view.findViewById(R.id.medicineList_recyclerView);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
