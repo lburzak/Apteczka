@@ -39,6 +39,11 @@ public class MedicineRepositoryStub implements MedicineRepository {
     }
 
     @Override
+    public Single<Integer> count() {
+        return Single.just(data.size());
+    }
+
+    @Override
     public Single<Long> create(final Medicine medicine) {
         return Single.create(new SingleOnSubscribe<Long>() {
             @Override

@@ -28,7 +28,7 @@ public class DomainModule {
     }
 
     @Provides
-    public CountMedicineUseCase countMedicineUseCase() {
-        return new CountMedicineUseCase();
+    public CountMedicineUseCase countMedicineUseCase(MedicineRepository medicineRepository) {
+        return new CountMedicineUseCase(medicineRepository);
     }
 }
