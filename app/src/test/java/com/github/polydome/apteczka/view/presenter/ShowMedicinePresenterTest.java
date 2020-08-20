@@ -1,22 +1,15 @@
 package com.github.polydome.apteczka.view.presenter;
 
-import com.github.polydome.apteczka.domain.model.Medicine;
 import com.github.polydome.apteczka.domain.usecase.GetMedicineDataUseCase;
 import com.github.polydome.apteczka.domain.usecase.structure.MedicineData;
 import com.github.polydome.apteczka.view.contract.ShowMedicineContract;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Maybe;
-import io.reactivex.Scheduler;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 import static org.mockito.Mockito.mock;
@@ -28,7 +21,7 @@ import static org.mockito.Mockito.when;
 class ShowMedicinePresenterTest {
     GetMedicineDataUseCase getMedicineDataUseCase = mock(GetMedicineDataUseCase.class);
     ShowMedicineContract.View view = mock(ShowMedicineContract.View.class);
-    ShowMedicinePresenter SUT = new ShowMedicinePresenter(getMedicineDataUseCase);
+    ShowMedicinePresenter SUT = new ShowMedicinePresenter(getMedicineDataUseCase, Schedulers.trampoline(), Schedulers.trampoline());
 
     @Test
     void onIdChanged_medicineExists_writesDataToFields() {
