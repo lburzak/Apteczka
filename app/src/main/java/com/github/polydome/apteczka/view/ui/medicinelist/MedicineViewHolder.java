@@ -22,10 +22,6 @@ public class MedicineViewHolder extends RecyclerView.ViewHolder implements ShowM
         this.presenter = presenter;
     }
 
-    public void setMedicineId(long id) {
-        presenter.onIdChanged(id);
-    }
-
     @Override
     public void showName(String name) {
         TextView nameField = itemView.findViewById(R.id.medicineEntry_name);
@@ -38,6 +34,10 @@ public class MedicineViewHolder extends RecyclerView.ViewHolder implements ShowM
 
     public void onDetach() {
         presenter.detach();
+    }
+
+    public void bindToPosition(int position) {
+        presenter.onPositionChanged(position);
     }
 
     public static class Factory {

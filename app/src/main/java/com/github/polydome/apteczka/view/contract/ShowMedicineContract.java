@@ -8,6 +8,6 @@ public interface ShowMedicineContract extends Contract {
     }
 
     interface Presenter extends Contract.Presenter<View> {
-        void onIdChanged(long medicineId);
+        void onPositionChanged(int position);
     }
 }

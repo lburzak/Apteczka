@@ -3,6 +3,7 @@ package com.github.polydome.apteczka.view.presenter;
 import com.github.polydome.apteczka.domain.usecase.GetMedicineDataUseCase;
 import com.github.polydome.apteczka.domain.usecase.structure.MedicineData;
 import com.github.polydome.apteczka.view.contract.ShowMedicineContract;
+import com.github.polydome.apteczka.view.model.MedicineListModel;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -17,14 +18,15 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestInstance(TestInstance.Lifecycle.PER_METHOD)
 class ShowMedicinePresenterTest {
     GetMedicineDataUseCase getMedicineDataUseCase = mock(GetMedicineDataUseCase.class);
     ShowMedicineContract.View view = mock(ShowMedicineContract.View.class);
-    ShowMedicinePresenter SUT = new ShowMedicinePresenter(getMedicineDataUseCase, Schedulers.trampoline(), Schedulers.trampoline());
+    MedicineListModel model = mock(MedicineListModel.class);
+    ShowMedicinePresenter SUT = new ShowMedicinePresenter(getMedicineDataUseCase, Schedulers.trampoline(), Schedulers.trampoline(), model);
 
     @Test
-    void onIdChanged_medicineExists_writesDataToFields() {
+    void onPositionChanged_legalPosition_writesDataToFields() {
         MedicineData data = MedicineData.builder()
                 .commonName("common name")
                 .ean("ean")
@@ -35,11 +37,15 @@ class ShowMedicinePresenterTest {
                 .potency("test potency")
                 .build();
 
-        when(getMedicineDataUseCase.execute(12))
+        when(model.getIdAtPosition(12))
+                .thenReturn(38L);
+
+        when(getMedicineDataUseCase.execute(38L))
                 .thenReturn(Maybe.just(data));
 
+
         SUT.attach(view);
-        SUT.onIdChanged(12);
+        SUT.onPositionChanged(12);
 
         verify(view).showName(data.getName());
     }
@@ -49,11 +55,14 @@ class ShowMedicinePresenterTest {
         Maybe<MedicineData> dataEmitter = Maybe
                 .just(MedicineData.builder().build());
 
+        when(model.getIdAtPosition(12))
+                .thenReturn(12L);
+
         when(getMedicineDataUseCase.execute(12))
                 .thenReturn(dataEmitter.delay(20, TimeUnit.MILLISECONDS));
 
         SUT.attach(view);
-        SUT.onIdChanged(12);
+        SUT.onPositionChanged(12);
 
         Thread.sleep(10);
         SUT.detach();

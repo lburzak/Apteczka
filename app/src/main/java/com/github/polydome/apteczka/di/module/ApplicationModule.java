@@ -3,8 +3,10 @@ package com.github.polydome.apteczka.di.module;
 import android.content.Context;
 
 import com.github.polydome.apteczka.BuildConfig;
+import com.github.polydome.apteczka.view.model.MedicineListModel;
 
 import javax.inject.Named;
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -27,5 +29,11 @@ public class ApplicationModule {
     @Named("remedyUrl")
     public String remedyUrl() {
         return BuildConfig.REMEDY_URL;
+    }
+
+    @Provides
+    @Singleton
+    public MedicineListModel medicineListModel() {
+        return new MedicineListModel();
     }
 }

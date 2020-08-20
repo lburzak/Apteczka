@@ -33,16 +33,14 @@ public class MedicineViewHolderTest {
 
         FragmentScenario<EntryViewContainer> scenario = FragmentScenario.launchInContainer(EntryViewContainer.class);
 
-        scenario.onFragment(fragment -> {
-            SUT = new MedicineViewHolder(Objects.requireNonNull(fragment.getView()), presenter);
-        });
+        scenario.onFragment(fragment -> SUT = new MedicineViewHolder(Objects.requireNonNull(fragment.getView()), presenter));
     }
 
     @Test
-    public void medicineIdChanged_medicineExists_callsPresenterOnIdChanged() {
-        SUT.setMedicineId(19);
+    public void bindToPosition_callsPresenterOnPositionChange() {
+        SUT.bindToPosition(19);
 
-        Mockito.verify(presenter).onIdChanged(19);
+        Mockito.verify(presenter).onPositionChanged(19);
     }
 
     @Test

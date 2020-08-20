@@ -60,12 +60,12 @@ class MedicineListAdapterTest {
     }
 
     @Test
-    void onBindViewHolder_setsViewHolderMedicineId() {
+    void onBindViewHolder_callsViewHolderBindToPosition() {
         MedicineViewHolder holder = mock(MedicineViewHolder.class);
 
         SUT.onBindViewHolder(holder, 11);
 
-        verify(holder).setMedicineId(11);
+        verify(holder).bindToPosition(11);
     }
 
     @Test

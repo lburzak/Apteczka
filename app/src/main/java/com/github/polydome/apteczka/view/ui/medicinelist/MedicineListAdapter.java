@@ -42,7 +42,7 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull MedicineViewHolder holder, int position) {
-        holder.setMedicineId(position);
+        holder.bindToPosition(position);
     }
 
     @Override
