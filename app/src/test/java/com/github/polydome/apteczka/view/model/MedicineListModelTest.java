@@ -26,7 +26,16 @@ class MedicineListModelTest {
         @Test
         void getIdAtPosition_notReady_throwsIllegalStateException() {
             Assertions.assertThrows(IllegalStateException.class, () ->
-                    SUT.getIdAtPosition(33), "Model not ready");
+                    SUT.getIdAtPosition(33), "Model not ready. Method `onReady` is expected to be called first");
+        }
+
+        @Test
+        void getSize_throwsIllegalStateException() {
+            when(observeMedicineIdsUseCase.execute())
+                    .thenReturn(Observable.just(Collections.singletonList(213L)));
+
+            Assertions.assertThrows(IllegalStateException.class, () ->
+                    SUT.getSize(), "Model not ready. Method `onReady` is expected to be called first");
         }
     }
 
@@ -53,6 +62,17 @@ class MedicineListModelTest {
             long id = SUT.getIdAtPosition(0);
 
             assertThat(id, equalTo(213L));
+        }
+
+        @Test
+        void getSize_returnsIdsCount() {
+            when(observeMedicineIdsUseCase.execute())
+                    .thenReturn(Observable.just(Collections.singletonList(213L)));
+
+            SUT.onReady();
+
+            int size = SUT.getSize();
+            assertThat(size, equalTo(1));
         }
     }
 }

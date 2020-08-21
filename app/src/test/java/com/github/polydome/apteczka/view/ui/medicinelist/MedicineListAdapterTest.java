@@ -7,7 +7,8 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.polydome.apteczka.R;
-import com.github.polydome.apteczka.view.contract.ListMedicineContract;
+import com.github.polydome.apteczka.view.contract.ShowMedicineContract;
+import com.github.polydome.apteczka.view.model.MedicineListModel;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -26,13 +27,13 @@ class MedicineListAdapterTest {
     LayoutInflater inflater = Mockito.mock(LayoutInflater.class);
     ViewGroup viewGroup = Mockito.mock(ViewGroup.class);
     MedicineViewHolder.Factory medicineViewHolderFactory = mock(MedicineViewHolder.Factory.class);
-    ListMedicineContract.Presenter presenter = Mockito.mock(ListMedicineContract.Presenter.class);
-    MedicineListAdapter SUT = new MedicineListAdapter(inflater, medicineViewHolderFactory, presenter);
+    MedicineListModel medicineListModel = Mockito.mock(MedicineListModel.class);
+    MedicineListAdapter SUT = new MedicineListAdapter(inflater, medicineViewHolderFactory, medicineListModel);
 
     @Test
     void onCreateViewHolder_createsViewHolderWithInflatedView() {
         View inflatedView = mock(View.class);
-        MedicineViewHolder createdHolder = new MedicineViewHolder(inflatedView, null);
+        MedicineViewHolder createdHolder = new MedicineViewHolder(inflatedView, mock(ShowMedicineContract.Presenter.class));
 
         when(medicineViewHolderFactory.create(Mockito.any(View.class)))
                 .thenReturn(createdHolder);
@@ -60,6 +61,20 @@ class MedicineListAdapterTest {
     }
 
     @Test
+    void onCreateViewHolder_callsViewHolderOnAttach() {
+        when(inflater.inflate(R.layout.entry_medicine, viewGroup, false))
+                .thenReturn(mock(View.class));
+
+        MedicineViewHolder holder = mock(MedicineViewHolder.class);
+        when(medicineViewHolderFactory.create(Mockito.any(View.class)))
+                .thenReturn(holder);
+
+        SUT.onCreateViewHolder(viewGroup, 0);
+
+        verify(holder).onAttach();
+    }
+
+    @Test
     void onBindViewHolder_callsViewHolderBindToPosition() {
         MedicineViewHolder holder = mock(MedicineViewHolder.class);
 
@@ -69,39 +84,25 @@ class MedicineListAdapterTest {
     }
 
     @Test
-    void onViewAttachedToWindow_callsViewHolderOnAttach() {
+    void onViewRecycled_callsViewHolderOnAttach() {
         MedicineViewHolder holder = mock(MedicineViewHolder.class);
 
-        SUT.onViewAttachedToWindow(holder);
-
-        verify(holder).onAttach();
-    }
-
-    @Test
-    void onViewDetachedFromWindow_callsViewHolderOnAttach() {
-        MedicineViewHolder holder = mock(MedicineViewHolder.class);
-
-        SUT.onViewDetachedFromWindow(holder);
+        SUT.onViewRecycled(holder);
 
         verify(holder).onDetach();
     }
 
     @Test
-    void getItemCount_noUpdates_returns0() {
+    void getItemCount_returnsSizeFromModel() {
+        when(medicineListModel.getSize()).thenReturn(13);
         int count = SUT.getItemCount();
-        assertThat(count, equalTo(0));
+        assertThat(count, equalTo(13));
     }
 
     @Test
-    void getItemCount_requestsUpdatedCount() {
-        SUT.getItemCount();
-        verify(presenter).onMedicineCountRequested();
-    }
-
-    @Test
-    void onAttachedToRecyclerView_attachesPresenter() {
+    void onAttachedToRecyclerView_callsModelOnReady() {
         SUT.onAttachedToRecyclerView(mock(RecyclerView.class));
 
-        verify(presenter).attach(SUT);
+        verify(medicineListModel).onReady();
     }
 }

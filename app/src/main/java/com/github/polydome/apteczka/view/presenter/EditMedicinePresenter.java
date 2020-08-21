@@ -65,9 +65,12 @@ public class EditMedicinePresenter extends Presenter<EditMedicineContract.View> 
                 .build();
 
         if (id > 0) {
-            // update
+            // TODO: Update medicine
         } else {
-            addMedicineUseCase.execute(medicineData);
+            addMedicineUseCase.execute(medicineData)
+                    .subscribeOn(ioScheduler)
+                    .observeOn(uiScheduler)
+                    .subscribe();
         }
     }
 

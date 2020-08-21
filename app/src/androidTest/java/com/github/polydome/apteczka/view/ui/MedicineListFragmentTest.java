@@ -56,8 +56,6 @@ public class MedicineListFragmentTest {
 
     @Test
     public void visible_medicineInDatabase_medicineShown() {
-        // FIXME: 8/21/20 Stuck before assertion
-
         Mockito.when(medicineRepository.count())
                 .thenReturn(Single.just(1));
 

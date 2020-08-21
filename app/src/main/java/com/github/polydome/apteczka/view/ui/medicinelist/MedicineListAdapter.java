@@ -8,36 +8,29 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.polydome.apteczka.R;
-import com.github.polydome.apteczka.view.contract.ListMedicineContract;
+import com.github.polydome.apteczka.view.model.MedicineListModel;
 
 import javax.inject.Inject;
 
-public class MedicineListAdapter extends RecyclerView.Adapter<MedicineViewHolder> implements ListMedicineContract.View {
+public class MedicineListAdapter extends RecyclerView.Adapter<MedicineViewHolder> {
     private final LayoutInflater inflater;
     private final MedicineViewHolder.Factory viewHolderFactory;
-    private final ListMedicineContract.Presenter presenter;
-
-    private int medicineCount = 0;
+    private final MedicineListModel model;
 
     @Inject
-    public MedicineListAdapter(LayoutInflater inflater, MedicineViewHolder.Factory viewHolderFactory, ListMedicineContract.Presenter presenter) {
+    public MedicineListAdapter(LayoutInflater inflater, MedicineViewHolder.Factory viewHolderFactory, MedicineListModel model) {
         this.inflater = inflater;
         this.viewHolderFactory = viewHolderFactory;
-        this.presenter = presenter;
-    }
-
-    @Override
-    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-        presenter.attach(this);
+        this.model = model;
     }
 
     @NonNull
     @Override
     public MedicineViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = inflater.inflate(R.layout.entry_medicine, parent, false);
-
-        return viewHolderFactory.create(itemView);
+        MedicineViewHolder holder = viewHolderFactory.create(itemView);
+        holder.onAttach();
+        return holder;
     }
 
     @Override
@@ -47,23 +40,16 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineViewHolder
 
     @Override
     public int getItemCount() {
-        presenter.onMedicineCountRequested();
-        return medicineCount;
+        return model.getSize();
     }
 
     @Override
-    public void onViewAttachedToWindow(@NonNull MedicineViewHolder holder) {
-        holder.onAttach();
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        model.onReady();
     }
 
     @Override
-    public void onViewDetachedFromWindow(@NonNull MedicineViewHolder holder) {
+    public void onViewRecycled(@NonNull MedicineViewHolder holder) {
         holder.onDetach();
-    }
-
-    @Override
-    public void updateMedicineCount(int count) {
-        medicineCount = count;
-        notifyDataSetChanged();
     }
 }
