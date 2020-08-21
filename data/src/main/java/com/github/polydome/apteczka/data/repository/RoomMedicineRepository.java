@@ -5,7 +5,10 @@ import com.github.polydome.apteczka.data.entity.MedicineEntity;
 import com.github.polydome.apteczka.domain.model.Medicine;
 import com.github.polydome.apteczka.domain.repository.MedicineRepository;
 
+import java.util.List;
+
 import io.reactivex.Maybe;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.functions.Function;
 
@@ -39,5 +42,9 @@ public class RoomMedicineRepository implements MedicineRepository {
     @Override
     public Single<Integer> count() {
         return medicineDao.count();
+    }
+
+    public Observable<List<Long>> ids() {
+        return medicineDao.ids();
     }
 }

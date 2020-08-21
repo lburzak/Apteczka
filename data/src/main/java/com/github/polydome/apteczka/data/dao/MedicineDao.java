@@ -6,7 +6,10 @@ import androidx.room.Query;
 
 import com.github.polydome.apteczka.data.entity.MedicineEntity;
 
+import java.util.List;
+
 import io.reactivex.Maybe;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 
 @Dao
@@ -22,4 +25,7 @@ public interface MedicineDao {
 
     @Query("SELECT COUNT(*) FROM medicine")
     Single<Integer> count();
+
+    @Query("SELECT id FROM medicine")
+    Observable<List<Long>> ids();
 }

@@ -11,6 +11,7 @@ import com.github.polydome.apteczka.data.dao.MedicineDao;
 import com.github.polydome.apteczka.data.di.DataModule;
 import com.github.polydome.apteczka.di.component.DaggerApplicationComponent;
 import com.github.polydome.apteczka.di.module.ApplicationModule;
+import com.github.polydome.apteczka.domain.model.Medicine;
 import com.github.polydome.apteczka.domain.repository.MedicineRepository;
 
 import org.junit.Before;
@@ -18,6 +19,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
+import java.util.Collections;
+
+import io.reactivex.Maybe;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -51,8 +56,16 @@ public class MedicineListFragmentTest {
 
     @Test
     public void visible_medicineInDatabase_medicineShown() {
+        // FIXME: 8/21/20 Stuck before assertion
+
         Mockito.when(medicineRepository.count())
-                .thenReturn(Single.just(0));
+                .thenReturn(Single.just(1));
+
+        Mockito.when(medicineRepository.ids())
+                .thenReturn(Observable.just(Collections.singletonList(6L)));
+
+        Mockito.when(medicineRepository.findById(6L))
+                .thenReturn(Maybe.just(Medicine.builder().name(NAME).build()));
 
         FragmentScenario.launchInContainer(MedicineListFragment.class);
 

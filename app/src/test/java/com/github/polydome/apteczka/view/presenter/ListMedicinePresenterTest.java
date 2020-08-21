@@ -2,6 +2,7 @@ package com.github.polydome.apteczka.view.presenter;
 
 import com.github.polydome.apteczka.domain.usecase.CountMedicineUseCase;
 import com.github.polydome.apteczka.view.contract.ListMedicineContract;
+import com.github.polydome.apteczka.view.model.MedicineListModel;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -20,7 +21,8 @@ import static org.mockito.Mockito.when;
 class ListMedicinePresenterTest {
     CountMedicineUseCase countMedicineUseCase = mock(CountMedicineUseCase.class);
     ListMedicineContract.View view = mock(ListMedicineContract.View.class);
-    ListMedicinePresenter SUT = new ListMedicinePresenter(countMedicineUseCase, Schedulers.trampoline(), Schedulers.trampoline());
+    MedicineListModel model = mock(MedicineListModel.class);
+    ListMedicinePresenter SUT = new ListMedicinePresenter(countMedicineUseCase, Schedulers.trampoline(), Schedulers.trampoline(), model);
 
     @Test
     void onMedicineCountRequested_callsViewUpdateMedicineCount() {
@@ -46,5 +48,12 @@ class ListMedicinePresenterTest {
 
         Thread.sleep(20);
         verifyNoInteractions(view);
+    }
+
+    @Test
+    void attach_callsModelOnReady() {
+        SUT.attach(view);
+
+        verify(model).onReady();
     }
 }

@@ -14,10 +14,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 import io.reactivex.MaybeSource;
 import io.reactivex.SingleSource;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
+import io.reactivex.observers.TestObserver;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -117,6 +120,19 @@ public class RoomIntegrationTest {
         roomMedicineRepository.create(createMedicine(2))
             .flatMap((i) -> roomMedicineRepository.count())
             .test().assertValue(1);
+    }
+
+    @Test
+    public void ids_noMedicineInRepository_emitsEmptyList() {
+        TestObserver<List<Long>> test = roomMedicineRepository.ids().test();
+        test.awaitCount(1).assertValue(List::isEmpty);
+    }
+
+    @Test
+    public void ids_1medicineInRepository_emitsListContainingMedicineId() {
+        TestObserver<List<Long>> test = roomMedicineRepository.ids().test();
+        roomMedicineRepository.create(createMedicine(2)).blockingGet();
+        test.assertValue(ids -> ids.contains(2L));
     }
 
     private Medicine createMedicine(long id) {
