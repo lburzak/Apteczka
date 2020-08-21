@@ -6,6 +6,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/medicineList_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:paddingTop="16dp"
+        android:paddingBottom="60dp"
+        android:clipToPadding="false"/>
 
 </LinearLayout>

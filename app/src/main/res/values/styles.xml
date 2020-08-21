@@ -7,5 +7,11 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlNormal">@android:color/white</item>
     </style>
+    
+    <style name="MedicineIcon" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+        <item name="background">@android:color/transparent</item>
+    </style>
 
 </resources>

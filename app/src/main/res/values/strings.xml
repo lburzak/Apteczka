@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Apteczka</string>
+    <string name="separator_dot">·</string>
 </resources>
