@@ -52,5 +52,7 @@ public class ShowMedicinePresenter extends Presenter<ShowMedicineContract.View> 
 
     private void showFields(MedicineData medicineData) {
         requireView().showName(medicineData.getName());
+        requireView().showCommonName(medicineData.getCommonName());
+        requireView().showForm(medicineData.getForm());
     }
 }

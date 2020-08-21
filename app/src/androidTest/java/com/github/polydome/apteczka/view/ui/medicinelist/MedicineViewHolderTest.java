@@ -56,6 +56,30 @@ public class MedicineViewHolderTest {
     }
 
     @Test
+    public void showForm_showsForm() {
+        String FORM = "test form";
+
+        Handler handler = new Handler(ApplicationProvider.getApplicationContext().getMainLooper());
+        handler.post(() -> SUT.showForm(FORM));
+
+        onView(withId(R.id.medicineEntry_form)).check(
+                matches(withText(FORM))
+        );
+    }
+
+    @Test
+    public void showCommonName_showsCommonName() {
+        String NAME = "test name";
+
+        Handler handler = new Handler(ApplicationProvider.getApplicationContext().getMainLooper());
+        handler.post(() -> SUT.showCommonName(NAME));
+
+        onView(withId(R.id.medicineEntry_commonName)).check(
+                matches(withText(NAME))
+        );
+    }
+
+    @Test
     public void onAttach_attachesPresenter() {
         SUT.onAttach();
         Mockito.verify(presenter).attach(SUT);

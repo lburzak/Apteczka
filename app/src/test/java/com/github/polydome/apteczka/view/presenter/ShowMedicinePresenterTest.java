@@ -48,6 +48,8 @@ class ShowMedicinePresenterTest {
         SUT.onPositionChanged(12);
 
         verify(view).showName(data.getName());
+        verify(view).showCommonName(data.getCommonName());
+        verify(view).showForm(data.getForm());
     }
 
     @Test
