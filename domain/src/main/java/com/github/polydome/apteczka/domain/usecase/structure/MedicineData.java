@@ -27,4 +27,17 @@ public class MedicineData {
                 .potency(medicine.getPotency())
                 .build();
     }
+
+    public Medicine toMedicine(long id) {
+        return Medicine.builder()
+                .name(getName())
+                .commonName(getCommonName())
+                .form(getForm())
+                .packagingSize(getPackagingSize())
+                .packagingUnit(getPackagingUnit())
+                .potency(getPotency())
+                .ean(getEan())
+                .id(id)
+                .build();
+    }
 }

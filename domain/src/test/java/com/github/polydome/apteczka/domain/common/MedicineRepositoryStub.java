@@ -4,12 +4,15 @@ import com.github.polydome.apteczka.domain.model.Medicine;
 import com.github.polydome.apteczka.domain.repository.MedicineRepository;
 
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
 import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;
 import io.reactivex.MaybeOnSubscribe;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.SingleEmitter;
 import io.reactivex.SingleOnSubscribe;
@@ -68,5 +71,16 @@ public class MedicineRepositoryStub implements MedicineRepository {
                 emitter.onSuccess(false);
             }
         });
+    }
+
+    @Override
+    public Observable<List<Long>> ids() {
+        List<Long> ids = new LinkedList<>();
+
+        for (final Medicine medicine : data) {
+            ids.add(medicine.getId());
+        }
+
+        return Observable.just(ids);
     }
 }

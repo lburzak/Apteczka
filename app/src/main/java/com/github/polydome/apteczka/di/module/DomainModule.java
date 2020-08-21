@@ -14,8 +14,8 @@ import dagger.Provides;
 @Module
 public class DomainModule {
     @Provides
-    public AddMedicineUseCase addMedicineUseCase(MedicineRepository medicineRepository, MedicineDetailsEndpoint medicineDetailsEndpoint) {
-        return new AddMedicineUseCase(medicineRepository, medicineDetailsEndpoint);
+    public AddMedicineUseCase addMedicineUseCase(MedicineRepository medicineRepository) {
+        return new AddMedicineUseCase(medicineRepository);
     }
 
     @Provides

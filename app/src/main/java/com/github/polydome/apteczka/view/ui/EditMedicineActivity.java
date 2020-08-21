@@ -24,6 +24,7 @@ import com.github.polydome.apteczka.barcodescanner.BarcodeType;
 import com.github.polydome.apteczka.view.contract.EditMedicineContract;
 import com.github.polydome.apteczka.view.ui.common.PresentationComponentProvider;
 import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import javax.inject.Inject;
 
@@ -37,6 +38,8 @@ public class EditMedicineActivity extends AppCompatActivity implements EditMedic
     @Inject
     public EditMedicineContract.Presenter presenter;
 
+    private long medicineId;
+
     private EditText eanField;
     private EditText nameField;
     private EditText commonNameField;
@@ -44,6 +47,7 @@ public class EditMedicineActivity extends AppCompatActivity implements EditMedic
     private EditText formField;
     private EditText packagingSizeField;
     private EditText packagingUnitField;
+    private FloatingActionButton fab;
 
     public EditMedicineActivity() {
         super(R.layout.activity_edit_medicine);
@@ -65,8 +69,9 @@ public class EditMedicineActivity extends AppCompatActivity implements EditMedic
         formField = findViewById(R.id.editMedicine_form);
         packagingSizeField = findViewById(R.id.editMedicine_packagingSize);
         packagingUnitField = findViewById(R.id.editMedicine_packagingUnit);
+        fab = findViewById(R.id.editMedicine_fab);
 
-        long medicineId = getIntent().getLongExtra("MEDICINE_ID", 0);
+        medicineId = getIntent().getLongExtra("MEDICINE_ID", 0);
         if (medicineId > 0)
             presenter.onCurrentDataRequest(medicineId);
 
@@ -90,6 +95,15 @@ public class EditMedicineActivity extends AppCompatActivity implements EditMedic
                     presenter.onEanInput(s.toString());
                 }
             }
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        fab.setOnClickListener(view -> {
+            saveMedicine();
+            finish();
         });
     }
 
@@ -146,6 +160,18 @@ public class EditMedicineActivity extends AppCompatActivity implements EditMedic
                 .bundle();
 
         startActivityForResult(scannerIntent, BARCODE_SCAN_REQUEST_CODE, scannerOptions);
+    }
+
+    private void saveMedicine() {
+        presenter.onSaveMedicine(
+                medicineId,
+                eanField.getText().toString(),
+                nameField.getText().toString(),
+                commonNameField.getText().toString(),
+                potencyField.getText().toString(),
+                formField.getText().toString(),
+                Integer.parseInt(packagingSizeField.getText().toString()),
+                packagingUnitField.getText().toString());
     }
 
     @Override

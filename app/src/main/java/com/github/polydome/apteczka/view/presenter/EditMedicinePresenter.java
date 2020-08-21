@@ -1,6 +1,7 @@
 package com.github.polydome.apteczka.view.presenter;
 
 import com.github.polydome.apteczka.domain.service.MedicineDetails;
+import com.github.polydome.apteczka.domain.usecase.AddMedicineUseCase;
 import com.github.polydome.apteczka.domain.usecase.GetMedicineDataUseCase;
 import com.github.polydome.apteczka.domain.usecase.GetMedicineDetailsUseCase;
 import com.github.polydome.apteczka.domain.usecase.structure.MedicineData;
@@ -12,20 +13,21 @@ import javax.inject.Named;
 
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
 
 public class EditMedicinePresenter extends Presenter<EditMedicineContract.View> implements EditMedicineContract.Presenter {
     private final GetMedicineDataUseCase getMedicineDataUseCase;
     private final GetMedicineDetailsUseCase getMedicineDetailsUseCase;
+    private final AddMedicineUseCase addMedicineUseCase;
     private final Scheduler ioScheduler;
     private final Scheduler uiScheduler;
 
     private final CompositeDisposable comp = new CompositeDisposable();
 
     @Inject
-    public EditMedicinePresenter(GetMedicineDataUseCase getMedicineDataUseCase, GetMedicineDetailsUseCase getMedicineDetailsUseCase, @Named("ioScheduler") Scheduler ioScheduler, @Named("uiScheduler") Scheduler uiScheduler) {
+    public EditMedicinePresenter(GetMedicineDataUseCase getMedicineDataUseCase, GetMedicineDetailsUseCase getMedicineDetailsUseCase, AddMedicineUseCase addMedicineUseCase, @Named("ioScheduler") Scheduler ioScheduler, @Named("uiScheduler") Scheduler uiScheduler) {
         this.getMedicineDataUseCase = getMedicineDataUseCase;
         this.getMedicineDetailsUseCase = getMedicineDetailsUseCase;
+        this.addMedicineUseCase = addMedicineUseCase;
         this.ioScheduler = ioScheduler;
         this.uiScheduler = uiScheduler;
     }
@@ -48,6 +50,25 @@ public class EditMedicinePresenter extends Presenter<EditMedicineContract.View> 
                 .observeOn(uiScheduler)
                 .subscribe((this::fillViewFields))
         );
+    }
+
+    @Override
+    public void onSaveMedicine(long id, String ean, String name, String commonName, String potency, String form, int packagingSize, String packagingUnit) {
+        MedicineData medicineData = MedicineData.builder()
+                .packagingUnit(packagingUnit)
+                .potency(potency)
+                .packagingSize(packagingSize)
+                .name(name)
+                .form(form)
+                .commonName(commonName)
+                .ean(ean)
+                .build();
+
+        if (id > 0) {
+            // update
+        } else {
+            addMedicineUseCase.execute(medicineData);
+        }
     }
 
     @Override

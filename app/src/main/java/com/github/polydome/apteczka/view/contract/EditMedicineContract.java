@@ -16,5 +16,6 @@ public interface EditMedicineContract {
     interface Presenter extends Contract.Presenter<View> {
         void onCurrentDataRequest(long medicineId);
         void onEanInput(String ean);
+        void onSaveMedicine(long id, String ean, String name, String commonName, String potency, String form, int packagingSize, String packagingUnit);
     }
 }

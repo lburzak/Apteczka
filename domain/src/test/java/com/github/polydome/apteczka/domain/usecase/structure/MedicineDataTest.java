@@ -33,4 +33,28 @@ class MedicineDataTest {
         assertThat(result.getPackagingUnit(), equalTo(medicine.getPackagingUnit()));
         assertThat(result.getPotency(), equalTo(medicine.getPotency()));
     }
+
+    @Test
+    void toMedicine_returnsProperMedicine() {
+        MedicineData medicineData = MedicineData.builder()
+                .commonName("test common name")
+                .ean("test ean")
+                .form("test form")
+                .name("test name")
+                .packagingSize(3)
+                .packagingUnit("test unit")
+                .potency("test potency")
+                .build();
+
+        Medicine result = medicineData.toMedicine(13L);
+
+        assertThat(result.getId(), equalTo(13L));
+        assertThat(result.getCommonName(), equalTo(medicineData.getCommonName()));
+        assertThat(result.getEan(), equalTo(medicineData.getEan()));
+        assertThat(result.getForm(), equalTo(medicineData.getForm()));
+        assertThat(result.getName(), equalTo(medicineData.getName()));
+        assertThat(result.getPackagingSize(), equalTo(medicineData.getPackagingSize()));
+        assertThat(result.getPackagingUnit(), equalTo(medicineData.getPackagingUnit()));
+        assertThat(result.getPotency(), equalTo(medicineData.getPotency()));
+    }
 }

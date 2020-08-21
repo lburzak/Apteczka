@@ -109,6 +109,7 @@
         app:menu="@menu/menu_bottomappbar_editmedicine"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/editMedicine_fab"
         android:layout_width="64dp"
         android:layout_height="64dp"
         app:backgroundTint="@color/colorAccent"
