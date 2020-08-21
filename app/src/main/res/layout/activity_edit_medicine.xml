@@ -111,6 +111,7 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="64dp"
         android:layout_height="64dp"
+        app:backgroundTint="@color/colorAccent"
         app:layout_anchor="@id/bottom_app_bar"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
