@@ -4,8 +4,6 @@ import com.github.polydome.apteczka.domain.service.MedicineDetailsEndpoint;
 import com.github.polydome.apteczka.network.RemedyMedicineDetailsEndpoint;
 import com.github.polydome.apteczka.network.RemedyService;
 
-import java.util.concurrent.Executors;
-
 import javax.inject.Named;
 import javax.inject.Singleton;
 
