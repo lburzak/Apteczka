@@ -1,5 +1,6 @@
 package com.github.polydome.apteczka.network;
 
+import com.github.polydome.apteczka.domain.model.Product;
 import com.github.polydome.apteczka.domain.service.ProductEndpoint;
 import com.github.polydome.apteczka.network.model.RemedyPackaging;
 import com.github.polydome.apteczka.network.model.RemedyProduct;
@@ -17,7 +18,7 @@ public class RemedyProductEndpoint implements ProductEndpoint {
     }
 
     @Override
-    public Maybe<MedicineDetails> fetchMedicineDetails(final String ean) {
+    public Maybe<Product> fetchMedicineDetails(final String ean) {
         Maybe<RemedyPackaging> packaging =
                 remedyService.getPackaging(ean).cache();
 
@@ -27,16 +28,16 @@ public class RemedyProductEndpoint implements ProductEndpoint {
                     return remedyService.getProduct(packaging.getProductId());
                 }
             })
-            .zipWith(packaging, new BiFunction<Object, RemedyPackaging, MedicineDetails>() {
+            .zipWith(packaging, new BiFunction<Object, RemedyPackaging, Product>() {
                 @Override
-                public MedicineDetails apply(Object product, RemedyPackaging packaging) {
-                    return createMedicineDetails(packaging, ((RemedyProduct) product));
+                public Product apply(Object product, RemedyPackaging packaging) {
+                    return createProduct(packaging, ((RemedyProduct) product));
                 }
             });
     }
 
-    private MedicineDetails createMedicineDetails(RemedyPackaging packaging, RemedyProduct product) {
-        return MedicineDetails.builder()
+    private Product createProduct(RemedyPackaging packaging, RemedyProduct product) {
+        return Product.builder()
                 .commonName(product.getCommonName())
                 .form(product.getForm())
                 .name(product.getName())

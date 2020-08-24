@@ -1,5 +1,7 @@
 package com.github.polydome.apteczka.network;
 
+import com.github.polydome.apteczka.domain.model.Product;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
@@ -31,7 +33,7 @@ public class RemedyIntegrationTest {
     @Test
     void fetchMedicineDetails_eanExists_emitsMedicineDetails() {
         SUT.fetchMedicineDetails(EAN).test().assertValue(
-                MedicineDetails.builder()
+                Product.builder()
                     .commonName(COMMON_NAME)
                     .form(FORM)
                     .packagingSize(PACKAGE_SIZE)
@@ -45,7 +47,7 @@ public class RemedyIntegrationTest {
     @Test
     void fetchMedicineDetails_eanNotExists_emitsMedicineDetails() {
         SUT.fetchMedicineDetails(EAN_NOT_EXISTING).test().assertValue(
-                MedicineDetails.builder().build()
+                Product.builder().build()
         );
     }
 }

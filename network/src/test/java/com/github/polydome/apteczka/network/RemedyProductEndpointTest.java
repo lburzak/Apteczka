@@ -1,5 +1,6 @@
 package com.github.polydome.apteczka.network;
 
+import com.github.polydome.apteczka.domain.model.Product;
 import com.github.polydome.apteczka.network.model.RemedyPackaging;
 import com.github.polydome.apteczka.network.model.RemedyProduct;
 
@@ -19,7 +20,7 @@ class RemedyProductEndpointTest {
 
     @Test
     public void fetchMedicineDetails_packagingAndProductExist_emitsMedicineDetails() {
-        MedicineDetails expected = createMedicineDetails();
+        Product expected = createProduct();
 
         Mockito.when(remedyService.getPackaging(EAN)).thenReturn(Maybe.just(
                 createRemedyPackaging(expected)
@@ -50,8 +51,8 @@ class RemedyProductEndpointTest {
         SUT.fetchMedicineDetails(EAN).test().assertNoValues().assertComplete();
     }
     
-    private MedicineDetails createMedicineDetails() {
-        return MedicineDetails.builder()
+    private Product createProduct() {
+        return Product.builder()
                 .commonName("test common name")
                 .form("test form")
                 .name("test name")
@@ -61,25 +62,25 @@ class RemedyProductEndpointTest {
                 .build();
     }
     
-    private RemedyProduct createRemedyProduct(MedicineDetails medicineDetails) {
+    private RemedyProduct createRemedyProduct(Product product) {
         return RemedyProduct.builder()
                 .activeSubstance("-")
                 .atc("-")
-                .commonName(medicineDetails.getCommonName())
-                .form(medicineDetails.getForm())
-                .name(medicineDetails.getName())
+                .commonName(product.getCommonName())
+                .form(product.getForm())
+                .name(product.getName())
                 .id(1128)
-                .potency(medicineDetails.getPotency())
+                .potency(product.getPotency())
                 .build();
     }
     
-    private RemedyPackaging createRemedyPackaging(MedicineDetails medicineDetails) {
+    private RemedyPackaging createRemedyPackaging(Product product) {
         return RemedyPackaging.builder()
                 .ean(EAN)
                 .id(112)
                 .productId(PRODUCT_ID)
-                .size(medicineDetails.getPackagingSize())
-                .unit(medicineDetails.getPackagingUnit())
+                .size(product.getPackagingSize())
+                .unit(product.getPackagingUnit())
                 .build();
     }
 }
