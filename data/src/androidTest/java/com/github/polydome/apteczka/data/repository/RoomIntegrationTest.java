@@ -90,7 +90,7 @@ public class RoomIntegrationTest {
     @Test
     public void ids_1medicineInRepository_emitsListContainingMedicineId() {
         TestObserver<List<Long>> test = roomMedicineRepository.ids().test();
-        roomMedicineRepository.create(createMedicine(2)).blockingGet();
+        roomMedicineRepository.create(createMedicine(2L)).blockingGet();
         test.assertValue(ids -> ids.contains(2L));
     }
 
