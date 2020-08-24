@@ -1,7 +1,7 @@
 package com.github.polydome.apteczka.network.di;
 
-import com.github.polydome.apteczka.domain.service.MedicineDetailsEndpoint;
-import com.github.polydome.apteczka.network.RemedyMedicineDetailsEndpoint;
+import com.github.polydome.apteczka.domain.service.ProductEndpoint;
+import com.github.polydome.apteczka.network.RemedyProductEndpoint;
 import com.github.polydome.apteczka.network.RemedyService;
 
 import javax.inject.Named;
@@ -16,8 +16,8 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
 @Module
 public class NetworkModule {
     @Provides
-    public MedicineDetailsEndpoint medicineDetailsEndpoint(RemedyService remedyService) {
-        return new RemedyMedicineDetailsEndpoint(remedyService);
+    public ProductEndpoint medicineDetailsEndpoint(RemedyService remedyService) {
+        return new RemedyProductEndpoint(remedyService);
     }
 
     @Provides

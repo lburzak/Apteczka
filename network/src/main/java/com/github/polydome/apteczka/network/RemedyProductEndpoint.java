@@ -1,7 +1,6 @@
 package com.github.polydome.apteczka.network;
 
-import com.github.polydome.apteczka.domain.service.MedicineDetails;
-import com.github.polydome.apteczka.domain.service.MedicineDetailsEndpoint;
+import com.github.polydome.apteczka.domain.service.ProductEndpoint;
 import com.github.polydome.apteczka.network.model.RemedyPackaging;
 import com.github.polydome.apteczka.network.model.RemedyProduct;
 
@@ -10,10 +9,10 @@ import io.reactivex.MaybeSource;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
 
-public class RemedyMedicineDetailsEndpoint implements MedicineDetailsEndpoint {
+public class RemedyProductEndpoint implements ProductEndpoint {
     private final RemedyService remedyService;
 
-    public RemedyMedicineDetailsEndpoint(RemedyService remedyService) {
+    public RemedyProductEndpoint(RemedyService remedyService) {
         this.remedyService = remedyService;
     }
 

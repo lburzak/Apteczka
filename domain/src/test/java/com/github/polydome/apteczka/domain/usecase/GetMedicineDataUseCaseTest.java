@@ -15,7 +15,7 @@ class GetMedicineDataUseCaseTest {
     private final MedicineRepositoryStub medicineRepository = new MedicineRepositoryStub();
     private final GetMedicineDataUseCase SUT = new GetMedicineDataUseCase(medicineRepository);
 
-    String EAN = "826194738292";
+    String TITLE = "test title";
     int ID = 137;
 
     @Test
@@ -27,11 +27,11 @@ class GetMedicineDataUseCaseTest {
 
     @Test
     public void execute_medicineExists_emitsMedicineData() {
-        medicineRepository.data = List.of(Medicine.builder().id(ID).ean(EAN).build());
+        medicineRepository.data = List.of(Medicine.builder().id(ID).title(TITLE).build());
 
         SUT.execute(ID).test().assertValue(
                 MedicineData.builder()
-                .ean(EAN)
+                .title(TITLE)
                 .build()
         );
     }

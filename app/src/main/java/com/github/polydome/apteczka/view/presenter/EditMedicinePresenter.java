@@ -1,9 +1,7 @@
 package com.github.polydome.apteczka.view.presenter;
 
-import com.github.polydome.apteczka.domain.service.MedicineDetails;
 import com.github.polydome.apteczka.domain.usecase.AddMedicineUseCase;
 import com.github.polydome.apteczka.domain.usecase.GetMedicineDataUseCase;
-import com.github.polydome.apteczka.domain.usecase.GetMedicineDetailsUseCase;
 import com.github.polydome.apteczka.domain.usecase.structure.MedicineData;
 import com.github.polydome.apteczka.view.contract.EditMedicineContract;
 import com.github.polydome.apteczka.view.presenter.common.Presenter;

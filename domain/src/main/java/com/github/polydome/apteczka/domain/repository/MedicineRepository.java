@@ -10,8 +10,6 @@ import io.reactivex.Single;
 
 public interface MedicineRepository {
     Single<Long> create(Medicine medicine);
-    Single<Boolean> exists(String ean);
     Maybe<Medicine> findById(long id);
-    Single<Integer> count();
     Observable<List<Long>> ids();
 }

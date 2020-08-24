@@ -1,11 +1,9 @@
 package com.github.polydome.apteczka.di.module;
 
 import com.github.polydome.apteczka.domain.repository.MedicineRepository;
-import com.github.polydome.apteczka.domain.service.MedicineDetailsEndpoint;
+import com.github.polydome.apteczka.domain.service.ProductEndpoint;
 import com.github.polydome.apteczka.domain.usecase.AddMedicineUseCase;
-import com.github.polydome.apteczka.domain.usecase.CountMedicineUseCase;
 import com.github.polydome.apteczka.domain.usecase.GetMedicineDataUseCase;
-import com.github.polydome.apteczka.domain.usecase.GetMedicineDetailsUseCase;
 import com.github.polydome.apteczka.domain.usecase.ObserveMedicineIdsUseCase;
 
 import dagger.Module;
@@ -24,8 +22,8 @@ public class DomainModule {
     }
 
     @Provides
-    public GetMedicineDetailsUseCase getMedicineDetailsUseCase(MedicineDetailsEndpoint medicineDetailsEndpoint) {
-        return new GetMedicineDetailsUseCase(medicineDetailsEndpoint);
+    public GetMedicineDetailsUseCase getMedicineDetailsUseCase(ProductEndpoint productEndpoint) {
+        return new GetMedicineDetailsUseCase(productEndpoint);
     }
 
     @Provides

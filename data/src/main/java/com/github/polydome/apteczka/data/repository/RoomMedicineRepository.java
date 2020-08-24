@@ -24,7 +24,6 @@ public class RoomMedicineRepository implements MedicineRepository {
         return medicineDao.create(new MedicineEntity(medicine));
     }
 
-    @Override
     public Single<Boolean> exists(String ean) {
         return medicineDao.exists(ean);
     }
@@ -39,7 +38,6 @@ public class RoomMedicineRepository implements MedicineRepository {
         });
     }
 
-    @Override
     public Single<Integer> count() {
         return medicineDao.count();
     }

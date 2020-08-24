@@ -1,6 +1,5 @@
 package com.github.polydome.apteczka.network;
 
-import com.github.polydome.apteczka.domain.service.MedicineDetails;
 import com.github.polydome.apteczka.network.model.RemedyPackaging;
 import com.github.polydome.apteczka.network.model.RemedyProduct;
 
@@ -11,9 +10,9 @@ import org.mockito.Mockito;
 import io.reactivex.Maybe;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class RemedyMedicineDetailsEndpointTest {
+class RemedyProductEndpointTest {
     RemedyService remedyService = Mockito.mock(RemedyService.class);
-    RemedyMedicineDetailsEndpoint SUT = new RemedyMedicineDetailsEndpoint(remedyService);
+    RemedyProductEndpoint SUT = new RemedyProductEndpoint(remedyService);
 
     String EAN = "8367138201222";
     int PRODUCT_ID = 381;

@@ -1,7 +1,5 @@
 package com.github.polydome.apteczka.network;
 
-import com.github.polydome.apteczka.domain.service.MedicineDetails;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
@@ -19,7 +17,7 @@ public class RemedyIntegrationTest {
             .build();
 
     RemedyService remedyService = retrofit.create(RemedyService.class);
-    RemedyMedicineDetailsEndpoint SUT = new RemedyMedicineDetailsEndpoint(remedyService);
+    RemedyProductEndpoint SUT = new RemedyProductEndpoint(remedyService);
 
     final String EAN = "5909990663613";
     final String EAN_NOT_EXISTING = "1909990663613";

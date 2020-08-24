@@ -41,8 +41,7 @@ public class MedicineRepositoryStub implements MedicineRepository {
         });
     }
 
-    @Override
-    public Single<Integer> count() {
+    private Single<Integer> count() {
         return Single.just(data.size());
     }
 
@@ -53,22 +52,6 @@ public class MedicineRepositoryStub implements MedicineRepository {
             public void subscribe(SingleEmitter<Long> emitter) {
                 data.add(medicine);
                 emitter.onSuccess(medicine.getId());
-            }
-        });
-    }
-
-    @Override
-    public Single<Boolean> exists(final String ean) {
-        return Single.create(new SingleOnSubscribe<Boolean>() {
-            @Override
-            public void subscribe(SingleEmitter<Boolean> emitter) throws Exception {
-                for (final Medicine medicine : data)
-                    if (medicine.getEan().equals(ean)) {
-                        emitter.onSuccess(true);
-                        return;
-                    }
-
-                emitter.onSuccess(false);
             }
         });
     }
