@@ -34,6 +34,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 public class MedicineListFragmentTest {
     MedicineRepository medicineRepository = Mockito.mock(MedicineRepository.class);
 
+    String TITLE = "test title";
+
     @Before
     public void setUp() {
 
@@ -52,22 +54,17 @@ public class MedicineListFragmentTest {
         );
     }
 
-    String NAME = "test name";
-
     @Test
     public void visible_medicineInDatabase_medicineShown() {
-        Mockito.when(medicineRepository.count())
-                .thenReturn(Single.just(1));
-
         Mockito.when(medicineRepository.ids())
                 .thenReturn(Observable.just(Collections.singletonList(6L)));
 
         Mockito.when(medicineRepository.findById(6L))
-                .thenReturn(Maybe.just(Medicine.builder().name(NAME).build()));
+                .thenReturn(Maybe.just(Medicine.builder().title(TITLE).build()));
 
         FragmentScenario.launchInContainer(MedicineListFragment.class);
 
-        Espresso.onView(withText(NAME)).check(
+        Espresso.onView(withText(TITLE)).check(
                 matches(isDisplayed())
         );
     }

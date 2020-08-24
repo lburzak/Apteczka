@@ -26,20 +26,13 @@ import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.equalToIgnoringCase;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class MainActivityTest {
     AppDatabase database;
 
-    final String EAN = "5909990663613";
-    final String NAME = "Herbapect";
-    final String COMMON_NAME = "Thymi herbae extractum + Primulae radicis tinctura + Sulfogaiacolum";
-    final String POTENCY = "(498 mg + 348 mg + 87 mg)/5 ml";
-    final String FORM = "syrop";
-    final String PACKAGE_UNIT = "butelka 125 ml";
-    final String PACKAGE_SIZE = "1";
+    final String TITLE = "test title";
 
     @Before
     public void setUp() {
@@ -78,19 +71,13 @@ public class MainActivityTest {
         // Wait for network operation TODO: Replace with IdlingResource implementation
         Thread.sleep(1000);
 
-        onView(withId(R.id.editMedicine_ean)).check(ViewAssertions.matches(withText(EAN)));
-        onView(withId(R.id.editMedicine_commonName)).check(ViewAssertions.matches(withText(COMMON_NAME)));
-        onView(withId(R.id.editMedicine_potency)).check(ViewAssertions.matches(withText(POTENCY)));
-        onView(withId(R.id.editMedicine_form)).check(ViewAssertions.matches(withText(FORM)));
-        onView(withId(R.id.editMedicine_name)).check(ViewAssertions.matches(withText(NAME)));
-        onView(withId(R.id.editMedicine_packagingSize)).check(ViewAssertions.matches(withText(PACKAGE_SIZE)));
-        onView(withId(R.id.editMedicine_packagingUnit)).check(ViewAssertions.matches(withText(PACKAGE_UNIT)));
+        onView(withId(R.id.editMedicine_title)).check(ViewAssertions.matches(withText(TITLE)));
     }
 
     private void createMedicine() {
         onView(withId(R.id.mainActivity_fab)).perform(click());
 
-        onView(withId(R.id.editMedicine_ean)).perform(typeText(EAN));
+        onView(withId(R.id.editMedicine_title)).perform(typeText(TITLE));
     }
 
     public AppDatabase getDatabase() {

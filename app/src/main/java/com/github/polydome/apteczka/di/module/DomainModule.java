@@ -22,16 +22,6 @@ public class DomainModule {
     }
 
     @Provides
-    public GetMedicineDetailsUseCase getMedicineDetailsUseCase(ProductEndpoint productEndpoint) {
-        return new GetMedicineDetailsUseCase(productEndpoint);
-    }
-
-    @Provides
-    public CountMedicineUseCase countMedicineUseCase(MedicineRepository medicineRepository) {
-        return new CountMedicineUseCase(medicineRepository);
-    }
-
-    @Provides
     public ObserveMedicineIdsUseCase observeMedicineIdsUseCase(MedicineRepository medicineRepository) {
         return new ObserveMedicineIdsUseCase(medicineRepository);
     }

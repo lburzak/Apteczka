@@ -28,13 +28,7 @@ class ShowMedicinePresenterTest {
     @Test
     void onPositionChanged_legalPosition_writesDataToFields() {
         MedicineData data = MedicineData.builder()
-                .commonName("common name")
-                .ean("ean")
-                .form("test form")
-                .name("test name")
-                .packagingSize(22)
-                .packagingUnit("test unit")
-                .potency("test potency")
+                .title("test title")
                 .build();
 
         when(model.getIdAtPosition(12))
@@ -47,9 +41,7 @@ class ShowMedicinePresenterTest {
         SUT.attach(view);
         SUT.onPositionChanged(12);
 
-        verify(view).showName(data.getName());
-        verify(view).showCommonName(data.getCommonName());
-        verify(view).showForm(data.getForm());
+        verify(view).showTitle(data.getTitle());
     }
 
     @Test

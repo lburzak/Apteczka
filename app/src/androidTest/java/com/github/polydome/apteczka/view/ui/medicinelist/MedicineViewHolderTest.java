@@ -45,37 +45,13 @@ public class MedicineViewHolderTest {
 
     @Test
     public void showName_showsName() {
-        String NAME = "test name";
+        String TITLE = "test title";
 
         Handler handler = new Handler(ApplicationProvider.getApplicationContext().getMainLooper());
-        handler.post(() -> SUT.showName(NAME));
+        handler.post(() -> SUT.showTitle(TITLE));
 
-        onView(withId(R.id.medicineEntry_name)).check(
-                matches(withText(NAME))
-        );
-    }
-
-    @Test
-    public void showForm_showsForm() {
-        String FORM = "test form";
-
-        Handler handler = new Handler(ApplicationProvider.getApplicationContext().getMainLooper());
-        handler.post(() -> SUT.showForm(FORM));
-
-        onView(withId(R.id.medicineEntry_form)).check(
-                matches(withText(FORM))
-        );
-    }
-
-    @Test
-    public void showCommonName_showsCommonName() {
-        String NAME = "test name";
-
-        Handler handler = new Handler(ApplicationProvider.getApplicationContext().getMainLooper());
-        handler.post(() -> SUT.showCommonName(NAME));
-
-        onView(withId(R.id.medicineEntry_commonName)).check(
-                matches(withText(NAME))
+        onView(withId(R.id.medicineEntry_title)).check(
+                matches(withText(TITLE))
         );
     }
 

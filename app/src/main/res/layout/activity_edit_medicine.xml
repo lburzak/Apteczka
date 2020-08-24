@@ -17,80 +17,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.google.android.material.textfield.TextInputEditText android:id="@+id/editMedicine_ean"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editMedicine_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:digits="0123456789"
-                    android:inputType="numberDecimal"
-                    android:maxLength="13"
-                    android:ems="13"
-                    android:hint="EAN code"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText android:id="@+id/editMedicine_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Name"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText android:id="@+id/editMedicine_commonName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Common name"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText android:id="@+id/editMedicine_potency"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Potency"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText android:id="@+id/editMedicine_form"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Form"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText android:id="@+id/editMedicine_packagingSize"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Packaging size"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText android:id="@+id/editMedicine_packagingUnit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Packaging unit"/>
+                    android:hint="Title"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
