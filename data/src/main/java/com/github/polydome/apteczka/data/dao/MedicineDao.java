@@ -17,14 +17,8 @@ public interface MedicineDao {
     @Insert
     Single<Long> create(MedicineEntity medicine);
 
-    @Query("SELECT EXISTS (SELECT * FROM medicine WHERE ean = :ean)")
-    Single<Boolean> exists(String ean);
-
     @Query("SELECT * FROM medicine WHERE id = :id")
     Maybe<MedicineEntity> findById(long id);
-
-    @Query("SELECT COUNT(*) FROM medicine")
-    Single<Integer> count();
 
     @Query("SELECT id FROM medicine")
     Observable<List<Long>> ids();

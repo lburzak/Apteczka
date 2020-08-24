@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import com.github.polydome.apteczka.data.dao.MedicineDao;
 import com.github.polydome.apteczka.data.entity.MedicineEntity;
 
-@Database(entities = {MedicineEntity.class}, version = 2)
+@Database(entities = {MedicineEntity.class}, version = 3)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract MedicineDao medicineDao();
 

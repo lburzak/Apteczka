@@ -24,10 +24,6 @@ public class RoomMedicineRepository implements MedicineRepository {
         return medicineDao.create(new MedicineEntity(medicine));
     }
 
-    public Single<Boolean> exists(String ean) {
-        return medicineDao.exists(ean);
-    }
-
     @Override
     public Maybe<Medicine> findById(long id) {
         return medicineDao.findById(id).map(new Function<MedicineEntity, Medicine>() {
@@ -36,10 +32,6 @@ public class RoomMedicineRepository implements MedicineRepository {
                 return medicineEntity.toMedicine();
             }
         });
-    }
-
-    public Single<Integer> count() {
-        return medicineDao.count();
     }
 
     public Observable<List<Long>> ids() {
