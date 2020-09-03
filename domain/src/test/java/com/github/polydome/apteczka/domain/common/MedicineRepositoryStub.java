@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;
 import io.reactivex.MaybeOnSubscribe;
@@ -65,5 +66,10 @@ public class MedicineRepositoryStub implements MedicineRepository {
         }
 
         return Observable.just(ids);
+    }
+
+    @Override
+    public Completable update(Medicine medicine) {
+        return Completable.complete();
     }
 }
