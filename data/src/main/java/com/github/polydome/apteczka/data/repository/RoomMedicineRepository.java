@@ -7,6 +7,7 @@ import com.github.polydome.apteczka.domain.repository.MedicineRepository;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -36,5 +37,10 @@ public class RoomMedicineRepository implements MedicineRepository {
 
     public Observable<List<Long>> ids() {
         return medicineDao.ids();
+    }
+
+    @Override
+    public Completable update(Medicine medicine) {
+        return null;
     }
 }
