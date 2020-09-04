@@ -2,14 +2,11 @@ package com.github.polydome.apteczka.data.entity;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
 import com.github.polydome.apteczka.domain.model.Product;
 
 @Entity(tableName = "product")
 public class ProductEntity {
-    @PrimaryKey(autoGenerate = true)
-    private final long id;
     private final String ean;
     private final String name;
     @ColumnInfo(name = "common_name")
@@ -21,8 +18,7 @@ public class ProductEntity {
     @ColumnInfo(name = "packaging_unit")
     private final String packagingUnit;
 
-    public ProductEntity(long id, String ean, String name, String commonName, String potency, String form, int packagingSize, String packagingUnit) {
-        this.id = id;
+    public ProductEntity(String ean, String name, String commonName, String potency, String form, int packagingSize, String packagingUnit) {
         this.ean = ean;
         this.name = name;
         this.commonName = commonName;
@@ -36,7 +32,6 @@ public class ProductEntity {
         this.commonName = product.getCommonName();
         this.ean = product.getEan();
         this.form = product.getForm();
-        this.id = product.getId();
         this.packagingSize = product.getPackagingSize();
         this.packagingUnit = product.getPackagingUnit();
         this.name = product.getName();
@@ -48,11 +43,39 @@ public class ProductEntity {
                 .commonName(commonName)
                 .ean(ean)
                 .form(form)
-                .id(id)
+                .id(0)
                 .name(name)
                 .packagingSize(packagingSize)
                 .packagingUnit(packagingUnit)
                 .potency(potency)
                 .build();
+    }
+
+    public String getEan() {
+        return ean;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCommonName() {
+        return commonName;
+    }
+
+    public String getPotency() {
+        return potency;
+    }
+
+    public String getForm() {
+        return form;
+    }
+
+    public int getPackagingSize() {
+        return packagingSize;
+    }
+
+    public String getPackagingUnit() {
+        return packagingUnit;
     }
 }

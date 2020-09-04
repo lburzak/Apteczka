@@ -3,6 +3,7 @@ package com.github.polydome.apteczka.data.repository;
 import com.github.polydome.apteczka.data.dao.MedicineDao;
 import com.github.polydome.apteczka.data.entity.MedicineEntity;
 import com.github.polydome.apteczka.domain.model.Medicine;
+import com.github.polydome.apteczka.domain.model.ProductLinkedMedicine;
 import com.github.polydome.apteczka.domain.repository.MedicineRepository;
 
 import java.util.List;
@@ -41,6 +42,14 @@ public class RoomMedicineRepository implements MedicineRepository {
 
     @Override
     public Completable update(Medicine medicine) {
-        return null;
+        MedicineEntity medicineEntity;
+
+        if (medicine instanceof ProductLinkedMedicine) {
+            medicineEntity = new MedicineEntity((ProductLinkedMedicine) medicine);
+        } else {
+            medicineEntity = new MedicineEntity(medicine);
+        }
+
+        return medicineDao.update(medicineEntity);
     }
 }

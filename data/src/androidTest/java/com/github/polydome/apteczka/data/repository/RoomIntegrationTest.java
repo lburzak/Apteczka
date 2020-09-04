@@ -9,6 +9,8 @@ import androidx.test.filters.MediumTest;
 import com.github.polydome.apteczka.data.dao.MedicineDao;
 import com.github.polydome.apteczka.data.db.AppDatabase;
 import com.github.polydome.apteczka.domain.model.Medicine;
+import com.github.polydome.apteczka.domain.model.Product;
+import com.github.polydome.apteczka.domain.model.ProductLinkedMedicine;
 
 import org.junit.After;
 import org.junit.Before;
@@ -16,6 +18,7 @@ import org.junit.Test;
 
 import java.util.List;
 
+import io.reactivex.CompletableSource;
 import io.reactivex.MaybeSource;
 import io.reactivex.SingleSource;
 import io.reactivex.functions.Function;
@@ -89,9 +92,47 @@ public class RoomIntegrationTest {
 
     @Test
     public void ids_1medicineInRepository_emitsListContainingMedicineId() {
-        TestObserver<List<Long>> test = roomMedicineRepository.ids().test();
         roomMedicineRepository.create(createMedicine(2L)).subscribe();
-        test.awaitCount(1).assertValue(ids -> ids.size() == 1 && ids.contains(2L));
+        TestObserver<List<Long>> test = roomMedicineRepository.ids().test();
+        test.awaitCount(1)
+                .assertValue(ids -> ids.size() == 1 && ids.contains(2L));
+    }
+
+    @Test
+    public void update_idExists_updatesMedicine() {
+        Medicine medicine = createMedicine(2L);
+        Medicine newMedicine = medicine.toBuilder()
+                .title("new title")
+                .build();
+        roomMedicineRepository.create(medicine)
+            .flatMapCompletable(l -> roomMedicineRepository.update(newMedicine))
+            .andThen(roomMedicineRepository.findById(2L))
+            .test()
+            .assertValue(newMedicine);
+    }
+
+    @Test
+    public void update_medicineWithProduct_updatesMedicine() {
+        long ID = 2L;
+        Medicine initialMedicine = createMedicine(ID);
+        ProductLinkedMedicine productMedicine = new ProductLinkedMedicine.Builder()
+                .id(ID)
+                .title("test title")
+                .product(createProduct(8L))
+                .build();
+
+        roomMedicineRepository.create(initialMedicine)
+            .flatMapCompletable(l -> roomMedicineRepository.update(productMedicine))
+            .andThen(roomMedicineRepository.findById(ID))
+            .test()
+            .assertValue(medicine -> medicine instanceof ProductLinkedMedicine
+                                  && medicine.equals(productMedicine));
+    }
+
+    private Product createProduct(long id) {
+        return Product.builder()
+                .id(id)
+                .build();
     }
 
     private Medicine createMedicine(long id) {
