@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Apteczka</string>
     <string name="separator_dot">·</string>
+    <string name="description_packagingIcon">Packaging icon</string>
+    <string name="productView_showLeaflet">show leaflet</string>
+    <string name="description_productLinkedRibbon">Product linked ribbon</string>
 </resources>

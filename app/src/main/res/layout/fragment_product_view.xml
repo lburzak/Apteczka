@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="6dp">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="44dp"
+            android:layout_height="match_parent"
+            android:padding="4dp"
+            android:src="@drawable/ic_product_linked_24"
+            android:background="@color/colorPrimary"
+            android:contentDescription="@string/description_productLinkedRibbon" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/productView_contentPadding">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/productView_name"
+                    tools:text="Clatra"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/productView_textSize"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="12dp"
+                    android:textSize="@dimen/productView_textSize"
+                    android:textStyle="normal"
+                    android:text="@string/separator_dot"/>
+
+                <TextView
+                    android:id="@+id/productView_form"
+                    tools:text="aerozol do nosa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/productView_textSize"
+                    android:textStyle="normal"
+                    android:text="@string/separator_dot"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/productView_linePadding">
+
+                <TextView
+                    android:id="@+id/productView_commonName"
+                    tools:text="Mometasoni furoas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/productView_textSize"
+                    android:textStyle="italic"
+                    android:text="@string/separator_dot"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:weightSum="2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingVertical="@dimen/productView_linePadding"
+                android:baselineAligned="false">
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/productView_packagingSize"
+                        tools:text="30"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/productView_textSizeSmall"
+                        android:textColor="@android:color/black"
+                        android:drawablePadding="@dimen/productView_propertyIconMargin"
+                        app:drawableLeftCompat="@drawable/ic_packaging_24" />
+
+                    <TextView
+                        android:id="@+id/productView_packagingUnit"
+                        tools:text="tabletki"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4sp"
+                        android:layout_marginStart="4sp"
+                        android:textSize="@dimen/productView_textSizeSmall"
+                        android:textColor="@android:color/black"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/productView_potency"
+                    tools:text="20 mg"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/productView_textSizeSmall"
+                    android:textColor="@android:color/black"
+                    app:drawableLeftCompat="@drawable/ic_potency_24"
+                    android:drawablePadding="@dimen/productView_propertyIconMargin"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/productView_linePadding"
+                android:gravity="end">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/productView_showLeaflet"
+                    android:text="@string/productView_showLeaflet"
+                    android:layout_width="180dp"
+                    android:layout_height="60dp"
+                    app:icon="@drawable/ic_baseline_receipt_24"
+                    app:strokeColor="@color/colorPrimary"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
