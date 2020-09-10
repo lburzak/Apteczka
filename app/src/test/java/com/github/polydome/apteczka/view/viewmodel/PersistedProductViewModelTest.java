@@ -5,6 +5,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import com.github.polydome.apteczka.domain.usecase.GetProductForMedicineUseCase;
 import com.github.polydome.apteczka.domain.usecase.structure.ProductData;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -21,7 +22,12 @@ public class PersistedProductViewModelTest {
     @Rule public InstantTaskExecutorRule executorRule = new InstantTaskExecutorRule();
 
     GetProductForMedicineUseCase getProductForMedicineUseCase = mock(GetProductForMedicineUseCase.class);
-    PersistedProductViewModel SUT = new PersistedProductViewModel(getProductForMedicineUseCase);
+    PersistedProductViewModel SUT;
+
+    @Before
+    public void setUp() {
+        SUT = new PersistedProductViewModel(getProductForMedicineUseCase);
+    }
 
     @Test
     public void medicineIdNeverChanged_fieldsEmpty() {
