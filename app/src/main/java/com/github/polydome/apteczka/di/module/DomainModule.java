@@ -3,6 +3,7 @@ package com.github.polydome.apteczka.di.module;
 import com.github.polydome.apteczka.domain.repository.MedicineRepository;
 import com.github.polydome.apteczka.domain.service.ProductEndpoint;
 import com.github.polydome.apteczka.domain.usecase.AddMedicineUseCase;
+import com.github.polydome.apteczka.domain.usecase.FetchProductDataUseCase;
 import com.github.polydome.apteczka.domain.usecase.GetMedicineDataUseCase;
 import com.github.polydome.apteczka.domain.usecase.GetProductForMedicineUseCase;
 import com.github.polydome.apteczka.domain.usecase.ObserveMedicineIdsUseCase;
@@ -30,5 +31,10 @@ public class DomainModule {
     @Provides
     public GetProductForMedicineUseCase getProductForMedicineUseCase(MedicineRepository medicineRepository) {
         return new GetProductForMedicineUseCase(medicineRepository);
+    }
+
+    @Provides
+    public FetchProductDataUseCase fetchProductDataUseCase(ProductEndpoint productEndpoint) {
+        return new FetchProductDataUseCase(productEndpoint);
     }
 }

@@ -16,6 +16,7 @@ public class MockPreviewProductViewModel extends PreviewProductViewModel {
     private final MutableLiveData<String> potency = new MutableLiveData<>("");
 
     public MockPreviewProductViewModel() {
+        super(fetchProductDataUseCase);
     }
 
     public void emitName(String name) {
