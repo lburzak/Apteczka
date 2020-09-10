@@ -17,11 +17,11 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ProductViewModelTest {
+public class PersistedProductViewModelTest {
     @Rule public InstantTaskExecutorRule executorRule = new InstantTaskExecutorRule();
 
     GetProductForMedicineUseCase getProductForMedicineUseCase = mock(GetProductForMedicineUseCase.class);
-    ProductViewModel SUT = new ProductViewModel(getProductForMedicineUseCase);
+    PersistedProductViewModel SUT = new PersistedProductViewModel(getProductForMedicineUseCase);
 
     @Test
     public void medicineIdNeverChanged_fieldsEmpty() {
@@ -49,7 +49,7 @@ public class ProductViewModelTest {
         when(getProductForMedicineUseCase.getProductData(MEDICINE_ID))
                 .thenReturn(Single.just(productData));
 
-        SUT.changeMedicineId(MEDICINE_ID);
+        SUT.setMedicineId(MEDICINE_ID);
 
         assertThat(SUT.getName().getValue(), equalTo(productData.getName()));
         assertThat(SUT.getCommonName().getValue(), equalTo(productData.getCommonName()));
@@ -77,7 +77,7 @@ public class ProductViewModelTest {
                 .thenReturn(Single.just(productData).delay(20, TimeUnit.MILLISECONDS));
 
         // when
-        SUT.changeMedicineId(MEDICINE_ID);
+        SUT.setMedicineId(MEDICINE_ID);
         SUT.onCleared();
 
         Thread.sleep(25);

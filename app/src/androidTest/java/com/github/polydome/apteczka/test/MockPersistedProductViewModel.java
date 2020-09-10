@@ -3,19 +3,20 @@ package com.github.polydome.apteczka.test;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.github.polydome.apteczka.view.viewmodel.ProductViewModel;
+import com.github.polydome.apteczka.view.viewmodel.PersistedProductViewModel;
 
-public class MockProductViewModel extends ProductViewModel {
+public class MockPersistedProductViewModel extends PersistedProductViewModel {
+    private long medicineId;
+
     private final MutableLiveData<String> name = new MutableLiveData<>("");
     private final MutableLiveData<String> commonName = new MutableLiveData<>("");
     private final MutableLiveData<String> form = new MutableLiveData<>("");
     private final MutableLiveData<String> packagingSize = new MutableLiveData<>("");
     private final MutableLiveData<String> packagingUnit = new MutableLiveData<>("");
     private final MutableLiveData<String> potency = new MutableLiveData<>("");
-    private long medicineId;
 
-    public MockProductViewModel() {
-        super(getProductForMedicineUseCase);
+    public MockPersistedProductViewModel() {
+        super(null);
     }
 
     public void emitName(String name) {
@@ -40,15 +41,6 @@ public class MockProductViewModel extends ProductViewModel {
 
     public void emitPotency(String potency) {
         this.potency.postValue(potency);
-    }
-
-    @Override
-    public void changeMedicineId(long medicineId) {
-        this.medicineId = medicineId;
-    }
-
-    public long getMedicineId() {
-        return medicineId;
     }
 
     @Override
@@ -79,5 +71,14 @@ public class MockProductViewModel extends ProductViewModel {
     @Override
     public LiveData<String> getPotency() {
         return potency;
+    }
+
+    @Override
+    public void setMedicineId(long medicineId) {
+        this.medicineId = medicineId;
+    }
+
+    public long getMedicineId() {
+        return medicineId;
     }
 }

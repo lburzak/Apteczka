@@ -12,12 +12,15 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.github.polydome.apteczka.databinding.FragmentProductViewBinding;
 import com.github.polydome.apteczka.view.ui.common.PresentationComponentProvider;
+import com.github.polydome.apteczka.view.viewmodel.PersistedProductViewModel;
+import com.github.polydome.apteczka.view.viewmodel.PreviewProductViewModel;
 import com.github.polydome.apteczka.view.viewmodel.ProductViewModel;
 
 import javax.inject.Inject;
 
 public class ProductFragment extends Fragment {
-    public static final String BUNDLE_KEY_MEDICINE_ID = "MEDICINE_ID";
+    public static final String BUNDLE_KEY_MEDICINE_ID = "com.github.polydome.apteczka.KEY_MEDICINE_ID";
+    public static final String BUNDLE_KEY_EAN = "com.github.polydome.apteczka.KEY_EAN";
 
     @Inject public ViewModelProvider.Factory viewModelFactory;
 
@@ -32,11 +35,17 @@ public class ProductFragment extends Fragment {
                 .getPresentationComponent()
                 .inject(this);
 
-        viewModel =
-                new ViewModelProvider(this, viewModelFactory).get(ProductViewModel.class);
-
         long medicineId = retrieveMedicineId();
-        viewModel.changeMedicineId(medicineId);
+
+        if (medicineId > 0) {
+            viewModel = new ViewModelProvider(this, viewModelFactory)
+                    .get(PersistedProductViewModel.class);
+            ((PersistedProductViewModel) viewModel).setMedicineId(medicineId);
+        } else {
+            viewModel = new ViewModelProvider(this, viewModelFactory)
+                    .get(PreviewProductViewModel.class);
+            ((PreviewProductViewModel) viewModel).setEan(retrieveEan());
+        }
     }
 
     @Nullable
@@ -51,6 +60,13 @@ public class ProductFragment extends Fragment {
     private long retrieveMedicineId() {
         if (getArguments() != null) {
             return getArguments().getLong(BUNDLE_KEY_MEDICINE_ID);
+        } else
+            throw new IllegalArgumentException("Medicine ID not specified");
+    }
+
+    private String retrieveEan() {
+        if (getArguments() != null) {
+            return getArguments().getString(BUNDLE_KEY_EAN);
         } else
             throw new IllegalArgumentException("Medicine ID not specified");
     }

@@ -13,10 +13,11 @@ import com.github.polydome.apteczka.R;
 import com.github.polydome.apteczka.di.component.ApplicationComponent;
 import com.github.polydome.apteczka.di.component.DaggerApplicationComponent;
 import com.github.polydome.apteczka.di.module.ApplicationModule;
-import com.github.polydome.apteczka.test.MockProductViewModel;
-import com.github.polydome.apteczka.view.viewmodel.ProductViewModel;
+import com.github.polydome.apteczka.test.MockPersistedProductViewModel;
+import com.github.polydome.apteczka.test.MockPreviewProductViewModel;
+import com.github.polydome.apteczka.view.viewmodel.PersistedProductViewModel;
+import com.github.polydome.apteczka.view.viewmodel.PreviewProductViewModel;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,7 +36,8 @@ import static org.hamcrest.Matchers.equalTo;
 @SmallTest
 @RunWith(AndroidJUnit4.class)
 public class ProductFragmentTest {
-    MockProductViewModel mockProductViewModel = new MockProductViewModel();
+    MockPersistedProductViewModel mockPersistedProductViewModel = new MockPersistedProductViewModel();
+    MockPreviewProductViewModel mockPreviewProductViewModel = new MockPreviewProductViewModel();
 
     @Rule public DaggerMockRule<ApplicationComponent> rule =
             new DaggerMockRule<>(ApplicationComponent.class)
@@ -49,36 +51,57 @@ public class ProductFragmentTest {
     @Mock ViewModelProvider.Factory viewModelFactoryMock;
 
     final long MEDICINE_ID = 1;
+    final String EAN = "92717227161782";
 
-    @Before
-    public void startFragment() {
-        Mockito.when(viewModelFactoryMock.create(ProductViewModel.class)).thenReturn(mockProductViewModel);
+    public void startFragmentWithMedicineId() {
+        Mockito.when(viewModelFactoryMock.create(PersistedProductViewModel.class)).thenReturn(mockPersistedProductViewModel);
 
         Bundle bundle = new Bundle();
         bundle.putLong(ProductFragment.BUNDLE_KEY_MEDICINE_ID, MEDICINE_ID);
         FragmentScenario.launchInContainer(ProductFragment.class, bundle, R.style.AppTheme, null);
     }
 
-    @Test
-    public void updatesViewModelWithMedicineId() {
-        assertThat(mockProductViewModel.getMedicineId(), equalTo(MEDICINE_ID));
+    public void startFragmentWithEan() {
+        Mockito.when(viewModelFactoryMock.create(PreviewProductViewModel.class)).thenReturn(mockPreviewProductViewModel);
+
+        Bundle bundle = new Bundle();
+        bundle.putString(ProductFragment.BUNDLE_KEY_EAN, EAN);
+        FragmentScenario.launchInContainer(ProductFragment.class, bundle, R.style.AppTheme, null);
     }
 
     @Test
-    public void showsName() {
-        mockProductViewModel.emitName("test name");
+    public void persistedProduct_updatesViewModelWithMedicineId() {
+        startFragmentWithMedicineId();
+
+        assertThat(mockPersistedProductViewModel.getMedicineId(), equalTo(MEDICINE_ID));
+    }
+
+    @Test
+    public void previewProduct_updatesViewModelWithEan() {
+        startFragmentWithEan();
+
+        assertThat(mockPreviewProductViewModel.getEan(), equalTo(EAN));
+    }
+
+    @Test
+    public void persistedProduct_showsName() {
+        startFragmentWithMedicineId();
+
+        mockPersistedProductViewModel.emitName("test name");
 
         onView(withId(R.id.productView_name)).check(matches(withText("test name")));
     }
 
     @Test
-    public void showsAllProperties() {
-        mockProductViewModel.emitName("test name");
-        mockProductViewModel.emitCommonName("test common name");
-        mockProductViewModel.emitForm("test form");
-        mockProductViewModel.emitPackagingSize("82");
-        mockProductViewModel.emitPackagingUnit("test unit");
-        mockProductViewModel.emitPotency("test potency");
+    public void persistedProduct_showsAllProperties() {
+        startFragmentWithMedicineId();
+
+        mockPersistedProductViewModel.emitName("test name");
+        mockPersistedProductViewModel.emitCommonName("test common name");
+        mockPersistedProductViewModel.emitForm("test form");
+        mockPersistedProductViewModel.emitPackagingSize("82");
+        mockPersistedProductViewModel.emitPackagingUnit("test unit");
+        mockPersistedProductViewModel.emitPotency("test potency");
 
         onView(withId(R.id.productView_name)).check(matches(withText("test name")));
         onView(withId(R.id.productView_commonName)).check(matches(withText("test common name")));
