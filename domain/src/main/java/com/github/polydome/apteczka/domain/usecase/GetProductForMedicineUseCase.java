@@ -20,7 +20,7 @@ public class GetProductForMedicineUseCase {
         this.medicineRepository = medicineRepository;
     }
 
-    Single<ProductData> getProductData(final long medicineId) {
+    public Single<ProductData> getProductData(final long medicineId) {
         return medicineRepository.findById(medicineId)
                 .switchIfEmpty(Maybe.<Medicine>error(new NoSuchMedicineException(medicineId)))
                 .flatMapSingle(new Function<Medicine, SingleSource<ProductLinkedMedicine>>() {

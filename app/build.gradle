@@ -91,6 +91,9 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0-M1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0-M1'
 
+    testImplementation "junit:junit:4.13"
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
+
     androidTestImplementation "de.mannodermaus.junit5:android-test-core:1.2.0"
     androidTestRuntimeOnly "de.mannodermaus.junit5:android-test-runner:1.2.0"
 

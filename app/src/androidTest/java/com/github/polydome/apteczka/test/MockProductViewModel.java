@@ -14,6 +14,10 @@ public class MockProductViewModel extends ProductViewModel {
     private final MutableLiveData<String> potency = new MutableLiveData<>("");
     private long medicineId;
 
+    public MockProductViewModel() {
+        super(getProductForMedicineUseCase);
+    }
+
     public void emitName(String name) {
         this.name.postValue(name);
     }

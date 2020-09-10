@@ -4,6 +4,7 @@ import com.github.polydome.apteczka.domain.repository.MedicineRepository;
 import com.github.polydome.apteczka.domain.service.ProductEndpoint;
 import com.github.polydome.apteczka.domain.usecase.AddMedicineUseCase;
 import com.github.polydome.apteczka.domain.usecase.GetMedicineDataUseCase;
+import com.github.polydome.apteczka.domain.usecase.GetProductForMedicineUseCase;
 import com.github.polydome.apteczka.domain.usecase.ObserveMedicineIdsUseCase;
 
 import dagger.Module;
@@ -24,5 +25,10 @@ public class DomainModule {
     @Provides
     public ObserveMedicineIdsUseCase observeMedicineIdsUseCase(MedicineRepository medicineRepository) {
         return new ObserveMedicineIdsUseCase(medicineRepository);
+    }
+
+    @Provides
+    public GetProductForMedicineUseCase getProductForMedicineUseCase(MedicineRepository medicineRepository) {
+        return new GetProductForMedicineUseCase(medicineRepository);
     }
 }
