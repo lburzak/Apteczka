@@ -24,6 +24,8 @@ public class MedicineEditorViewModelTest {
     FetchProductDataUseCase fetchProductDataUseCase = mock(FetchProductDataUseCase.class);
     MedicineEditorViewModel SUT;
 
+    final String EXISTING_PRODUCT_EAN = "92716282736152";
+
     @Before
     public void setUp() {
         SUT = new MedicineEditorViewModel(fetchProductDataUseCase);
@@ -32,7 +34,6 @@ public class MedicineEditorViewModelTest {
     @Test
     public void onEanInput_productExists_liveDataReflectsProduct() {
         // given
-        String EXISTING_PRODUCT_EAN = "92716282736152";
         ProductData PRODUCT_DATA = ProductData.builder()
                 .potency("test potency")
                 .packagingUnit("test unit")
@@ -44,8 +45,6 @@ public class MedicineEditorViewModelTest {
 
         when(fetchProductDataUseCase.byEan(EXISTING_PRODUCT_EAN))
                 .thenReturn(Maybe.just(PRODUCT_DATA));
-
-
 
         // when
         SUT.onEanInput(EXISTING_PRODUCT_EAN);
@@ -59,6 +58,36 @@ public class MedicineEditorViewModelTest {
         assertThat(SUT.getName().getValue(), equalTo(PRODUCT_DATA.getName()));
         assertThat(SUT.getEan().getValue(), equalTo(EXISTING_PRODUCT_EAN));
         assertThat(SUT.productExists().getValue(), equalTo(true));
+    }
+
+    @Test
+    public void onEanCleared_liveDataReflectsMissingProduct() {
+        // given
+        ProductData PRODUCT_DATA = ProductData.builder()
+                .potency("test potency")
+                .packagingUnit("test unit")
+                .packagingSize(12)
+                .form("test form")
+                .commonName("test common name")
+                .name("test name")
+                .build();
+
+        when(fetchProductDataUseCase.byEan(EXISTING_PRODUCT_EAN))
+                .thenReturn(Maybe.just(PRODUCT_DATA));
+
+        // when
+        SUT.onEanInput(EXISTING_PRODUCT_EAN);
+        SUT.onEanCleared();
+
+        // then
+        assertThat(SUT.getCommonName().getValue(), equalTo(""));
+        assertThat(SUT.getPotency().getValue(), equalTo(""));
+        assertThat(SUT.getPackagingUnit().getValue(), equalTo(""));
+        assertThat(SUT.getPackagingSize().getValue(), equalTo(""));
+        assertThat(SUT.getForm().getValue(), equalTo(""));
+        assertThat(SUT.getName().getValue(), equalTo(""));
+        assertThat(SUT.getEan().getValue(), equalTo(""));
+        assertThat(SUT.productExists().getValue(), equalTo(false));
     }
 
     @Test

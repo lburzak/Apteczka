@@ -36,6 +36,11 @@ public class MedicineEditorViewModel extends ViewModel implements EanInputListen
     }
 
     @Override
+    public void onEanCleared() {
+        clearProductData();
+    }
+
+    @Override
     public LiveData<String> getName() {
         return name;
     }
@@ -89,5 +94,16 @@ public class MedicineEditorViewModel extends ViewModel implements EanInputListen
         packagingSize.postValue(String.valueOf(productData.getPackagingSize()));
         productExistence.postValue(true);
         this.ean.postValue(ean);
+    }
+
+    private void clearProductData() {
+        name.postValue("");
+        commonName.postValue("");
+        form.postValue("");
+        potency.postValue("");
+        packagingUnit.postValue("");
+        packagingSize.postValue("");
+        productExistence.postValue(false);
+        this.ean.postValue("");
     }
 }
