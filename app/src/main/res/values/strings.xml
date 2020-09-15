@@ -4,4 +4,7 @@
     <string name="description_packagingIcon">Packaging icon</string>
     <string name="productView_showLeaflet">show leaflet</string>
     <string name="description_productLinkedRibbon">Product linked ribbon</string>
+    <string name="productPrompt_submit">Submit</string>
+    <string name="productPrompt_scan">Scan code</string>
+    <string name="productPrompt_enterCode">Enter EAN code</string>
 </resources>

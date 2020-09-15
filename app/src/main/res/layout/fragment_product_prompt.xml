@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:layout_gravity="bottom"
+    android:padding="@dimen/productPrompt_layoutPadding">
+
+    <TextView
+        tools:text="Link medicinal product"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/productPrompt_sectionSpacing"
+        android:textSize="18sp"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:hint="@string/productPrompt_enterCode"
+        android:drawableLeft="@drawable/ic_menu_barcode"
+        android:drawableTint="@android:color/black"
+        android:drawablePadding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="false"
+        android:inputType="numberDecimal"
+        android:drawableStart="@drawable/ic_menu_barcode" />
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/productPrompt_sectionSpacing"
+        android:weightSum="2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/productPrompt_buttonHeight">
+
+        <com.google.android.material.button.MaterialButton
+            android:text="@string/productPrompt_scan"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:icon="@drawable/ic_baseline_photo_camera_24"
+            app:strokeColor="@color/colorPrimary"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+        <Space
+            android:layout_width="@dimen/productPrompt_buttonSpacing"
+            android:layout_height="match_parent"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:text="@string/productPrompt_submit"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:icon="@drawable/ic_baseline_link_24"/>
+
+    </LinearLayout>
+
+</LinearLayout>

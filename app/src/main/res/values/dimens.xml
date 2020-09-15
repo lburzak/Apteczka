@@ -6,4 +6,8 @@
     <dimen name="productView_linePadding">6dp</dimen>
     <dimen name="productView_propertyIconSize">24dp</dimen>
     <dimen name="productView_propertyIconMargin">12dp</dimen>
+    <dimen name="productPrompt_buttonSpacing">30dp</dimen>
+    <dimen name="productPrompt_sectionSpacing">20dp</dimen>
+    <dimen name="productPrompt_layoutPadding">20dp</dimen>
+    <dimen name="productPrompt_buttonHeight">56dp</dimen>
 </resources>
