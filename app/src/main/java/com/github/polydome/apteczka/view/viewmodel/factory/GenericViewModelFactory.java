@@ -4,30 +4,25 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.github.polydome.apteczka.view.viewmodel.PersistedProductViewModel;
-import com.github.polydome.apteczka.view.viewmodel.PreviewProductViewModel;
+import com.github.polydome.apteczka.view.ui.medicineeditor.MedicineEditorViewModel;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
 
 public class GenericViewModelFactory implements ViewModelProvider.Factory {
-    private final Provider<PersistedProductViewModel> persistedProductViewModelProvider;
-    private final Provider<PreviewProductViewModel> previewProductViewModelProvider;
+    private final Provider<MedicineEditorViewModel> medicineEditorViewModelProvider;
 
     @Inject
-    public GenericViewModelFactory(Provider<PersistedProductViewModel> persistedProductViewModelProvider, Provider<PreviewProductViewModel> previewProductViewModelProvider) {
-        this.persistedProductViewModelProvider = persistedProductViewModelProvider;
-        this.previewProductViewModelProvider = previewProductViewModelProvider;
+    public GenericViewModelFactory(Provider<MedicineEditorViewModel> medicineEditorViewModelProvider) {
+        this.medicineEditorViewModelProvider = medicineEditorViewModelProvider;
     }
 
     @SuppressWarnings("unchecked")
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if (modelClass == PersistedProductViewModel.class) {
-            return (T) persistedProductViewModelProvider.get();
-        } else if (modelClass == PreviewProductViewModel.class) {
-            return (T) previewProductViewModelProvider.get();
+        if (modelClass == MedicineEditorViewModel.class) {
+            return (T) medicineEditorViewModelProvider.get();
         } else {
             throw new RuntimeException(String.format("Unsupported ViewModel: %s", modelClass.toString()));
         }

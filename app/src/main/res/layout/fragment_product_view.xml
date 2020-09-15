@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="viewModel"
-            type="com.github.polydome.apteczka.view.viewmodel.ProductViewModel" />
+            name="model"
+            type="com.github.polydome.apteczka.view.ui.medicineeditor.ProductModel" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -41,7 +41,7 @@
 
                     <TextView
                         android:id="@+id/productView_name"
-                        android:text="@{viewModel.name}"
+                        android:text="@{model.name}"
                         tools:text="Clatra"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
                     <TextView
                         android:id="@+id/productView_form"
                         tools:text="aerozol do nosa"
-                        android:text="@{viewModel.form}"
+                        android:text="@{model.form}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/productView_textSize"
@@ -77,7 +77,7 @@
                     <TextView
                         android:id="@+id/productView_commonName"
                         tools:text="Mometasoni furoas"
-                        android:text="@{viewModel.commonName}"
+                        android:text="@{model.commonName}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/productView_textSize"
@@ -102,7 +102,7 @@
                         <TextView
                             android:id="@+id/productView_packagingSize"
                             tools:text="30"
-                            android:text="@{viewModel.packagingSize}"
+                            android:text="@{model.packagingSize}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/productView_textSizeSmall"
@@ -113,7 +113,7 @@
                         <TextView
                             android:id="@+id/productView_packagingUnit"
                             tools:text="tabletki"
-                            android:text="@{viewModel.packagingUnit}"
+                            android:text="@{model.packagingUnit}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="4sp"
@@ -126,7 +126,7 @@
                     <TextView
                         android:id="@+id/productView_potency"
                         tools:text="20 mg"
-                        android:text="@{viewModel.potency}"
+                        android:text="@{model.potency}"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
