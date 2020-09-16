@@ -1,13 +1,17 @@
 package com.github.polydome.apteczka.view.ui;
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.fragment.app.FragmentFactory;
 import androidx.fragment.app.testing.FragmentScenario;
 import androidx.lifecycle.MutableLiveData;
 
 import com.github.polydome.apteczka.R;
+import com.github.polydome.apteczka.test.MockProductStatusOwner;
 import com.github.polydome.apteczka.view.ui.medicineeditor.EanInputListener;
+import com.github.polydome.apteczka.view.ui.medicineeditor.ProductStatus;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -28,7 +32,15 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProductPromptFragmentTest {
+    @Rule public InstantTaskExecutorRule executorRule = new InstantTaskExecutorRule();
+
     @Mock EanInputListener inputListener;
+    MockProductStatusOwner mockProductStatusOwner;
+
+    @Before
+    public void instantiateMocks() {
+        mockProductStatusOwner = new MockProductStatusOwner(ProductStatus.EMPTY);
+    }
 
     @Before
     public void showFragment() {
@@ -41,11 +53,14 @@ public class ProductPromptFragmentTest {
     }
 
     @Test
-    public void submitEanCode_productNotExists_callsOnEanInput() {
+    public void submitEanCode_productStatusEmpty_callsOnEanInput() {
+        // when
         String EAN = "923612763512653";
-        MutableLiveData<String> eanInput = new MutableLiveData<>();
 
+        MutableLiveData<String> eanInput = new MutableLiveData<>();
         when(inputListener.getEan()).thenReturn(eanInput);
+
+        mockProductStatusOwner.setStatus(ProductStatus.EMPTY);
 
         onView(withId(R.id.productPrompt_eanInput)).perform(typeText(EAN));
         onView(withId(R.id.productPrompt_submit)).perform(click());
