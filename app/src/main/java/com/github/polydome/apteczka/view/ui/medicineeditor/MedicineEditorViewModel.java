@@ -28,10 +28,10 @@ public class MedicineEditorViewModel extends ViewModel implements EanInputListen
     }
 
     @Override
-    public void onEanInput(String ean) {
+    public void onEanInput() {
         comp.add(
-            fetchProductDataUseCase.byEan(ean)
-                    .subscribe(productData -> postProductData(ean, productData))
+            fetchProductDataUseCase.byEan(ean.getValue())
+                    .subscribe(this::postProductData)
         );
     }
 
@@ -85,7 +85,7 @@ public class MedicineEditorViewModel extends ViewModel implements EanInputListen
         comp.dispose();
     }
 
-    private void postProductData(String ean, ProductData productData) {
+    private void postProductData(ProductData productData) {
         name.postValue(productData.getName());
         commonName.postValue(productData.getCommonName());
         form.postValue(productData.getForm());
@@ -93,7 +93,6 @@ public class MedicineEditorViewModel extends ViewModel implements EanInputListen
         packagingUnit.postValue(productData.getPackagingUnit());
         packagingSize.postValue(String.valueOf(productData.getPackagingSize()));
         productExistence.postValue(true);
-        this.ean.postValue(ean);
     }
 
     private void clearProductData() {

@@ -21,11 +21,6 @@ public class StubProductModel implements ProductModel {
     }
 
     @Override
-    public LiveData<String> getEan() {
-        return ean;
-    }
-
-    @Override
     public LiveData<String> getName() {
         return name;
     }
