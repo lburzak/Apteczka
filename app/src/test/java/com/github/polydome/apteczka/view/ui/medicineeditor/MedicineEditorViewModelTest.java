@@ -47,7 +47,8 @@ public class MedicineEditorViewModelTest {
                 .thenReturn(Maybe.just(PRODUCT_DATA));
 
         // when
-        SUT.onEanInput(EXISTING_PRODUCT_EAN);
+        SUT.getEan().setValue(EXISTING_PRODUCT_EAN);
+        SUT.onEanInputFinished();
 
         // then
         assertThat(SUT.getCommonName().getValue(), equalTo(PRODUCT_DATA.getCommonName()));
@@ -76,7 +77,8 @@ public class MedicineEditorViewModelTest {
                 .thenReturn(Maybe.just(PRODUCT_DATA));
 
         // when
-        SUT.onEanInput(EXISTING_PRODUCT_EAN);
+        SUT.getEan().setValue(EXISTING_PRODUCT_EAN);
+        SUT.onEanInputFinished();
         SUT.onEanCleared();
 
         // then
@@ -107,7 +109,8 @@ public class MedicineEditorViewModelTest {
                 .thenReturn(Maybe.just(PRODUCT_DATA).delay(20, TimeUnit.MILLISECONDS));
 
         // when
-        SUT.onEanInput(EXISTING_PRODUCT_EAN);
+        SUT.getEan().setValue(EXISTING_PRODUCT_EAN);
+        SUT.onEanInputFinished();
         SUT.onCleared();
 
         // then
@@ -121,7 +124,7 @@ public class MedicineEditorViewModelTest {
         assertThat(SUT.getPackagingSize().getValue(), equalTo(""));
         assertThat(SUT.getForm().getValue(), equalTo(""));
         assertThat(SUT.getName().getValue(), equalTo(""));
-        assertThat(SUT.getEan().getValue(), equalTo(""));
+        assertThat(SUT.getEan().getValue(), equalTo(EXISTING_PRODUCT_EAN));
         assertThat(SUT.productExists().getValue(), equalTo(false));
     }
 }
