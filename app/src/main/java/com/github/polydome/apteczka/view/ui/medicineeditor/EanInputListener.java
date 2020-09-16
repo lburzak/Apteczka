@@ -4,6 +4,6 @@ import androidx.lifecycle.MutableLiveData;
 
 public interface EanInputListener {
     MutableLiveData<String> getEan();
-    void onEanInput();
+    void onEanInputFinished();
     void onEanCleared();
 }

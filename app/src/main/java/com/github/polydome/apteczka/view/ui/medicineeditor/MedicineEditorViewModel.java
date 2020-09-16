@@ -28,7 +28,7 @@ public class MedicineEditorViewModel extends ViewModel implements EanInputListen
     }
 
     @Override
-    public void onEanInput() {
+    public void onEanInputFinished() {
         comp.add(
             fetchProductDataUseCase.byEan(ean.getValue())
                     .subscribe(this::postProductData)

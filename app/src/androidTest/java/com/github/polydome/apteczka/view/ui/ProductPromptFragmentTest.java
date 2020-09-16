@@ -51,6 +51,6 @@ public class ProductPromptFragmentTest {
         onView(withId(R.id.productPrompt_submit)).perform(click());
 
         assertThat(eanInput.getValue(), equalTo(EAN));
-        verify(inputListener, VerificationModeFactory.times(1)).onEanInput();
+        verify(inputListener, VerificationModeFactory.times(1)).onEanInputFinished();
     }
 }

@@ -58,7 +58,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/productPrompt_submit"
-                android:onClick="@{() -> inputListener.onEanInput()}"
+                android:onClick="@{() -> inputListener.onEanInputFinished()}"
                 android:text="@string/productPrompt_submit"
                 android:layout_weight="1"
                 android:layout_width="0dp"
