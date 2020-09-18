@@ -38,23 +38,20 @@ public class ProductPromptFragmentTest {
     MockProductStatusOwner mockProductStatusOwner;
 
     @Before
-    public void instantiateMocks() {
-        mockProductStatusOwner = new MockProductStatusOwner(ProductStatus.EMPTY);
-    }
-
-    @Before
     public void showFragment() {
+        mockProductStatusOwner = new MockProductStatusOwner(ProductStatus.EMPTY);
+
         FragmentFactory factory = mock(FragmentFactory.class);
 
         when(factory.instantiate(any(), eq(ProductPromptFragment.class.getName())))
-                .thenReturn(new ProductPromptFragment(inputListener));
+                .thenReturn(new ProductPromptFragment(inputListener, mockProductStatusOwner));
 
         FragmentScenario.launchInContainer(ProductPromptFragment.class, null, R.style.AppTheme, factory);
     }
 
     @Test
     public void submitEanCode_productStatusEmpty_callsOnEanInput() {
-        // when
+        // given
         String EAN = "923612763512653";
 
         MutableLiveData<String> eanInput = new MutableLiveData<>();
@@ -62,10 +59,24 @@ public class ProductPromptFragmentTest {
 
         mockProductStatusOwner.setStatus(ProductStatus.EMPTY);
 
+        // when
         onView(withId(R.id.productPrompt_eanInput)).perform(typeText(EAN));
         onView(withId(R.id.productPrompt_submit)).perform(click());
 
+        // then
         assertThat(eanInput.getValue(), equalTo(EAN));
         verify(inputListener, VerificationModeFactory.times(1)).onEanInputFinished();
+    }
+
+    @Test
+    public void unlinkProduct_productStatusLinked_callsOnEanInput() {
+        // given
+        mockProductStatusOwner.setStatus(ProductStatus.LINKED);
+
+        // when
+        onView(withId(R.id.productPrompt_unlink)).perform(click());
+
+        // then
+        verify(inputListener, VerificationModeFactory.times(1)).onEanCleared();
     }
 }

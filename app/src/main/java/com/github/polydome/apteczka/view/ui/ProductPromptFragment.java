@@ -11,12 +11,15 @@ import androidx.fragment.app.Fragment;
 
 import com.github.polydome.apteczka.databinding.FragmentProductPromptBinding;
 import com.github.polydome.apteczka.view.ui.medicineeditor.EanInputListener;
+import com.github.polydome.apteczka.view.ui.medicineeditor.ProductStatus;
 
 public class ProductPromptFragment extends Fragment {
     private final EanInputListener inputListener;
+    private final ProductStatus.Owner productStatusOwner;
 
-    public ProductPromptFragment(EanInputListener inputListener) {
+    public ProductPromptFragment(EanInputListener inputListener, ProductStatus.Owner productStatusOwner) {
         this.inputListener = inputListener;
+        this.productStatusOwner = productStatusOwner;
     }
 
     @Nullable
@@ -24,6 +27,7 @@ public class ProductPromptFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         FragmentProductPromptBinding binding = FragmentProductPromptBinding.inflate(inflater, container, false);
         binding.setInputListener(inputListener);
+        binding.setProductStatus(productStatusOwner.getProductStatus());
         return binding.getRoot();
     }
 }

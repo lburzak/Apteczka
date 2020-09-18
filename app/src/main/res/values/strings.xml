@@ -7,4 +7,5 @@
     <string name="productPrompt_submit">Submit</string>
     <string name="productPrompt_scan">Scan code</string>
     <string name="productPrompt_enterCode">Enter EAN code</string>
+    <string name="productPrompt_unlink">Unlink</string>
 </resources>

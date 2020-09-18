@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+        <import type="android.view.View"/>
+        <import type="com.github.polydome.apteczka.view.ui.medicineeditor.ProductStatus"/>
         <variable
             name="inputListener"
             type="com.github.polydome.apteczka.view.ui.medicineeditor.EanInputListener" />
+        <variable
+            name="productStatus"
+            type="androidx.lifecycle.LiveData&lt;com.github.polydome.apteczka.view.ui.medicineeditor.ProductStatus&gt;" />
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -45,25 +49,36 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/productPrompt_scan"
                 android:text="@string/productPrompt_scan"
+                android:visibility="@{productStatus == ProductStatus.LINKED ? View.GONE : View.VISIBLE}"
                 android:layout_weight="1"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:icon="@drawable/ic_baseline_photo_camera_24"
                 app:strokeColor="@color/colorPrimary"
+                android:layout_marginRight="@dimen/productPrompt_buttonSpacing"
+                android:layout_marginEnd="@dimen/productPrompt_buttonSpacing"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
-
-            <Space
-                android:layout_width="@dimen/productPrompt_buttonSpacing"
-                android:layout_height="match_parent"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/productPrompt_submit"
                 android:onClick="@{() -> inputListener.onEanInputFinished()}"
                 android:text="@string/productPrompt_submit"
+                android:visibility="@{productStatus == ProductStatus.LINKED ? View.GONE : View.VISIBLE}"
                 android:layout_weight="1"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:icon="@drawable/ic_baseline_link_24"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/productPrompt_unlink"
+                android:onClick="@{() -> inputListener.onEanCleared()}"
+                android:text="@string/productPrompt_unlink"
+                android:visibility="@{productStatus == ProductStatus.LINKED ? View.VISIBLE : View.GONE}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:icon="@drawable/ic_baseline_link_off_24"
+                tools:visibility="gone"/>
 
         </LinearLayout>
 
