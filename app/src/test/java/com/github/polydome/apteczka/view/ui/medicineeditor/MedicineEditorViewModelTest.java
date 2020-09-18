@@ -10,6 +10,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 
 import io.reactivex.Maybe;
 
@@ -126,5 +127,78 @@ public class MedicineEditorViewModelTest {
         assertThat(SUT.getName().getValue(), equalTo(""));
         assertThat(SUT.getEan().getValue(), equalTo(EXISTING_PRODUCT_EAN));
         assertThat(SUT.productExists().getValue(), equalTo(false));
+    }
+
+    @Test
+    public void onEatInput_productExists_productStatusReflectsSequentialChanges() throws InterruptedException {
+        ProductStatus statusBeforeFetch;
+        AtomicReference<ProductStatus> statusDuringFetch = new AtomicReference<>();
+        AtomicReference<ProductStatus> statusAfterFetch = new AtomicReference<>();
+
+        // given
+        ProductData PRODUCT_DATA = ProductData.builder()
+                .potency("test potency")
+                .packagingUnit("test unit")
+                .packagingSize(12)
+                .form("test form")
+                .commonName("test common name")
+                .name("test name")
+                .build();
+
+        int FETCH_DURATION_MILLIS = 10;
+
+        when(fetchProductDataUseCase.byEan(EXISTING_PRODUCT_EAN))
+                .thenReturn(Maybe.just(PRODUCT_DATA)
+                        .delay(FETCH_DURATION_MILLIS, TimeUnit.MILLISECONDS)
+                );
+
+        // then
+        statusBeforeFetch = SUT.getProductStatus().getValue();
+
+        SUT.getEan().setValue(EXISTING_PRODUCT_EAN);
+        SUT.onEanInputFinished();
+
+        statusDuringFetch.set(SUT.getProductStatus().getValue());
+
+        Thread.sleep(FETCH_DURATION_MILLIS + 5);
+
+        statusAfterFetch.set(SUT.getProductStatus().getValue());
+
+        // then
+        assertThat(statusBeforeFetch, equalTo(ProductStatus.EMPTY));
+        assertThat(statusDuringFetch.get(), equalTo(ProductStatus.FETCHING));
+        assertThat(statusAfterFetch.get(), equalTo(ProductStatus.LINKED));
+    }
+
+    @Test
+    public void onEatInput_productNotExists_productStatusReflectsSequentialChanges() throws InterruptedException {
+        ProductStatus statusBeforeFetch;
+        AtomicReference<ProductStatus> statusDuringFetch = new AtomicReference<>();
+        AtomicReference<ProductStatus> statusAfterFetch = new AtomicReference<>();
+
+        // given
+        int FETCH_DURATION_MILLIS = 10;
+
+        when(fetchProductDataUseCase.byEan(EXISTING_PRODUCT_EAN))
+                .thenReturn(Maybe.<ProductData>empty()
+                        .delay(FETCH_DURATION_MILLIS, TimeUnit.MILLISECONDS)
+                );
+
+        // when
+        statusBeforeFetch = SUT.getProductStatus().getValue();
+
+        SUT.getEan().setValue(EXISTING_PRODUCT_EAN);
+        SUT.onEanInputFinished();
+
+        statusDuringFetch.set(SUT.getProductStatus().getValue());
+
+        Thread.sleep(FETCH_DURATION_MILLIS + 5);
+
+        statusAfterFetch.set(SUT.getProductStatus().getValue());
+
+        // then
+        assertThat(statusBeforeFetch, equalTo(ProductStatus.EMPTY));
+        assertThat(statusDuringFetch.get(), equalTo(ProductStatus.FETCHING));
+        assertThat(statusAfterFetch.get(), equalTo(ProductStatus.UNRECOGNIZED));
     }
 }

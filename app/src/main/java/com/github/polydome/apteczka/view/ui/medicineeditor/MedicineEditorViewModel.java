@@ -8,8 +8,9 @@ import com.github.polydome.apteczka.domain.usecase.FetchProductDataUseCase;
 import com.github.polydome.apteczka.domain.usecase.structure.ProductData;
 
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
-public class MedicineEditorViewModel extends ViewModel implements EanInputListener, ProductModel {
+public class MedicineEditorViewModel extends ViewModel implements EanInputListener, ProductModel, ProductStatus.Owner {
     private final MutableLiveData<Boolean> productExistence = new MutableLiveData<>(false);
     private final MutableLiveData<String> ean = new MutableLiveData<>("");
     private final MutableLiveData<String> name = new MutableLiveData<>("");
@@ -18,6 +19,7 @@ public class MedicineEditorViewModel extends ViewModel implements EanInputListen
     private final MutableLiveData<String> packagingSize = new MutableLiveData<>("");
     private final MutableLiveData<String> packagingUnit = new MutableLiveData<>("");
     private final MutableLiveData<String> potency = new MutableLiveData<>("");
+    private final MutableLiveData<ProductStatus> productStatus = new MutableLiveData<>(ProductStatus.EMPTY);
 
     private final CompositeDisposable comp = new CompositeDisposable();
 
@@ -31,8 +33,19 @@ public class MedicineEditorViewModel extends ViewModel implements EanInputListen
     public void onEanInputFinished() {
         comp.add(
             fetchProductDataUseCase.byEan(ean.getValue())
+                    .doOnSubscribe(this::onFetchStart)
+                    .doOnSuccess(this::onFetchSuccess)
+                    .doOnComplete(this::onFetchFailed)
                     .subscribe(this::postProductData)
         );
+    }
+
+    private void onFetchSuccess(ProductData productData) {
+        productStatus.postValue(ProductStatus.LINKED);
+    }
+
+    private void onFetchFailed() {
+        productStatus.postValue(ProductStatus.UNRECOGNIZED);
     }
 
     @Override
@@ -81,6 +94,11 @@ public class MedicineEditorViewModel extends ViewModel implements EanInputListen
     }
 
     @Override
+    public LiveData<ProductStatus> getProductStatus() {
+        return productStatus;
+    }
+
+    @Override
     protected void onCleared() {
         comp.dispose();
     }
@@ -104,5 +122,9 @@ public class MedicineEditorViewModel extends ViewModel implements EanInputListen
         packagingSize.postValue("");
         productExistence.postValue(false);
         this.ean.postValue("");
+    }
+
+    private void onFetchStart(Disposable disposable) {
+        productStatus.postValue(ProductStatus.FETCHING);
     }
 }
