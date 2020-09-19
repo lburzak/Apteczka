@@ -45,7 +45,7 @@
 
         <LinearLayout
             android:layout_marginTop="@dimen/productPrompt_sectionSpacing"
-            android:weightSum="2"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="@dimen/productPrompt_buttonHeight">
 
@@ -54,22 +54,25 @@
                 android:text="@string/productPrompt_scan"
                 android:visibility="@{productStatus == ProductStatus.LINKED ? View.GONE : View.VISIBLE}"
                 android:layout_weight="1"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 app:icon="@drawable/ic_baseline_photo_camera_24"
                 app:strokeColor="@color/colorPrimary"
-                android:layout_marginRight="@dimen/productPrompt_buttonSpacing"
-                android:layout_marginEnd="@dimen/productPrompt_buttonSpacing"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+            <Space
+                android:visibility="@{productStatus == ProductStatus.LINKED ? View.GONE : View.VISIBLE}"
+                android:layout_width="15dp"
+                android:layout_height="match_parent"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/productPrompt_submit"
                 android:onClick="@{() -> inputListener.onEanInputFinished()}"
                 android:text="@string/productPrompt_submit"
                 android:visibility="@{productStatus == ProductStatus.LINKED ? View.GONE : View.VISIBLE}"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 app:icon="@drawable/ic_baseline_link_24"/>
 
             <com.google.android.material.button.MaterialButton
@@ -77,7 +80,7 @@
                 android:onClick="@{() -> inputListener.onEanCleared()}"
                 android:text="@string/productPrompt_unlink"
                 android:visibility="@{productStatus == ProductStatus.LINKED ? View.VISIBLE : View.GONE}"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 app:icon="@drawable/ic_baseline_link_off_24"
