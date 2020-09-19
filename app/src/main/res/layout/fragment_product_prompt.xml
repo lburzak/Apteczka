@@ -22,7 +22,7 @@
         android:padding="@dimen/productPrompt_layoutPadding">
 
         <TextView
-            tools:text="Link medicinal product"
+            android:text="@string/productPrompt_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/productPrompt_sectionSpacing"
