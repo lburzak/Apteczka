@@ -65,6 +65,7 @@ public class MedicineEditorViewModel extends ViewModel implements EanInputListen
     @Override
     public void onEanCleared() {
         clearProductData();
+        productStatus.postValue(ProductStatus.EMPTY);
     }
 
     @Override

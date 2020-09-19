@@ -202,4 +202,29 @@ public class MedicineEditorViewModelTest {
         assertThat(statusDuringFetch.get(), equalTo(ProductStatus.FETCHING));
         assertThat(statusAfterFetch.get(), equalTo(ProductStatus.UNRECOGNIZED));
     }
+
+    @Test
+    public void onEanCleared_productStatusLinked_changesToProductStatusEmpty() {
+        // given
+        String EXISTING_PRODUCT_EAN = "92716282736152";
+        ProductData PRODUCT_DATA = ProductData.builder()
+                .potency("test potency")
+                .packagingUnit("test unit")
+                .packagingSize(12)
+                .form("test form")
+                .commonName("test common name")
+                .name("test name")
+                .build();
+
+        when(fetchProductDataUseCase.byEan(EXISTING_PRODUCT_EAN))
+                .thenReturn(Maybe.just(PRODUCT_DATA));
+
+        // when
+        SUT.getEan().setValue(EXISTING_PRODUCT_EAN);
+        SUT.onEanInputFinished();
+        SUT.onEanCleared();
+
+        // then
+        assertThat(SUT.getProductStatus().getValue(), equalTo(ProductStatus.EMPTY));
+    }
 }
