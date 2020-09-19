@@ -11,6 +11,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.github.polydome.apteczka.R;
 import com.github.polydome.apteczka.view.contract.EditMedicineContract;
 import com.github.polydome.apteczka.view.ui.common.PresentationComponentProvider;
+import com.github.polydome.apteczka.view.ui.medicineeditor.MedicineEditorViewModel;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -19,8 +20,9 @@ import javax.inject.Inject;
 public class EditMedicineActivity extends AppCompatActivity implements EditMedicineContract.View, Toolbar.OnMenuItemClickListener {
     private PresentationComponentProvider componentProvider;
 
-    @Inject
-    public EditMedicineContract.Presenter presenter;
+    @Inject public EditMedicineContract.Presenter presenter;
+    @Inject public MedicineEditorViewModel viewModel;
+    @Inject public ProductPromptFragment productPromptFragment;
 
     private long medicineId;
 
@@ -40,15 +42,11 @@ public class EditMedicineActivity extends AppCompatActivity implements EditMedic
         componentProvider.getPresentationComponent().inject(this);
         presenter.attach(this);
 
-        titleField = findViewById(R.id.editMedicine_title);
-        fab = findViewById(R.id.editMedicine_fab);
+        prepareUi();
 
         medicineId = getIntent().getLongExtra("MEDICINE_ID", 0);
         if (medicineId > 0)
             presenter.onCurrentDataRequest(medicineId);
-
-        BottomAppBar bottomAppBar = findViewById(R.id.bottom_app_bar);
-        bottomAppBar.setOnMenuItemClickListener(this);
     }
 
     @Override
@@ -74,6 +72,27 @@ public class EditMedicineActivity extends AppCompatActivity implements EditMedic
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.editMedicine_action_scan:
+                showProductPrompt();
+                return true;
+        }
+
         return false;
+    }
+
+    private void showProductPrompt() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(productPromptFragment, "ProductPromptFragment")
+                .commit();
+    }
+
+    private void prepareUi() {
+        titleField = findViewById(R.id.editMedicine_title);
+        fab = findViewById(R.id.editMedicine_fab);
+
+        BottomAppBar bottomAppBar = findViewById(R.id.bottom_app_bar);
+        bottomAppBar.setOnMenuItemClickListener(this);
     }
 }

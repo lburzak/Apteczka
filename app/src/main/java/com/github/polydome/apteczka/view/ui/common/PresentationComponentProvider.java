@@ -3,6 +3,7 @@ package com.github.polydome.apteczka.view.ui.common;
 import android.app.Activity;
 import android.content.Context;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.github.polydome.apteczka.Apteczka;
@@ -16,13 +17,13 @@ public class PresentationComponentProvider {
     public PresentationComponentProvider(Fragment owner) {
         this.presentationComponent =
                 getApplicationComponent(owner.requireActivity())
-                        .createPresentationComponent(createFrameworkModule(owner.getContext()));
+                        .createPresentationComponent(createFrameworkModule((AppCompatActivity) owner.requireActivity()));
     }
 
     public PresentationComponentProvider(Activity owner) {
         this.presentationComponent =
                 getApplicationComponent(owner)
-                        .createPresentationComponent(createFrameworkModule(owner));
+                        .createPresentationComponent(createFrameworkModule((AppCompatActivity) owner));
     }
 
     public PresentationComponent getPresentationComponent() {
@@ -34,7 +35,7 @@ public class PresentationComponentProvider {
                 .getApplicationComponent();
     }
 
-    private FrameworkModule createFrameworkModule(Context presentationContext) {
-        return new FrameworkModule(presentationContext);
+    private FrameworkModule createFrameworkModule(AppCompatActivity activity) {
+        return new FrameworkModule(activity);
     }
 }

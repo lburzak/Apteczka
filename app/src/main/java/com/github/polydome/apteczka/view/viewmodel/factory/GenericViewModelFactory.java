@@ -7,13 +7,14 @@ import androidx.lifecycle.ViewModelProvider;
 import com.github.polydome.apteczka.view.ui.medicineeditor.MedicineEditorViewModel;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Provider;
 
 public class GenericViewModelFactory implements ViewModelProvider.Factory {
     private final Provider<MedicineEditorViewModel> medicineEditorViewModelProvider;
 
     @Inject
-    public GenericViewModelFactory(Provider<MedicineEditorViewModel> medicineEditorViewModelProvider) {
+    public GenericViewModelFactory(@Named("Factory") Provider<MedicineEditorViewModel> medicineEditorViewModelProvider) {
         this.medicineEditorViewModelProvider = medicineEditorViewModelProvider;
     }
 

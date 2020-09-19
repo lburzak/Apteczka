@@ -7,6 +7,10 @@ import androidx.lifecycle.ViewModel;
 import com.github.polydome.apteczka.domain.usecase.FetchProductDataUseCase;
 import com.github.polydome.apteczka.domain.usecase.structure.ProductData;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
@@ -24,15 +28,25 @@ public class MedicineEditorViewModel extends ViewModel implements EanInputListen
     private final CompositeDisposable comp = new CompositeDisposable();
 
     private final FetchProductDataUseCase fetchProductDataUseCase;
+    private final Scheduler ioScheduler;
+    private final Scheduler uiScheduler;
 
-    public MedicineEditorViewModel(FetchProductDataUseCase fetchProductDataUseCase) {
+    @Inject
+    public MedicineEditorViewModel(FetchProductDataUseCase fetchProductDataUseCase,
+                                   @Named("ioScheduler") Scheduler ioScheduler,
+                                   @Named("uiScheduler") Scheduler uiScheduler
+    ) {
         this.fetchProductDataUseCase = fetchProductDataUseCase;
+        this.ioScheduler = ioScheduler;
+        this.uiScheduler = uiScheduler;
     }
 
     @Override
     public void onEanInputFinished() {
         comp.add(
             fetchProductDataUseCase.byEan(ean.getValue())
+                    .subscribeOn(ioScheduler)
+                    .observeOn(uiScheduler)
                     .doOnSubscribe(this::onFetchStart)
                     .doOnSuccess(this::onFetchSuccess)
                     .doOnComplete(this::onFetchFailed)

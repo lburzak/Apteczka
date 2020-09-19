@@ -3,12 +3,11 @@ package com.github.polydome.apteczka.di.module;
 import android.content.Context;
 import android.view.LayoutInflater;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.github.polydome.apteczka.view.ui.medicinelist.MedicineListAdapter;
-import com.github.polydome.apteczka.view.ui.medicinelist.MedicineViewHolder;
 import com.github.polydome.apteczka.view.viewmodel.factory.GenericViewModelFactory;
 
 import javax.inject.Named;
@@ -19,16 +18,16 @@ import dagger.Provides;
 // TODO: Rename to AndroidModule
 @Module(includes = {PresentationModule.class})
 public class FrameworkModule {
-    private final Context presentationContext;
+    private final AppCompatActivity activity;
 
-    public FrameworkModule(Context presentationContext) {
-        this.presentationContext = presentationContext;
+    public FrameworkModule(AppCompatActivity activity) {
+        this.activity = activity;
     }
 
     @Provides
     @Named("presentationContext")
     public Context presentationContext() {
-        return presentationContext;
+        return activity;
     }
 
     @Provides
@@ -37,12 +36,16 @@ public class FrameworkModule {
     }
 
     @Provides
-    public LayoutInflater layoutInflater() {
+    public LayoutInflater layoutInflater(@Named("presentationContext") Context presentationContext) {
         return LayoutInflater.from(presentationContext);
     }
 
     @Provides
     public ViewModelProvider.Factory viewModelFactory(GenericViewModelFactory genericViewModelFactory) {
         return genericViewModelFactory;
+    }
+
+    @Provides AppCompatActivity appCompatActivity() {
+        return this.activity;
     }
 }

@@ -8,7 +8,7 @@ import com.github.polydome.apteczka.view.presenter.ShowMedicinePresenter;
 import dagger.Module;
 import dagger.Provides;
 
-@Module(includes = {DomainModule.class, SchedulerModule.class})
+@Module(includes = {DomainModule.class, SchedulerModule.class, MedicineEditorModule.class})
 public class PresentationModule {
     @Provides
     public EditMedicineContract.Presenter editMedicinePresenter(EditMedicinePresenter editMedicinePresenter) {

@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
 import io.reactivex.Maybe;
+import io.reactivex.schedulers.Schedulers;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -29,7 +30,7 @@ public class MedicineEditorViewModelTest {
 
     @Before
     public void setUp() {
-        SUT = new MedicineEditorViewModel(fetchProductDataUseCase);
+        SUT = new MedicineEditorViewModel(fetchProductDataUseCase, Schedulers.trampoline(), Schedulers.trampoline());
     }
 
     @Test
