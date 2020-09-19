@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.fragment.app.FragmentFactory;
 import androidx.fragment.app.testing.FragmentScenario;
 import androidx.lifecycle.MutableLiveData;
+import androidx.test.espresso.assertion.ViewAssertions;
 
 import com.github.polydome.apteczka.R;
 import com.github.polydome.apteczka.test.MockProductStatusOwner;
@@ -21,8 +22,10 @@ import org.mockito.junit.MockitoJUnitRunner;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -69,7 +72,7 @@ public class ProductPromptFragmentTest {
     }
 
     @Test
-    public void unlinkProduct_productStatusLinked_callsOnEanInput() {
+    public void unlinkProduct_productLinked_callsOnEanInput() {
         // given
         mockProductStatusOwner.setStatus(ProductStatus.LINKED);
 
@@ -78,5 +81,48 @@ public class ProductPromptFragmentTest {
 
         // then
         verify(inputListener, VerificationModeFactory.times(1)).onEanCleared();
+    }
+
+    @Test
+    public void entry_productLinked_showsAppropriateStatusMessage() {
+        // when
+        mockProductStatusOwner.setStatus(ProductStatus.LINKED);
+
+        // then
+        onView(withId(R.id.productPrompt_status))
+                .check(matches(withText(R.string.productPrompt_status_alreadyLinked)));
+    }
+
+    @Test
+    public void entry_productUnrecognized_showsAppropriateStatusMessage() {
+        // when
+        mockProductStatusOwner.setStatus(ProductStatus.UNRECOGNIZED);
+
+        // then
+        onView(withId(R.id.productPrompt_status))
+                .check(matches(withText(R.string.productPrompt_status_notAvailable)));
+    }
+
+    @Test
+    public void entry_productEmpty_statusMessageEmpty() {
+        // when
+        mockProductStatusOwner.setStatus(ProductStatus.EMPTY);
+
+        // then
+        onView(withId(R.id.productPrompt_status))
+                .check(matches(withText("")));
+    }
+
+    @Test
+    public void entry_productUnrecognizedThenEmpty_statusMessageEmpty() {
+        // given
+        mockProductStatusOwner.setStatus(ProductStatus.UNRECOGNIZED);
+
+        // when
+        mockProductStatusOwner.setStatus(ProductStatus.EMPTY);
+
+        // then
+        onView(withId(R.id.productPrompt_status))
+                .check(matches(withText("")));
     }
 }

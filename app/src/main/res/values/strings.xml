@@ -9,4 +9,6 @@
     <string name="productPrompt_enterCode">Enter EAN code</string>
     <string name="productPrompt_unlink">Unlink</string>
     <string name="productPrompt_header">Medicinal product association</string>
+    <string name="productPrompt_status_alreadyLinked">Product is already linked</string>
+    <string name="productPrompt_status_notAvailable">Product identified with entered code is not available</string>
 </resources>

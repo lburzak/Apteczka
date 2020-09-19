@@ -43,6 +43,18 @@
             android:inputType="numberDecimal"
             android:drawableStart="@drawable/ic_menu_barcode" />
 
+        <TextView
+            android:id="@+id/productPrompt_status"
+            tools:text="This is status content"
+            tools:drawableStart="@drawable/ic_baseline_save_24"
+            tools:drawableTint="@android:color/holo_green_dark"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:drawablePadding="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/productPrompt_sectionSpacing"/>
+
         <LinearLayout
             android:layout_marginTop="@dimen/productPrompt_sectionSpacing"
             android:orientation="horizontal"
