@@ -4,6 +4,7 @@
     <data>
         <import type="android.view.View"/>
         <import type="com.github.polydome.apteczka.view.ui.medicineeditor.ProductStatus"/>
+        <import type="android.graphics.Typeface"/>
         <variable
             name="inputListener"
             type="com.github.polydome.apteczka.view.ui.medicineeditor.EanInputListener" />
@@ -32,6 +33,8 @@
             android:hint="@string/productPrompt_enterCode"
             android:drawableLeft="@drawable/ic_menu_barcode"
             android:drawableTint="@android:color/black"
+            android:enabled="@{productStatus == ProductStatus.LINKED ? false : true}"
+            android:typeface="@{productStatus == ProductStatus.LINKED ? Typeface.MONOSPACE : Typeface.DEFAULT}"
             android:text="@={inputListener.ean}"
             android:drawablePadding="16dp"
             android:layout_width="match_parent"
