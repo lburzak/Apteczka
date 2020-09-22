@@ -9,6 +9,10 @@ import org.junit.jupiter.api.TestInstance;
 import org.mockito.Mockito;
 
 import io.reactivex.Maybe;
+import okhttp3.MediaType;
+import okhttp3.ResponseBody;
+import retrofit2.Response;
+import retrofit2.adapter.rxjava2.HttpException;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class RemedyProductEndpointTest {
@@ -35,7 +39,8 @@ class RemedyProductEndpointTest {
 
     @Test
     public void fetchMedicineDetails_packagingNotExists_empty() {
-        Mockito.when(remedyService.getPackaging(EAN)).thenReturn(Maybe.<RemedyPackaging>empty());
+        Mockito.when(remedyService.getPackaging(EAN))
+                .thenReturn(Maybe.<RemedyPackaging>error(new HttpException(Response.error(404, ResponseBody.create(MediaType.get("text/plain"), "")))));
 
         SUT.fetchMedicineDetails(EAN).test().assertNoValues().assertComplete();
     }

@@ -45,9 +45,7 @@ public class RemedyIntegrationTest {
     }
 
     @Test
-    void fetchMedicineDetails_eanNotExists_emitsMedicineDetails() {
-        SUT.fetchMedicineDetails(EAN_NOT_EXISTING).test().assertValue(
-                Product.builder().build()
-        );
+    void fetchMedicineDetails_eanNotExists_emitsEmpty() {
+        SUT.fetchMedicineDetails(EAN_NOT_EXISTING).test().assertNoValues(). assertComplete();
     }
 }

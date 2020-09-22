@@ -9,6 +9,8 @@ import io.reactivex.Maybe;
 import io.reactivex.MaybeSource;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
+import retrofit2.adapter.rxjava2.HttpException;
 
 public class RemedyProductEndpoint implements ProductEndpoint {
     private final RemedyService remedyService;
@@ -26,6 +28,13 @@ public class RemedyProductEndpoint implements ProductEndpoint {
                 @Override
                 public MaybeSource<?> apply(RemedyPackaging packaging) {
                     return remedyService.getProduct(packaging.getProductId());
+                }
+            })
+            .onErrorComplete(new Predicate<Throwable>() {
+                @Override
+                public boolean test(Throwable throwable) {
+                    return throwable instanceof HttpException
+                        && throwable.getMessage().contains("404");
                 }
             })
             .zipWith(packaging, new BiFunction<Object, RemedyPackaging, Product>() {
