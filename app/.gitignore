@@ -1,1 +1,3 @@
 /build
+network_properties.gradle
+src/main/res/xml/network_security_config.xml
