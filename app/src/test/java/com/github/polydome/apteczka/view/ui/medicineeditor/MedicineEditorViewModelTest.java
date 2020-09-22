@@ -4,13 +4,13 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 
 import com.github.polydome.apteczka.domain.usecase.FetchProductDataUseCase;
 import com.github.polydome.apteczka.domain.usecase.structure.ProductData;
+import com.github.polydome.apteczka.view.test.util.FakeMaybe;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicReference;
 
 import io.reactivex.Maybe;
 import io.reactivex.schedulers.Schedulers;
@@ -131,10 +131,8 @@ public class MedicineEditorViewModelTest {
     }
 
     @Test
-    public void onEatInput_productExists_productStatusReflectsSequentialChanges() throws InterruptedException {
-        ProductStatus statusBeforeFetch;
-        AtomicReference<ProductStatus> statusDuringFetch = new AtomicReference<>();
-        AtomicReference<ProductStatus> statusAfterFetch = new AtomicReference<>();
+    public void onEatInput_productExists_productStatusReflectsSequentialChanges() {
+        FakeMaybe<ProductData> fakeMaybe = new FakeMaybe<>();
 
         // given
         ProductData PRODUCT_DATA = ProductData.builder()
@@ -146,61 +144,44 @@ public class MedicineEditorViewModelTest {
                 .name("test name")
                 .build();
 
-        int FETCH_DURATION_MILLIS = 10;
-
+        // given
         when(fetchProductDataUseCase.byEan(EXISTING_PRODUCT_EAN))
-                .thenReturn(Maybe.just(PRODUCT_DATA)
-                        .delay(FETCH_DURATION_MILLIS, TimeUnit.MILLISECONDS)
-                );
+                .thenReturn(fakeMaybe);
 
-        // then
-        statusBeforeFetch = SUT.getProductStatus().getValue();
-
+        // when
+        ProductStatus statusBeforeFetch = SUT.getProductStatus().getValue();
         SUT.getEan().setValue(EXISTING_PRODUCT_EAN);
         SUT.onEanInputFinished();
-
-        statusDuringFetch.set(SUT.getProductStatus().getValue());
-
-        Thread.sleep(FETCH_DURATION_MILLIS + 5);
-
-        statusAfterFetch.set(SUT.getProductStatus().getValue());
+        ProductStatus statusDuringFetch = SUT.getProductStatus().getValue();
+        fakeMaybe.pushSuccess(PRODUCT_DATA);
+        ProductStatus statusAfterFetch = SUT.getProductStatus().getValue();
 
         // then
         assertThat(statusBeforeFetch, equalTo(ProductStatus.EMPTY));
-        assertThat(statusDuringFetch.get(), equalTo(ProductStatus.FETCHING));
-        assertThat(statusAfterFetch.get(), equalTo(ProductStatus.LINKED));
+        assertThat(statusDuringFetch, equalTo(ProductStatus.FETCHING));
+        assertThat(statusAfterFetch, equalTo(ProductStatus.LINKED));
     }
 
     @Test
-    public void onEatInput_productNotExists_productStatusReflectsSequentialChanges() throws InterruptedException {
-        ProductStatus statusBeforeFetch;
-        AtomicReference<ProductStatus> statusDuringFetch = new AtomicReference<>();
-        AtomicReference<ProductStatus> statusAfterFetch = new AtomicReference<>();
+    public void onEatInput_productNotExists_productStatusReflectsSequentialChanges() {
+        FakeMaybe<ProductData> fakeMaybe = new FakeMaybe<>();
 
         // given
-        int FETCH_DURATION_MILLIS = 10;
-
         when(fetchProductDataUseCase.byEan(EXISTING_PRODUCT_EAN))
-                .thenReturn(Maybe.<ProductData>empty()
-                        .delay(FETCH_DURATION_MILLIS, TimeUnit.MILLISECONDS)
-                );
+                .thenReturn(fakeMaybe);
 
         // when
-        statusBeforeFetch = SUT.getProductStatus().getValue();
-
+        ProductStatus statusBeforeFetch = SUT.getProductStatus().getValue();
         SUT.getEan().setValue(EXISTING_PRODUCT_EAN);
         SUT.onEanInputFinished();
-
-        statusDuringFetch.set(SUT.getProductStatus().getValue());
-
-        Thread.sleep(FETCH_DURATION_MILLIS + 5);
-
-        statusAfterFetch.set(SUT.getProductStatus().getValue());
+        ProductStatus statusDuringFetch = SUT.getProductStatus().getValue();
+        fakeMaybe.pushComplete();
+        ProductStatus statusAfterFetch = SUT.getProductStatus().getValue();
 
         // then
         assertThat(statusBeforeFetch, equalTo(ProductStatus.EMPTY));
-        assertThat(statusDuringFetch.get(), equalTo(ProductStatus.FETCHING));
-        assertThat(statusAfterFetch.get(), equalTo(ProductStatus.UNRECOGNIZED));
+        assertThat(statusDuringFetch, equalTo(ProductStatus.FETCHING));
+        assertThat(statusAfterFetch, equalTo(ProductStatus.UNRECOGNIZED));
     }
 
     @Test
