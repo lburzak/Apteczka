@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="productView_textSize">22sp</dimen>
-    <dimen name="productView_textSizeSmall">18sp</dimen>
-    <dimen name="productView_contentPadding">24dp</dimen>
-    <dimen name="productView_linePadding">6dp</dimen>
+    <dimen name="productView_textSize">18sp</dimen>
+    <dimen name="productView_textSizeSmall">14sp</dimen>
+    <dimen name="productView_contentPadding">20dp</dimen>
+    <dimen name="productView_linePadding">4dp</dimen>
     <dimen name="productView_propertyIconSize">24dp</dimen>
     <dimen name="productView_propertyIconMargin">12dp</dimen>
     <dimen name="productPrompt_buttonSpacing">30dp</dimen>
