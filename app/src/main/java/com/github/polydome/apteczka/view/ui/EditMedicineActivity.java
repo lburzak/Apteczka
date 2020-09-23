@@ -23,6 +23,7 @@ public class EditMedicineActivity extends AppCompatActivity implements EditMedic
     @Inject public EditMedicineContract.Presenter presenter;
     @Inject public MedicineEditorViewModel viewModel;
     @Inject public ProductPromptFragment productPromptFragment;
+    @Inject public ProductFragment productFragment;
 
     private long medicineId;
 
@@ -94,5 +95,10 @@ public class EditMedicineActivity extends AppCompatActivity implements EditMedic
 
         BottomAppBar bottomAppBar = findViewById(R.id.bottom_app_bar);
         bottomAppBar.setOnMenuItemClickListener(this);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.editMedicine_productFragmentContainer, productFragment, "ProductFragment")
+                .commit();
     }
 }

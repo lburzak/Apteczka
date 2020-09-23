@@ -31,6 +31,7 @@ public class ProductFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentProductViewBinding.inflate(inflater, container, false);
         binding.setModel(productModel);
+        binding.setLifecycleOwner(this);
         return binding.getRoot();
     }
 }
